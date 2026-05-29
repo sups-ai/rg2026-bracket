@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ITHF × Roland Garros 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --clay:#D45C38;--clay-lt:#F7EDE7;--bg:#FAF7F4;
+  --ink:#111;--ink2:#555;--ink3:#999;
+  --line:#E5DDD5;--white:#fff;
+  --green:#2A7A50;--gold:#B8860B;--r:6px;
+  --cw:186px;
+}
+body{font-family:'Instrument Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+
+/* ─ HEADER ─ */
+.hdr{display:flex;flex-direction:column;justify-content:center;padding:0 1.5rem;background:rgba(255,255,255,.97);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:200;min-height:58px}
+.hdr-inner{display:flex;align-items:center;justify-content:space-between;width:100%}
+.hdr-sub{font-size:.6rem;letter-spacing:.08em;color:var(--ink3);margin-top:.18rem;padding-left:.02rem}
+.hdr-sub em{color:var(--clay);font-style:normal;font-weight:500}
+.brand{display:flex;align-items:center;gap:.6rem}
+.bp{background:var(--clay);color:#fff;font-size:.58rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:.26rem .5rem;border-radius:3px}
+.bn{font-family:'Instrument Serif',serif;font-size:1rem;line-height:1}
+.bn em{color:var(--clay);font-style:italic}
+.hdr-r{display:flex;align-items:center;gap:.8rem}
+.pts-chip{display:flex;align-items:baseline;gap:.22rem}
+.pts-n{font-family:'Instrument Serif',serif;font-size:1.3rem;color:var(--clay);line-height:1}
+.pts-l{font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink3)}
+
+/* ─ SUBNAV: tabs | sep | draw toggle | sep | deadline strip ─ */
+.snav{display:flex;align-items:center;padding:0 1.5rem;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:58px;z-index:199;min-height:42px;gap:0;overflow-x:auto}
+.tabs{display:flex;flex-shrink:0}
+.tab{background:none;border:none;font-family:'Instrument Sans',sans-serif;font-size:.73rem;font-weight:500;letter-spacing:.04em;color:var(--ink3);padding:.75rem 1rem .65rem;cursor:pointer;border-bottom:2px solid transparent;transition:color .14s,border-color .14s;white-space:nowrap}
+.tab.on{color:var(--ink);border-bottom-color:var(--clay)}
+.tab:hover:not(.on){color:var(--ink2)}
+/* Draw toggle lives RIGHT of first vsep */
+/* Deadline strip */
+.dlst{display:flex;align-items:center;gap:1.1rem;margin-left:auto;flex-shrink:0;padding:.3rem 0 .3rem .5rem}
+.dli{display:flex;align-items:center;gap:.38rem}
+.dld{width:6px;height:6px;border-radius:50%;background:var(--clay);animation:bl 2s infinite}
+@keyframes bl{0%,100%{opacity:1}50%{opacity:.28}}
+.dll{font-size:.6rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--clay)}
+.dlv{font-size:.65rem;color:var(--ink2)}
+/* dtog is always visible on bracket tab, positioned left */
+.dtog-wrap{display:flex;align-items:center;gap:.6rem;flex-shrink:0}
+.dtog-label{font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink3);white-space:nowrap}
+@media(max-width:860px){.dlst{display:none}}
+@media(max-width:560px){.snav{padding:0 .75rem}.tab{padding:.72rem .72rem .62rem;font-size:.68rem}}
+
+/* ─ PAGES ─ */
+.pg{display:none}.pg.on{display:block}
+
+/* ─ GATE ─ */
+.gate{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:1.3rem 1.4rem;margin:1.2rem 1.5rem}
+.gate h2{font-family:'Instrument Serif',serif;font-size:1.15rem;margin-bottom:.22rem}
+.gate p{font-size:.75rem;color:var(--ink2);line-height:1.55;margin-bottom:.95rem}
+.gate-row{display:flex;gap:.5rem;flex-wrap:wrap}
+.fi{font-family:'Instrument Sans',sans-serif;font-size:.78rem;background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:.52rem .78rem;color:var(--ink);outline:none;transition:border-color .14s}
+.fi::placeholder{color:var(--ink3)}
+.fi:focus{border-color:var(--clay);background:#fff}
+.bjoin{font-family:'Instrument Sans',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:var(--clay);color:#fff;border:none;border-radius:5px;padding:.52rem 1.1rem;cursor:pointer;transition:all .14s;white-space:nowrap}
+.bjoin:hover{background:#c14e2a;transform:translateY(-1px)}
+
+/* ─ GATE OVERLAY ─ */
+.gate-overlay{position:fixed;inset:0;background:var(--bg);z-index:300;display:flex;align-items:center;justify-content:center;padding:1.5rem}
+.gate-overlay.gone{display:none}
+.gate-box{background:#fff;border:1px solid var(--line);border-radius:10px;padding:2.2rem 2rem 1.9rem;max-width:440px;width:100%;box-shadow:0 6px 32px rgba(0,0,0,.09)}
+/* Logo row */
+.gate-logo-row{display:flex;align-items:center;gap:.55rem;margin-bottom:1.2rem}
+.gate-bp{background:var(--clay);color:#fff;font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:.28rem .55rem;border-radius:3px}
+.gate-x{font-size:.7rem;color:var(--ink3)}
+.gate-elc{font-size:.65rem;font-weight:500;letter-spacing:.06em;color:var(--ink2);text-transform:uppercase}
+/* Headings */
+.gate-h2{font-family:'Instrument Serif',serif;font-size:1.65rem;font-weight:400;line-height:1.1;color:var(--ink);margin-bottom:.15rem}
+.gate-h2 em{color:var(--clay);font-style:italic}
+.gate-h3{font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:1rem}
+.gate-desc{font-size:.74rem;color:var(--ink2);line-height:1.6;margin-bottom:1.3rem;padding-bottom:1.2rem;border-bottom:1px solid var(--line)}
+/* Fields */
+.gate-fields{display:flex;flex-direction:column;gap:.6rem;margin-bottom:.4rem}
+.fi-wrap{display:flex;flex-direction:column;gap:.2rem;flex:1}
+.fi-lbl{font-size:.58rem;text-transform:uppercase;letter-spacing:.09em;color:var(--ink3);font-weight:500}
+.req{color:var(--clay)}
+.gate-opt{color:var(--ink3);font-weight:400;text-transform:none;letter-spacing:0;font-size:.56rem}
+.fi{font-family:'Instrument Sans',sans-serif;font-size:16px;background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:.52rem .78rem;color:var(--ink);outline:none;transition:border-color .14s;width:100%}
+.fi::placeholder{color:var(--ink3)}
+.fi:focus{border-color:var(--clay);background:#fff}
+.fi.err{border-color:var(--clay)!important;background:#fff9f7}
+.gate-err{font-size:.68rem;color:var(--clay);min-height:.85rem;margin-top:.3rem}
+.bjoin{font-family:'Instrument Sans',sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;background:var(--clay);color:#fff;border:none;border-radius:5px;padding:.62rem 1.3rem;cursor:pointer;transition:all .14s;white-space:nowrap;width:100%;margin-top:.5rem}
+.bjoin:hover{background:#c14e2a;transform:translateY(-1px)}
+.gate-fine{font-size:.62rem;color:var(--ink3);text-align:center;margin-top:.8rem;line-height:1.6}
+.pw-wrap{position:relative;display:flex;align-items:center}
+.pw-fi{padding-right:3.5rem !important}
+.pw-toggle{position:absolute;right:.6rem;background:none;border:none;font-family:'Instrument Sans',sans-serif;font-size:.65rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--clay);cursor:pointer;padding:.2rem .1rem;transition:opacity .14s}
+.pw-toggle:hover{opacity:.7}
+
+/* ─ DEMO BANNER ─ */
+.demo-banner{display:none;background:#FFF8E7;border-bottom:1px solid #F0D080;padding:.45rem 1.5rem;font-size:.68rem;color:#7A5C00;letter-spacing:.02em;align-items:center;gap:.5rem}
+.demo-banner.show{display:flex}
+.demo-banner strong{font-weight:600}
+.demo-banner .db-pill{background:#F0D080;color:#5A4200;font-size:.58rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.15rem .45rem;border-radius:3px}
+
+/* ─ SUBMITTED BANNER ─ */
+.sub-banner{background:#fff;border:1.5px solid var(--green);border-radius:var(--r);padding:1.1rem 1.3rem;margin:1.2rem 1.5rem;display:flex;align-items:flex-start;gap:.9rem;display:none}
+.sb-ico{font-size:1.4rem;flex-shrink:0;margin-top:.05rem}
+.sb-body h3{font-family:'Instrument Serif',serif;font-size:1.05rem;color:var(--green);margin-bottom:.18rem}
+.sb-body p{font-size:.73rem;color:var(--ink2);line-height:1.55;margin-bottom:.65rem}
+
+/* ─ BRACKET ─ */
+.bwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:1.2rem 1.5rem 2.5rem}
+.sh{font-size:.6rem;color:var(--ink3);letter-spacing:.06em;text-align:center;padding:.3rem;display:none}
+@media(max-width:860px){.sh{display:block}}
+.bracket{display:flex;align-items:stretch;min-width:840px;gap:0;animation:fu .3s ease}
+@keyframes fu{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* columns */
+.col{display:flex;flex-direction:column;min-width:var(--cw)}
+.col+.col{margin-left:30px}
+.ch{display:flex;flex-direction:column;min-width:148px;margin-left:30px}
+.col-hd{padding:0 0 .7rem;white-space:nowrap}
+.cr{font-size:.6rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
+.cp{font-size:.56rem;color:var(--ink3);margin-top:.1rem}
+.col-b{flex:1;display:flex;flex-direction:column}
+.col.qf .col-b{justify-content:space-between}
+.col.sf .col-b{justify-content:space-around}
+.col.fn .col-b{justify-content:center}
+.ch .col-b{justify-content:center}
+
+/* match unit — card + connector line via pseudo */
+.mu{display:flex;align-items:center;position:relative}
+.mu::after{content:'';position:absolute;right:-30px;top:50%;width:30px;height:1px;background:var(--line)}
+.ch .mu::after{display:none}
+
+/* card */
+.mc{width:var(--cw);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:#fff;transition:border-color .15s,box-shadow .15s}
+.mc:hover{border-color:#C5B5A8;box-shadow:0 2px 10px rgba(0,0,0,.07)}
+.ch .mc{width:148px}
+
+/* player slot */
+.ps{display:flex;align-items:center;gap:.48rem;padding:.5rem .68rem;cursor:pointer;transition:background .11s;position:relative;min-height:37px}
+.ps+.ps{border-top:1px solid var(--line)}
+.ps:hover:not(.tbd):not(.lk){background:var(--clay-lt)}
+.ps.sel{background:#FFF2EC}
+.ps.win{background:#F0FAF5}
+.ps.out{opacity:.3}
+.ps.tbd,.ps.lk{cursor:default}
+.ps.tbd:hover,.ps.lk:hover{background:none}
+.ps.sel::before,.ps.win::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px}
+.ps.sel::before{background:var(--clay)}
+.ps.win::before{background:var(--green)}
+.p-s{font-size:.57rem;color:var(--ink3);width:13px;text-align:right;flex-shrink:0}
+.p-f{font-size:.88rem;line-height:1;flex-shrink:0}
+.p-n{font-size:.76rem;font-weight:500;color:var(--ink);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ps.sel .p-n{color:var(--clay)}
+.ps.win .p-n{color:var(--green)}
+.ps.out .p-n{text-decoration:line-through;color:var(--ink3)}
+.ps.tbd .p-n{color:var(--ink3);font-weight:400;font-style:italic;font-size:.7rem}
+.p-c{font-size:.6rem;color:var(--green);opacity:0;margin-left:.05rem}
+.ps.win .p-c{opacity:1}
+
+/* final score row */
+.sr{display:flex;flex-direction:column;gap:.28rem;padding:.45rem .68rem;background:var(--bg);border-top:1px solid var(--line)}
+.sr-top{display:flex;align-items:center;gap:.38rem}
+.sr-hint{font-size:.56rem;color:var(--ink3);line-height:1}
+.sl{font-size:.56rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3);white-space:nowrap}
+.sf-in{font-family:'Instrument Sans',sans-serif;font-size:.68rem;background:#fff;border:1px solid var(--line);border-radius:4px;padding:.2rem .42rem;color:var(--ink);outline:none;flex:1;min-width:0;transition:border-color .14s}
+.sf-in:focus{border-color:var(--clay)}
+.sf-in::placeholder{color:var(--ink3)}
+.sb{font-size:.56rem;font-weight:600;color:var(--gold);white-space:nowrap}
+
+/* champion */
+.cc{width:148px;border:1.5px solid var(--clay);border-radius:var(--r);background:#fff;padding:1.1rem .9rem;text-align:center;position:relative;overflow:hidden}
+.cc::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(212,92,56,.04),transparent);pointer-events:none}
+.ct{font-size:1.35rem;display:block;margin-bottom:.4rem}
+.cl{font-size:.54rem;text-transform:uppercase;letter-spacing:.14em;color:var(--ink3);display:block;margin-bottom:.28rem}
+.cn{font-family:'Instrument Serif',serif;font-size:.92rem;font-style:italic;color:var(--clay);display:block}
+.cpt{font-size:.56rem;color:var(--ink3);margin-top:.22rem}
+
+/* ─ SUBMIT BAR ─ */
+.sbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding:.8rem 1.5rem;background:#fff;border-top:1px solid var(--line);position:sticky;bottom:0;z-index:150}
+.ss{font-size:.73rem;color:var(--ink2)}
+.ss strong{color:var(--ink)}
+.bsub{font-family:'Instrument Sans',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:var(--clay);color:#fff;border:none;border-radius:5px;padding:.58rem 1.3rem;cursor:pointer;transition:all .14s}
+.bsub:hover{background:#c14e2a;transform:translateY(-1px)}
+
+/* ─ MODAL ─ */
+.mbk{position:fixed;inset:0;background:rgba(0,0,0,.38);z-index:500;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .2s}
+.mbk.open{opacity:1;pointer-events:all}
+.mdl{background:#fff;border-radius:10px;padding:1.8rem;max-width:440px;width:100%;transform:translateY(10px);transition:transform .2s;max-height:90vh;overflow-y:auto}
+.mbk.open .mdl{transform:translateY(0)}
+.mdl h3{font-family:'Instrument Serif',serif;font-size:1.2rem;margin-bottom:.2rem}
+.mdl p{font-size:.74rem;color:var(--ink2);line-height:1.55;margin-bottom:1.1rem}
+.mpl{margin-bottom:1.1rem}
+.mps{margin-bottom:.9rem}
+.mpt{font-size:.58rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--clay);margin-bottom:.35rem}
+.mpr{display:flex;align-items:center;justify-content:space-between;padding:.3rem .45rem;border-radius:4px;font-size:.76rem;border-bottom:1px solid var(--line)}
+.mpr:last-child{border-bottom:none}
+.mpr .rnd{color:var(--ink3);font-size:.66rem}
+.mpr .plr{font-weight:500;color:var(--ink)}
+.mpr .plr.mt{color:var(--ink3);font-style:italic;font-weight:400}
+.mact{display:flex;gap:.6rem;flex-wrap:wrap}
+.modal-pending-note{font-size:.7rem;color:var(--clay);background:var(--clay-lt);border-radius:4px;padding:.4rem .65rem;margin-bottom:.75rem;line-height:1.45}
+.pick-err-box{background:#FFF2EC;border:1px solid #E8C4B2;border-radius:var(--r);padding:.75rem .9rem;margin-bottom:.5rem}
+.pick-err-item{font-size:.74rem;color:var(--clay);padding:.18rem 0;font-weight:500}
+.bcf{font-family:'Instrument Sans',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;flex:1;background:var(--clay);color:#fff;border:none;border-radius:5px;padding:.6rem 1rem;cursor:pointer;transition:all .14s}
+.bcf:hover{background:#c14e2a}
+.bcc{font-family:'Instrument Sans',sans-serif;font-size:.7rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;background:none;border:1px solid var(--line);border-radius:5px;color:var(--ink2);padding:.6rem 1rem;cursor:pointer;transition:all .14s}
+.bcc:hover{border-color:#aaa;color:var(--ink)}
+
+/* ─ LEADERBOARD ─ */
+.lbw{padding:1.2rem 1.5rem;max-width:600px}
+.lbs{font-size:.6rem;text-transform:uppercase;letter-spacing:.12em;color:var(--ink3);margin-bottom:.6rem}
+.lb-tabs{display:flex;gap:0;margin-bottom:1.1rem;border-bottom:1px solid var(--line)}
+.lb-tab{background:none;border:none;font-family:'Instrument Sans',sans-serif;font-size:.72rem;font-weight:500;color:var(--ink3);padding:.65rem 1rem .6rem;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .14s}
+.lb-tab.on{color:var(--ink);border-bottom-color:var(--clay)}
+.lb-tab:hover:not(.on){color:var(--ink2)}
+.lb-view{display:none}.lb-view.on{display:block}
+.lb-arr{font-size:.9rem;color:var(--ink3);margin-left:.3rem;flex-shrink:0}
+.lbr{display:flex;align-items:center;gap:.75rem;padding:.65rem .85rem;border:1px solid var(--line);border-radius:var(--r);margin-bottom:.38rem;transition:all .15s;animation:fu .25s ease both;cursor:pointer}
+.lbr:nth-child(1){animation-delay:.03s}.lbr:nth-child(2){animation-delay:.06s}.lbr:nth-child(3){animation-delay:.09s}.lbr:nth-child(4){animation-delay:.12s}.lbr:nth-child(5){animation-delay:.15s}
+.lbr:hover{border-color:#C5B5A8;background:var(--clay-lt)}
+.lbr.me{border-color:var(--clay);background:#FFF2EC}
+.lrk{font-family:'Instrument Serif',serif;font-size:1.2rem;color:var(--ink3);width:1.4rem;text-align:center;flex-shrink:0;line-height:1}
+.lbr:nth-child(1) .lrk{color:#B8860B}.lbr:nth-child(2) .lrk{color:#888}.lbr:nth-child(3) .lrk{color:#A0522D}
+.lav{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:600;color:#fff;flex-shrink:0}
+.li{flex:1;min-width:0}
+.ln{font-size:.78rem;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lbr.me .ln{color:var(--clay)}
+.lsu{font-size:.6rem;color:var(--ink3);margin-top:.08rem}
+.lr{text-align:right}
+.lp{font-family:'Instrument Serif',serif;font-size:1.25rem;color:var(--ink);line-height:1}
+.lbr.me .lp{color:var(--clay)}
+.lpl{font-size:.54rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3)}
+
+/* ─ RULES PAGE ─ */
+.rlw{padding:1.2rem 1.5rem;max-width:560px}
+.rl-section{margin-bottom:2rem}
+.rl-section:last-child{margin-bottom:0}
+.rl-head{font-size:.62rem;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--clay);margin-bottom:.85rem;padding-bottom:.5rem;border-bottom:1px solid var(--line)}
+
+/* ─ SCORING ─ */
+.scw{padding:1.2rem 1.5rem;max-width:520px}
+.sci{font-size:.78rem;color:var(--ink2);line-height:1.65;margin-bottom:1.3rem}
+.sct{width:100%;border-collapse:collapse;margin-bottom:1.1rem}
+.sct th{text-align:left;font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink3);padding:0 .85rem .45rem;border-bottom:1px solid var(--line)}
+.sct th:last-child{text-align:right}
+.sct td{padding:.68rem .85rem;border-bottom:1px solid var(--line);font-size:.78rem;color:var(--ink)}
+.sct td:last-child{text-align:right;font-family:'Instrument Serif',serif;font-size:1.1rem;color:var(--clay)}
+.sct tr:last-child td{border-bottom:none}
+.sn{background:var(--bg);border:1px solid var(--line);border-radius:var(--r);padding:.8rem .95rem;font-size:.72rem;color:var(--ink2);line-height:1.6;margin-bottom:.55rem}
+.sn strong{color:var(--ink)}
+.smx{background:#fff;border:1.5px solid var(--clay);border-radius:var(--r);padding:.88rem 1rem;display:flex;align-items:center;justify-content:space-between;margin-top:.9rem}
+.smx .ml{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink2)}
+.smx .ms{font-size:.56rem;color:var(--ink3);margin-top:.1rem}
+.smx .mv{font-family:'Instrument Serif',serif;font-size:1.85rem;color:var(--clay);line-height:1}
+
+/* ─ DEADLINES ─ */
+.dlw{padding:1.2rem 1.5rem;max-width:560px}
+.dlw h2{font-family:'Instrument Serif',serif;font-size:1.3rem;margin-bottom:.9rem}
+.dlc{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-bottom:.75rem;background:#fff}
+.dlch{background:var(--bg);padding:.58rem .95rem;display:flex;align-items:center;gap:.65rem;border-bottom:1px solid var(--line)}
+.dlcd{width:7px;height:7px;border-radius:50%;background:var(--clay)}
+.dlcn{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--ink)}
+.dlcs{margin-left:auto;font-size:.58rem;color:var(--clay);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.dlcb{padding:.8rem .95rem}
+.dli2{display:flex;justify-content:space-between;align-items:baseline;padding:.3rem 0;border-bottom:1px solid var(--line)}
+.dli2:last-child{border-bottom:none}
+.dlr{font-size:.74rem;color:var(--ink2)}
+.dlv2{font-size:.74rem;font-weight:600;color:var(--ink)}
+.dlal{background:#FFF2EC;border:1px solid #E8C4B2;border-radius:var(--r);padding:.82rem .95rem;margin-top:.7rem;font-size:.74rem;color:var(--ink2);line-height:1.6}
+.dlal strong{color:var(--clay)}
+
+/* ─ MY PICKS ─ */
+.mpw{padding:1.2rem 1.5rem;max-width:460px}
+.mpw h2{font-family:'Instrument Serif',serif;font-size:1.2rem;margin-bottom:.22rem}
+.mpw p{font-size:.74rem;color:var(--ink2);margin-bottom:.9rem;line-height:1.55}
+.lup-row{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.95rem}
+.lup-res{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:.95rem 1.1rem;display:none}
+.lup-res.show{display:block}
+.lrn{font-family:'Instrument Serif',serif;font-size:1.05rem;margin-bottom:.08rem}
+.lrm{font-size:.62rem;color:var(--ink3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.8rem}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="hdr-inner">
+    <div class="brand">
+      <span class="bp">ITHF</span>
+      <span class="bn">Roland Garros <em>'26</em></span>
+    </div>
+    <div class="hdr-r">      <div class="pts-chip">
+        <span class="pts-n" id="pts">160</span>
+        <span class="pts-l" id="ptsL">pts</span>
+      </div>
+    </div>
+  </div>
+  <div class="hdr-sub">Presented by the <em>Emerging Leaders Council</em> · Quarterfinal Bracket Challenge for ITHF &amp; Friends</div>
+</header>
+
+<nav class="snav">
+  <div class="tabs">
+    <button class="tab on"  onclick="pg('bracket',this)">Bracket</button>
+    <button class="tab"     onclick="pg('leaderboard',this)">Leaderboard</button>
+    <button class="tab"     onclick="pg('rules',this)">Rules</button>
+  </div>
+  <div class="dlst" id="dlst">
+    <div class="dli"><div class="dld"></div><span class="dll">ATP locks</span><span class="dlv">June 2 · 4:00 AM ET</span></div>
+    <div class="dli"><div class="dld"></div><span class="dll">WTA locks</span><span class="dlv">June 3 · 4:00 AM ET</span></div>
+  </div>
+</nav>
+
+<!-- DEMO BANNER -->
+<div class="demo-banner" id="demoBanner"><span class="db-pill">Demo</span> <strong>Test mode active</strong> — picks are not saved. Use invite code <strong>TEST2026</strong> to enter.</div>
+
+<!-- ════════ BRACKET PAGE ════════ -->
+<div class="pg on" id="pg-bracket">
+
+  <!-- Gate overlay - covers everything until user enters correctly -->
+  <div class="gate-overlay" id="gateOverlay">
+    <div class="gate-box">
+      <div class="gate-logo-row">
+        <span class="gate-bp">ITHF</span>
+        <span class="gate-x">×</span>
+        <span class="gate-elc">Emerging Leaders Council</span>
+      </div>
+      <h2 class="gate-h2">Roland Garros <em>'26</em></h2>
+      <p class="gate-h3">Quarterfinal Bracket Challenge</p>
+      <p class="gate-desc">Pick QF winners through the champion for both ATP &amp; WTA draws. Picks lock when quarterfinals begin — ATP June 2 (4 AM ET) · WTA June 3 (4 AM ET).</p>
+      <div class="gate-fields">
+        <div class="fi-wrap">
+          <label class="fi-lbl">Full name <span class="req">*</span></label>
+          <input class="fi" id="uN" type="text" placeholder="First Last" autocomplete="off">
+        </div>
+        <div class="fi-wrap">
+          <label class="fi-lbl">Role / affiliation <span class="req">*</span></label>
+          <input class="fi" id="uR" type="text" placeholder="e.g. ELC Member, Board, ITHF Staff" autocomplete="off">
+        </div>
+        <div class="fi-wrap">
+          <label class="fi-lbl">Invite code <span class="req">*</span></label>
+          <div class="pw-wrap">
+            <input class="fi pw-fi" id="uC" type="password" placeholder="••••••••••" autocomplete="off">
+            <button class="pw-toggle" type="button" onclick="togglePw()" id="pwBtn" tabindex="-1">Show</button>
+          </div>
+        </div>
+      </div>
+      <div class="gate-err" id="gErr"></div>
+      <button class="bjoin" onclick="join()">Enter Challenge →</button>
+      <div class="gate-fine" id="gateFine">Access restricted to ITHF staff, board &amp; ELC members.</div>
+    </div>
+  </div>
+
+  <div class="sub-banner" id="subBanner">
+    <div class="sb-ico">✅</div>
+    <div class="sb-body">
+      <h3>Picks submitted!</h3>
+      <p>Your bracket is locked in. Find your picks anytime on the Leaderboard by clicking your name. Scores update automatically as matches complete.</p>
+    </div>
+  </div>
+
+  <!-- ATP -->
+  <!-- Bracket draw sub-tabs — same pattern as leaderboard -->
+  <div class="lb-tabs" id="bracketTabs" style="padding:0 1.5rem;margin-bottom:0">
+    <button class="lb-tab on" id="btab-atp" onclick="draw('atp',this)">ATP</button>
+    <button class="lb-tab"    id="btab-wta" onclick="draw('wta',this)">WTA</button>
+  </div>
+
+  <div id="dv-atp">
+    <div class="sh">← Swipe to see full bracket →</div>
+    <div class="bwrap">
+      <div class="bracket">
+
+        <div class="col qf">
+          <div class="col-hd"><div class="cr">Quarterfinals</div><div class="cp">10 pts each</div></div>
+          <div class="col-b">
+
+            <div class="mu"><div class="mc" id="a-q1">
+              <div class="ps" data-d="atp" data-r="q1" data-i="0" data-pl="sinner"   data-n="Sinner"           data-s="1"  data-f="🇮🇹" onclick="pick(this)"><span class="p-s">1</span><span class="p-f">🇮🇹</span><span class="p-n">Sinner</span><span class="p-c">✓</span></div>
+              <div class="ps" data-d="atp" data-r="q1" data-i="1" data-pl="shelton"  data-n="Shelton"          data-s="5"  data-f="🇺🇸" onclick="pick(this)"><span class="p-s">5</span><span class="p-f">🇺🇸</span><span class="p-n">Shelton</span><span class="p-c">✓</span></div>
+            </div></div>
+
+            <div class="mu"><div class="mc" id="a-q2">
+              <div class="ps" data-d="atp" data-r="q2" data-i="0" data-pl="faa"      data-n="Auger-Aliassime"  data-s="4"  data-f="🇨🇦" onclick="pick(this)"><span class="p-s">4</span><span class="p-f">🇨🇦</span><span class="p-n">Auger-Aliassime</span><span class="p-c">✓</span></div>
+              <div class="ps"     data-d="atp" data-r="q2" data-i="1" data-pl="mensik"   data-n="Menšík"           data-s="26" data-f="🇨🇿" onclick="pick(this)"><span class="p-s">26</span><span class="p-f">🇨🇿</span><span class="p-n">Menšík</span><span class="p-c">✓</span></div>
+            </div></div>
+
+            <div class="mu"><div class="mc" id="a-q3">
+              <div class="ps" data-d="atp" data-r="q3" data-i="0" data-pl="ruud"     data-n="Ruud"             data-s="15" data-f="🇳🇴" onclick="pick(this)"><span class="p-s">15</span><span class="p-f">🇳🇴</span><span class="p-n">Ruud</span><span class="p-c">✓</span></div>
+              <div class="ps" data-d="atp" data-r="q3" data-i="1" data-pl="paul"     data-n="T. Paul"          data-s="24" data-f="🇺🇸" onclick="pick(this)"><span class="p-s">24</span><span class="p-f">🇺🇸</span><span class="p-n">T. Paul</span><span class="p-c">✓</span></div>
+            </div></div>
+
+            <div class="mu"><div class="mc" id="a-q4">
+              <div class="ps" data-d="atp" data-r="q4" data-i="0" data-pl="djokovic" data-n="Djokovic"         data-s="3"  data-f="🇷🇸" onclick="pick(this)"><span class="p-s">3</span><span class="p-f">🇷🇸</span><span class="p-n">Djokovic</span><span class="p-c">✓</span></div>
+              <div class="ps"     data-d="atp" data-r="q4" data-i="1" data-pl="zverev"   data-n="Zverev"           data-s="2"  data-f="🇩🇪" onclick="pick(this)"><span class="p-s">2</span><span class="p-f">🇩🇪</span><span class="p-n">Zverev</span><span class="p-c">✓</span></div>
+            </div></div>
+
+          </div>
+        </div>
+
+        <div class="col sf">
+          <div class="col-hd"><div class="cr">Semifinals</div><div class="cp">20 pts each</div></div>
+          <div class="col-b">
+
+            <div class="mu"><div class="mc" id="a-s1" style="width:var(--cw)">
+              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner QF1</span></div>
+              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner QF2</span></div>
+            </div></div>
+
+            <div class="mu"><div class="mc" id="a-s2" style="width:var(--cw)">
+              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner QF3</span></div>
+              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner QF4</span></div>
+            </div></div>
+
+          </div>
+        </div>
+
+        <div class="col fn">
+          <div class="col-hd"><div class="cr">Final</div><div class="cp">40 pts · +5 final set bonus</div></div>
+          <div class="col-b">
+            <div class="mu"><div class="mc" id="a-fn" style="width:var(--cw)">
+              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner SF1</span></div>
+              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner SF2</span></div>
+              <div class="sr"><div class="sr-top"><span class="sl">Final set games</span><input class="sf-in" id="atp-sc" type="number" min="6" max="13" placeholder="12" style="max-width:58px"><span class="sb">+5 pts</span></div><span class="sr-hint">Sum of games in deciding set only</span></div>
+            </div></div>
+          </div>
+        </div>
+
+        <div class="ch">
+          <div class="col-hd"><div class="cr">Champion</div><div class="cp">80 pts</div></div>
+          <div class="col-b">
+            <div class="mu"><div class="cc" id="a-ch">
+              <span class="ct">🏆</span>
+              <span class="cl">Your pick</span>
+              <span class="cn" id="a-cn">—</span>
+              <div class="cpt">80 pts if correct</div>
+            </div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- /atp -->
+
+  <!-- WTA -->
+  <div id="dv-wta" style="display:none">
+    <div class="sh">← Swipe to see full bracket →</div>
+    <div class="bwrap">
+      <div class="bracket">
+
+        <div class="col qf">
+          <div class="col-hd"><div class="cr">Quarterfinals</div><div class="cp">10 pts each</div></div>
+          <div class="col-b">
+
+            <div class="mu"><div class="mc" id="w-q1">
+              <div class="ps" data-d="wta" data-r="q1" data-i="0" data-pl="sabalenka" data-n="Sabalenka" data-s="1"  data-f="🇧🇾" onclick="pick(this)"><span class="p-s">1</span><span class="p-f">🇧🇾</span><span class="p-n">Sabalenka</span><span class="p-c">✓</span></div>
+              <div class="ps"     data-d="wta" data-r="q1" data-i="1" data-pl="gauff"      data-n="Gauff"     data-s="4"  data-f="🇺🇸" onclick="pick(this)"><span class="p-s">4</span><span class="p-f">🇺🇸</span><span class="p-n">Gauff</span><span class="p-c">✓</span></div>
+            </div></div>
+
+            <div class="mu"><div class="mc" id="w-q2">
+              <div class="ps" data-d="wta" data-r="q2" data-i="0" data-pl="swiatek"    data-n="Swiatek"   data-s="3"  data-f="🇵🇱" onclick="pick(this)"><span class="p-s">3</span><span class="p-f">🇵🇱</span><span class="p-n">Swiatek</span><span class="p-c">✓</span></div>
+              <div class="ps"     data-d="wta" data-r="q2" data-i="1" data-pl="andreeva"   data-n="Andreeva"  data-s="8"  data-f="🇷🇺" onclick="pick(this)"><span class="p-s">8</span><span class="p-f">🇷🇺</span><span class="p-n">Andreeva</span><span class="p-c">✓</span></div>
+            </div></div>
+
+            <div class="mu"><div class="mc" id="w-q3">
+              <div class="ps"     data-d="wta" data-r="q3" data-i="0" data-pl="keys"       data-n="Keys"      data-s="19" data-f="🇺🇸" onclick="pick(this)"><span class="p-s">19</span><span class="p-f">🇺🇸</span><span class="p-n">Keys</span><span class="p-c">✓</span></div>
+              <div class="ps"     data-d="wta" data-r="q3" data-i="1" data-pl="muchova"    data-n="Muchová"   data-s="10" data-f="🇨🇿" onclick="pick(this)"><span class="p-s">10</span><span class="p-f">🇨🇿</span><span class="p-n">Muchová</span><span class="p-c">✓</span></div>
+            </div></div>
+
+            <div class="mu"><div class="mc" id="w-q4">
+              <div class="ps"     data-d="wta" data-r="q4" data-i="0" data-pl="paolini"    data-n="Paolini"   data-s="13" data-f="🇮🇹" onclick="pick(this)"><span class="p-s">13</span><span class="p-f">🇮🇹</span><span class="p-n">Paolini</span><span class="p-c">✓</span></div>
+              <div class="ps"     data-d="wta" data-r="q4" data-i="1" data-pl="rybakina"   data-n="Rybakina"  data-s="2"  data-f="🇰🇿" onclick="pick(this)"><span class="p-s">2</span><span class="p-f">🇰🇿</span><span class="p-n">Rybakina</span><span class="p-c">✓</span></div>
+            </div></div>
+
+          </div>
+        </div>
+
+        <div class="col sf">
+          <div class="col-hd"><div class="cr">Semifinals</div><div class="cp">20 pts each</div></div>
+          <div class="col-b">
+
+            <div class="mu"><div class="mc" id="w-s1" style="width:var(--cw)">
+              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner QF1</span></div>
+              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner QF2</span></div>
+            </div></div>
+
+            <div class="mu"><div class="mc" id="w-s2" style="width:var(--cw)">
+              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner QF3</span></div>
+              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner QF4</span></div>
+            </div></div>
+
+          </div>
+        </div>
+
+        <div class="col fn">
+          <div class="col-hd"><div class="cr">Final</div><div class="cp">40 pts · +5 final set bonus</div></div>
+          <div class="col-b">
+            <div class="mu"><div class="mc" id="w-fn" style="width:var(--cw)">
+              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner SF1</span></div>
+              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner SF2</span></div>
+              <div class="sr"><div class="sr-top"><span class="sl">Final set games</span><input class="sf-in" id="wta-sc" type="number" min="6" max="13" placeholder="12" style="max-width:58px"><span class="sb">+5 pts</span></div><span class="sr-hint">Sum of games in deciding set only</span></div>
+            </div></div>
+          </div>
+        </div>
+
+        <div class="ch">
+          <div class="col-hd"><div class="cr">Champion</div><div class="cp">80 pts</div></div>
+          <div class="col-b">
+            <div class="mu"><div class="cc" id="w-ch">
+              <span class="ct">🏆</span>
+              <span class="cl">Your pick</span>
+              <span class="cn" id="w-cn">—</span>
+              <div class="cpt">80 pts if correct</div>
+            </div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- /wta -->
+
+  <div class="sbar" id="sbar">
+    <div style="display:flex;flex-direction:column;gap:.18rem">
+      <div class="ss"><strong id="pcnt">0 / 7</strong> <span id="sbarLabel">picks made this draw</span></div>
+      <div style="font-size:.65rem;color:var(--ink3)">Max remaining: <strong id="maxRem" style="color:var(--clay)">—</strong> pts</div>
+    </div>
+    <button class="bsub" onclick="openModal()">Review &amp; Submit →</button>
+  </div>
+
+</div><!-- /bracket page -->
+
+<!-- ════════ LEADERBOARD ════════ -->
+<div class="pg" id="pg-leaderboard">
+  <div class="lbw">
+    <!-- Leaderboard sub-tabs -->
+    <div class="lb-tabs">
+      <button class="lb-tab on" onclick="lbTab('atp',this)">ATP</button>
+      <button class="lb-tab" onclick="lbTab('wta',this)">WTA</button>
+      <button class="lb-tab" onclick="lbTab('combined',this)">Combined</button>
+    </div>
+
+    <!-- Combined leaderboard -->
+    <div class="lb-view" id="lbv-combined">
+      <div class="lbs">8 participants · Combined ATP + WTA · Click a name to view picks</div>
+      <div class="lbr" onclick="viewPicks('Ben Carnevale','ITHF Staff',{atp:{q1:'🇮🇹 Sinner',q2:'🇨🇦 Auger-Aliassime',q3:'🇳🇴 Ruud',q4:'🇩🇪 Zverev',s1:'🇮🇹 Sinner',s2:'🇩🇪 Zverev',fn:'🇮🇹 Sinner'},wta:{q1:'🇧🇾 Sabalenka',q2:'🇵🇱 Swiatek',q3:'🇨🇿 Muchová',q4:'🇰🇿 Rybakina',s1:'🇧🇾 Sabalenka',s2:'🇰🇿 Rybakina',fn:'🇧🇾 Sabalenka'}})"><div class="lrk">1</div><div class="lav" style="background:#5A3E28">BC</div><div class="li"><div class="ln">Ben Carnevale</div><div class="lsu">ITHF Staff</div></div><div class="lr"><div class="lp">220</div><div class="lpl">pts</div></div><div class="lb-arr">›</div></div>
+      <div class="lbr" onclick="viewPicks('Morgan Hayes','Board Member',{atp:{q1:'🇮🇹 Sinner',q2:'🇨🇿 Menšík',q3:'🇳🇴 Ruud',q4:'🇷🇸 Djokovic',s1:'🇮🇹 Sinner',s2:'🇷🇸 Djokovic',fn:'🇮🇹 Sinner'},wta:{q1:'🇺🇸 Gauff',q2:'🇵🇱 Swiatek',q3:'🇺🇸 Keys',q4:'🇮🇹 Paolini',s1:'🇺🇸 Gauff',s2:'🇺🇸 Keys',fn:'🇺🇸 Gauff'}})"><div class="lrk">2</div><div class="lav" style="background:#2A3E6B">MH</div><div class="li"><div class="ln">Morgan Hayes</div><div class="lsu">Board Member</div></div><div class="lr"><div class="lp">195</div><div class="lpl">pts</div></div><div class="lb-arr">›</div></div>
+      <div class="lbr me" id="lb-me-combined" onclick="viewMyPicks()"><div class="lrk">3</div><div class="lav" style="background:#D45C38" id="lb-me-av">—</div><div class="li"><div class="ln" id="lb-me-name">—</div><div class="lsu" id="lb-me-role">—</div></div><div class="lr"><div class="lp">160</div><div class="lpl">pts</div></div><div class="lb-arr">›</div></div>
+      <div class="lbr" onclick="viewPicks('Kathryn Pryce','ELC Member',{atp:{q1:'🇮🇹 Sinner',q2:'🇨🇦 Auger-Aliassime',q3:'🇳🇴 Ruud',q4:'🇷🇸 Djokovic',s1:'🇮🇹 Sinner',s2:'🇷🇸 Djokovic',fn:'🇮🇹 Sinner'},wta:{q1:'🇧🇾 Sabalenka',q2:'🇷🇺 Andreeva',q3:'🇨🇿 Muchová',q4:'🇰🇿 Rybakina',s1:'🇧🇾 Sabalenka',s2:'🇰🇿 Rybakina',fn:'🇧🇾 Sabalenka'}})"><div class="lrk">4</div><div class="lav" style="background:#5A2A6B">KP</div><div class="li"><div class="ln">Kathryn Pryce</div><div class="lsu">ELC Member</div></div><div class="lr"><div class="lp">145</div><div class="lpl">pts</div></div><div class="lb-arr">›</div></div>
+      <div class="lbr" onclick="viewPicks('James Rowlands','Board Member',{atp:{q1:'🇮🇹 Sinner',q2:'🇨🇦 Auger-Aliassime',q3:'🇺🇸 T. Paul',q4:'🇩🇪 Zverev',s1:'🇮🇹 Sinner',s2:'🇩🇪 Zverev',fn:'🇩🇪 Zverev'},wta:{q1:'🇧🇾 Sabalenka',q2:'🇵🇱 Swiatek',q3:'🇺🇸 Keys',q4:'🇰🇿 Rybakina',s1:'🇵🇱 Swiatek',s2:'🇰🇿 Rybakina',fn:'🇵🇱 Swiatek'}})"><div class="lrk">5</div><div class="lav" style="background:#2A5A3E">JR</div><div class="li"><div class="ln">James Rowlands</div><div class="lsu">Board Member</div></div><div class="lr"><div class="lp">130</div><div class="lpl">pts</div></div><div class="lb-arr">›</div></div>
+      <div class="lbr" onclick="viewPicks('Ana López','ITHF Staff',{atp:{q1:'🇮🇹 Sinner',q2:'🇨🇿 Menšík',q3:'🇳🇴 Ruud',q4:'🇩🇪 Zverev',s1:'🇮🇹 Sinner',s2:'🇩🇪 Zverev',fn:'🇮🇹 Sinner'},wta:{q1:'🇧🇾 Sabalenka',q2:'🇵🇱 Swiatek',q3:'🇨🇿 Muchová',q4:'🇮🇹 Paolini',s1:'🇧🇾 Sabalenka',s2:'🇨🇿 Muchová',fn:'🇧🇾 Sabalenka'}})"><div class="lrk">6</div><div class="lav" style="background:#3E2A5A">AL</div><div class="li"><div class="ln">Ana López</div><div class="lsu">ITHF Staff</div></div><div class="lr"><div class="lp">115</div><div class="lpl">pts</div></div><div class="lb-arr">›</div></div>
+      <div class="lbr" onclick="viewPicks('Thomas Webb','ELC Member',{atp:{q1:'🇨🇦 Auger-Aliassime',q2:'🇨🇦 Auger-Aliassime',q3:'🇳🇴 Ruud',q4:'🇷🇸 Djokovic',s1:'🇨🇦 Auger-Aliassime',s2:'🇷🇸 Djokovic',fn:'🇷🇸 Djokovic'},wta:{q1:'🇺🇸 Gauff',q2:'🇵🇱 Swiatek',q3:'🇺🇸 Keys',q4:'🇰🇿 Rybakina',s1:'🇺🇸 Gauff',s2:'🇰🇿 Rybakina',fn:'🇰🇿 Rybakina'}})"><div class="lrk">7</div><div class="lav" style="background:#5A3E28">TW</div><div class="li"><div class="ln">Thomas Webb</div><div class="lsu">ELC Member</div></div><div class="lr"><div class="lp">100</div><div class="lpl">pts</div></div><div class="lb-arr">›</div></div>
+      <div class="lbr" onclick="viewPicks('Sophie Park','ITHF Staff',{atp:{q1:'🇮🇹 Sinner',q2:'🇨🇦 Auger-Aliassime',q3:'🇺🇸 T. Paul',q4:'🇩🇪 Zverev',s1:'🇮🇹 Sinner',s2:'🇩🇪 Zverev',fn:'🇩🇪 Zverev'},wta:{q1:'🇧🇾 Sabalenka',q2:'🇷🇺 Andreeva',q3:'🇺🇸 Keys',q4:'🇮🇹 Paolini',s1:'🇧🇾 Sabalenka',s2:'🇮🇹 Paolini',fn:'🇧🇾 Sabalenka'}})"><div class="lrk">8</div><div class="lav" style="background:#28405A">SP</div><div class="li"><div class="ln">Sophie Park</div><div class="lsu">ITHF Staff</div></div><div class="lr"><div class="lp">85</div><div class="lpl">pts</div></div><div class="lb-arr">›</div></div>
+    </div>
+
+    <!-- ATP leaderboard -->
+    <div class="lb-view on" id="lbv-atp">
+      <div class="lbs">ATP Men's Singles · Click a name to view picks</div>
+      <div class="lbr" onclick="viewPicks('Ben Carnevale','ITHF Staff',null,'atp')"><div class="lrk">1</div><div class="lav" style="background:#5A3E28">BC</div><div class="li"><div class="ln">Ben Carnevale</div><div class="lsu">Champion pick: 🇮🇹 Sinner</div></div><div class="lr"><div class="lp">120</div><div class="lpl">pts</div></div><div class="lb-arr">›</div></div>
+      <div class="lbr" onclick="viewPicks('Morgan Hayes','Board Member',null,'atp')"><div class="lrk">2</div><div class="lav" style="background:#2A3E6B">MH</div><div class="li"><div class="ln">Morgan Hayes</div><div class="lsu">Champion pick: 🇮🇹 Sinner</div></div><div class="lr"><div class="lp">100</div><div class="lpl">pts</div></div><div class="lb-arr">›</div></div>
+      <div class="lbr me" id="lb-me-atp" onclick="viewMyPicks('atp')"><div class="lrk">3</div><div class="lav" style="background:#D45C38" id="lb-me-av-atp">—</div><div class="li"><div class="ln" id="lb-me-name-atp">—</div><div class="lsu" id="lb-me-champ-atp">Champion pick: —</div></div><div class="lr"><div class="lp">80</div><div class="lpl">pts</div></div><div class="lb-arr">›</div></div>
+      <div class="lbr" onclick="viewPicks('Kathryn Pryce','ELC Member',null,'atp')"><div class="lrk">4</div><div class="lav" style="background:#5A2A6B">KP</div><div class="li"><div class="ln">Kathryn Pryce</div><div class="lsu">Champion pick: 🇮🇹 Sinner</div></div><div class="lr"><div class="lp">80</div><div class="lpl">pts</div></div><div class="lb-arr">›</div></div>
+      <div class="lbr" onclick="viewPicks('James Rowlands','Board Member',null,'atp')"><div class="lrk">5</div><div class="lav" style="background:#2A5A3E">JR</div><div class="li"><div class="ln">James Rowlands</div><div class="lsu">Champion pick: 🇩🇪 Zverev</div></div><div class="lr"><div class="lp">60</div><div class="lpl">pts</div></div><div class="lb-arr">›</div></div>
+      <div class="lbr" onclick="viewPicks('Ana López','ITHF Staff',null,'atp')"><div class="lrk">6</div><div class="lav" style="background:#3E2A5A">AL</div><div class="li"><div class="ln">Ana López</div><div class="lsu">Champion pick: 🇮🇹 Sinner</div></div><div class="lr"><div class="lp">60</div><div class="lpl">pts</div></div><div class="lb-arr">›</div></div>
+      <div class="lbr" onclick="viewPicks('Thomas Webb','ELC Member',null,'atp')"><div class="lrk">7</div><div class="lav" style="background:#5A3E28">TW</div><div class="li"><div class="ln">Thomas Webb</div><div class="lsu">Champion pick: 🇷🇸 Djokovic</div></div><div class="lr"><div class="lp">40</div><div class="lpl">pts</div></div><div class="lb-arr">›</div></div>
+      <div class="lbr" onclick="viewPicks('Sophie Park','ITHF Staff',null,'atp')"><div class="lrk">8</div><div class="lav" style="background:#28405A">SP</div><div class="li"><div class="ln">Sophie Park</div><div class="lsu">Champion pick: 🇩🇪 Zverev</div></div><div class="lr"><div class="lp">20</div><div class="lpl">pts</div></div><div class="lb-arr">›</div></div>
+    </div>
+
+    <!-- WTA leaderboard -->
+    <div class="lb-view" id="lbv-wta">
+      <div class="lbs">WTA Women's Singles · Click a name to view picks</div>
+      <div class="lbr" onclick="viewPicks('Ben Carnevale','ITHF Staff',null,'wta')"><div class="lrk">1</div><div class="lav" style="background:#5A3E28">BC</div><div class="li"><div class="ln">Ben Carnevale</div><div class="lsu">Champion pick: 🇧🇾 Sabalenka</div></div><div class="lr"><div class="lp">100</div><div class="lpl">pts</div></div><div class="lb-arr">›</div></div>
+      <div class="lbr" onclick="viewPicks('Kathryn Pryce','ELC Member',null,'wta')"><div class="lrk">2</div><div class="lav" style="background:#5A2A6B">KP</div><div class="li"><div class="ln">Kathryn Pryce</div><div class="lsu">Champion pick: 🇧🇾 Sabalenka</div></div><div class="lr"><div class="lp">65</div><div class="lpl">pts</div></div><div class="lb-arr">›</div></div>
+      <div class="lbr" onclick="viewPicks('Ana López','ITHF Staff',null,'wta')"><div class="lrk">3</div><div class="lav" style="background:#3E2A5A">AL</div><div class="li"><div class="ln">Ana López</div><div class="lsu">Champion pick: 🇧🇾 Sabalenka</div></div><div class="lr"><div class="lp">55</div><div class="lpl">pts</div></div><div class="lb-arr">›</div></div>
+      <div class="lbr" onclick="viewPicks('Morgan Hayes','Board Member',null,'wta')"><div class="lrk">4</div><div class="lav" style="background:#2A3E6B">MH</div><div class="li"><div class="ln">Morgan Hayes</div><div class="lsu">Champion pick: 🇺🇸 Gauff</div></div><div class="lr"><div class="lp">55</div><div class="lpl">pts</div></div><div class="lb-arr">›</div></div>
+      <div class="lbr me" id="lb-me-wta" onclick="viewMyPicks('wta')"><div class="lrk">5</div><div class="lav" style="background:#D45C38" id="lb-me-av-wta">—</div><div class="li"><div class="ln" id="lb-me-name-wta">—</div><div class="lsu" id="lb-me-champ-wta">Champion pick: —</div></div><div class="lr"><div class="lp">80</div><div class="lpl">pts</div></div><div class="lb-arr">›</div></div>
+      <div class="lbr" onclick="viewPicks('Sophie Park','ITHF Staff',null,'wta')"><div class="lrk">6</div><div class="lav" style="background:#28405A">SP</div><div class="li"><div class="ln">Sophie Park</div><div class="lsu">Champion pick: 🇧🇾 Sabalenka</div></div><div class="lr"><div class="lp">65</div><div class="lpl">pts</div></div><div class="lb-arr">›</div></div>
+      <div class="lbr" onclick="viewPicks('James Rowlands','Board Member',null,'wta')"><div class="lrk">7</div><div class="lav" style="background:#2A5A3E">JR</div><div class="li"><div class="ln">James Rowlands</div><div class="lsu">Champion pick: 🇵🇱 Swiatek</div></div><div class="lr"><div class="lp">50</div><div class="lpl">pts</div></div><div class="lb-arr">›</div></div>
+      <div class="lbr" onclick="viewPicks('Thomas Webb','ELC Member',null,'wta')"><div class="lrk">8</div><div class="lav" style="background:#5A3E28">TW</div><div class="li"><div class="ln">Thomas Webb</div><div class="lsu">Champion pick: 🇰🇿 Rybakina</div></div><div class="lr"><div class="lp">60</div><div class="lpl">pts</div></div><div class="lb-arr">›</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Picks modal (triggered from leaderboard) -->
+<div class="mbk" id="picksModal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="mdl">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.1rem">
+      <div>
+        <div style="font-family:'Instrument Serif',serif;font-size:1.15rem" id="pmName">—</div>
+        <div style="font-size:.62rem;color:var(--ink3);margin-top:.08rem" id="pmRole">—</div>
+      </div>
+      <button onclick="document.getElementById('picksModal').classList.remove('open')" style="background:none;border:none;font-size:1.2rem;color:var(--ink3);cursor:pointer;padding:.2rem .4rem">×</button>
+    </div>
+    <div id="pmContent"></div>
+  </div>
+</div>
+
+<!-- ════════ SCORING ════════ -->
+<!-- ════════ RULES ════════ -->
+<div class="pg" id="pg-rules">
+  <div class="rlw">
+
+    <div class="rl-section">
+      <div class="rl-head">Deadlines</div>
+      <div class="dlc">
+        <div class="dlch"><div class="dlcd"></div><div class="dlcn">Men's Draw · ATP</div><div class="dlcs">⏳ Open</div></div>
+        <div class="dlcb">
+          <div class="dli2"><span class="dlr">Picks deadline</span><span class="dlv2">Mon June 2 · 4:00 AM ET (10:00 AM Paris)</span></div>
+          <div class="dli2"><span class="dlr">QF start</span><span class="dlv2">Mon June 2 · ~5:00 AM ET (11:00 AM Paris)</span></div>
+          <div class="dli2"><span class="dlr">Semifinals</span><span class="dlv2">Thu June 5</span></div>
+          <div class="dli2"><span class="dlr">Final</span><span class="dlv2">Sun June 7</span></div>
+        </div>
+      </div>
+      <div class="dlc">
+        <div class="dlch"><div class="dlcd"></div><div class="dlcn">Women's Draw · WTA</div><div class="dlcs">⏳ Open</div></div>
+        <div class="dlcb">
+          <div class="dli2"><span class="dlr">Picks deadline</span><span class="dlv2">Tue June 3 · 4:00 AM ET (10:00 AM Paris)</span></div>
+          <div class="dli2"><span class="dlr">QF start</span><span class="dlv2">Tue June 3 · ~5:00 AM ET (11:00 AM Paris)</span></div>
+          <div class="dli2"><span class="dlr">Semifinals</span><span class="dlv2">Thu–Fri June 5–6</span></div>
+          <div class="dli2"><span class="dlr">Final</span><span class="dlv2">Sat June 7</span></div>
+        </div>
+      </div>
+      <div class="dlal">
+        <strong>Picks are final once submitted.</strong> You cannot edit your bracket after the deadline. WTA QF slots marked TBD will be confirmed around June 1 — but you must submit before June 3 by 4 AM ET regardless.
+      </div>
+    </div>
+
+    <div class="rl-section">
+      <div class="rl-head">Scoring</div>
+      <p class="sci">Points double each round — the later the pick, the more it's worth. Bonus points are available for the Final only: guess the sum of games in the deciding set.</p>
+      <table class="sct">
+        <thead><tr><th>Round</th><th>Total picks</th><th>Pts</th></tr></thead>
+        <tbody>
+          <tr><td>Quarterfinal winner</td><td style="color:var(--ink3);font-size:.7rem">4 per draw · 8 total</td><td>10</td></tr>
+          <tr><td>Semifinal winner</td><td style="color:var(--ink3);font-size:.7rem">2 per draw · 4 total</td><td>20</td></tr>
+          <tr><td>Finalist</td><td style="color:var(--ink3);font-size:.7rem">1 per draw · 2 total</td><td>40</td></tr>
+          <tr><td>Champion 🏆</td><td style="color:var(--ink3);font-size:.7rem">1 per draw · 2 total</td><td>80</td></tr>
+          <tr><td style="color:var(--gold);font-weight:500">Bonus: Final deciding set</td><td style="color:var(--ink3);font-size:.7rem">Sum of games in deciding set · both draws</td><td style="color:var(--gold) !important">+5</td></tr>
+        </tbody>
+      </table>
+      <div class="sn"><strong>Tiebreaker:</strong> Most correct QF picks first. Second tiebreaker: most correct set score bonuses.</div>
+      <div class="smx">
+        <div><div class="ml">Max possible score</div><div class="ms">Both draws perfect + all bonuses</div></div>
+        <div><div class="mv">550</div><div style="font-size:.58rem;color:var(--ink3);text-align:right">pts</div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<!-- POST-SUBMIT NUDGE: shown after one draw is locked -->
+<div class="mbk" id="postNudgeModal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="mdl" style="max-width:360px">
+    <div id="postNudgeText" style="font-size:.82rem;color:var(--ink2);margin-bottom:1.25rem;line-height:1.6"></div>
+    <div class="mact">
+      <button class="bcf" id="postNudgeBtn">Go to WTA →</button>
+      <button class="bcc" onclick="document.getElementById('postNudgeModal').classList.remove('open')">Later</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="mbk" id="modal" onclick="bgClose(event)">
+  <div class="mdl">
+    <h3>Review Your Picks</h3>
+    <p>Confirm your selections. Once submitted, picks lock at the deadline and cannot be changed.</p>
+    <div class="mpl" id="mpl"></div>
+    <div class="mact">
+      <button class="bcf" id="confirmBtn" onclick="confirm_sub()">Lock in picks →</button>
+      <button class="bcc" onclick="closeModal()">Go back</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── STATE ──
+const S = {
+  user: null, role: null, code: null,
+  submitted: {atp: false, wta: false},
+  p: {
+    atp: {q1:null,q2:null,q3:null,q4:null,s1:null,s2:null,fn:null},
+    wta: {q1:null,q2:null,q3:null,q4:null,s1:null,s2:null,fn:null}
+  }
+};
+
+
+// ── TABS ──
+function pg(id,btn){
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
+  document.getElementById('pg-'+id).classList.add('on');
+  btn.classList.add('on');
+  const isBr = id==='bracket';
+  const dlst=document.getElementById('dlst');
+  if(dlst) dlst.style.display=isBr?'':'none';
+  const bt=document.getElementById('bracketTabs');
+  if(bt) bt.style.display = isBr ? '' : 'none';
+  const sb=document.getElementById('sbar');
+  if(sb && isBr){
+    const curDraw = document.getElementById('dv-wta').style.display==='none' ? 'atp' : 'wta';
+    sb.style.display = S.submitted[curDraw] ? 'none' : 'flex';
+  } else if(sb){ sb.style.display='none'; }
+}
+
+// ── DRAW TOGGLE ──
+function draw(d, btn){
+  // Hide both draws
+  ['atp','wta'].forEach(id=>{
+    const el=document.getElementById('dv-'+id);
+    if(el) el.style.display='none';
+  });
+  // Deactivate both bracket sub-tabs
+  ['btab-atp','btab-wta'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.classList.remove('on');
+  });
+  // Show selected draw
+  const dvEl = document.getElementById('dv-'+d);
+  if(dvEl) dvEl.style.display='';
+  // Activate bracket tab — use the element directly, never relies on btn arg
+  const tab = document.getElementById('btab-'+d);
+  if(tab) tab.classList.add('on');
+  // Show/hide submit bar
+  const sb=document.getElementById('sbar');
+  if(sb) sb.style.display = S.submitted[d] ? 'none' : 'flex';
+  updateSubmitBarText(d);
+  countPicks();
+}
+
+function updateSubmitBarText(d){
+  const other = d==='atp' ? 'wta' : 'atp';
+  const label = document.getElementById('sbarLabel');
+  if(!label) return;
+  if(S.submitted[other] && !S.submitted[d]){
+    label.textContent = (d==='atp'?'ATP':'WTA') + ' picks — submit when ready';
+  } else {
+    label.textContent = 'picks made';
+  }
+}
+
+// ── JOIN ──
+function join(){
+  const n=document.getElementById('uN').value.trim();
+  const r=document.getElementById('uR').value.trim();
+  const c=document.getElementById('uC').value.trim().toUpperCase();
+  // email removed from gate
+  const err=document.getElementById('gErr');
+  [document.getElementById('uN'),document.getElementById('uR'),document.getElementById('uC')].forEach(el=>el.classList.remove('err'));
+  err.textContent='';
+  if(!n){ document.getElementById('uN').classList.add('err'); err.textContent='Please enter your full name.'; return; }
+  if(!r){ document.getElementById('uR').classList.add('err'); err.textContent='Please enter your role or affiliation.'; return; }
+  if(!c){ document.getElementById('uC').classList.add('err'); err.textContent='An invite code is required to access the challenge.'; return; }
+  const validCode = DEMO_MODE ? (c==='TEST2026') : (c==='ITHF2026ELC');
+  if(!validCode){ document.getElementById('uC').classList.add('err'); err.textContent = DEMO_MODE ? 'Use code TEST2026 for demo access.' : 'Incorrect invite code. Please contact ITHF to join.'; return; }
+  S.user=n; S.role=r;
+  document.getElementById('gateOverlay').classList.add('gone');
+  document.getElementById('ptsL').textContent=n.split(' ')[0]+"'s pts";
+  // Update leaderboard rows with real name, initials, and role
+  const initials = n.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+  // Combined row — shows name + affiliation
+  document.getElementById('lb-me-name').textContent    = n;
+  document.getElementById('lb-me-av').textContent      = initials;
+  document.getElementById('lb-me-role').textContent    = r;
+  // ATP row — shows name + champion pick (updates live as picks are made)
+  document.getElementById('lb-me-name-atp').textContent = n;
+  document.getElementById('lb-me-av-atp').textContent   = initials;
+  // WTA row
+  document.getElementById('lb-me-name-wta').textContent = n;
+  document.getElementById('lb-me-av-wta').textContent   = initials;
+  updateMaxRemaining();
+}
+
+// ── PICK FLOW ──
+const NEXT={q1:{next:'s1',slot:0},q2:{next:'s1',slot:1},q3:{next:'s2',slot:0},q4:{next:'s2',slot:1},s1:{next:'fn',slot:0},s2:{next:'fn',slot:1}};
+const CARD_MAP={atp:{q1:'a-q1',q2:'a-q2',q3:'a-q3',q4:'a-q4',s1:'a-s1',s2:'a-s2',fn:'a-fn'},wta:{q1:'w-q1',q2:'w-q2',q3:'w-q3',q4:'w-q4',s1:'w-s1',s2:'w-s2',fn:'w-fn'}};
+const CHAMP={atp:'a-cn',wta:'w-cn'};
+
+function pick(el){
+  if(el.classList.contains('tbd')||el.classList.contains('win')||el.classList.contains('out')||S.submitted[el.dataset.d]) return;
+  const d=el.dataset.d, r=el.dataset.r;
+  const card=el.closest('.mc');
+  card.querySelectorAll('.ps:not(.win):not(.out):not(.tbd)').forEach(s=>s.classList.remove('sel'));
+  el.classList.add('sel');
+  const pk={n:el.dataset.n,f:el.dataset.f,s:el.dataset.s};
+  S.p[d][r]=pk;
+  propagate(d,r,pk);
+  if(r==='fn'){
+    document.getElementById(CHAMP[d]).textContent=pk.f+' '+pk.n;
+    // Update leaderboard champion subtitle live
+    const champEl = document.getElementById('lb-me-champ-'+d);
+    if(champEl) champEl.textContent = 'Champion pick: '+pk.f+' '+pk.n;
+  }
+  countPicks();
+}
+
+function propagate(d,r,pk){
+  const dest=NEXT[r]; if(!dest) return;
+  const cid=CARD_MAP[d][dest.next]; if(!cid) return;
+  const card=document.getElementById(cid); if(!card) return;
+  const slots=card.querySelectorAll('.ps');
+  const t=slots[dest.slot];
+  if(!t||t.classList.contains('win')||t.classList.contains('out')) return;
+  // Make the slot selectable by adding all needed attrs and onclick
+  t.classList.remove('tbd','sel');
+  t.setAttribute('data-d', d);
+  t.setAttribute('data-r', dest.next);
+  t.setAttribute('data-i', dest.slot);
+  t.setAttribute('data-n', pk.n);
+  t.setAttribute('data-f', pk.f);
+  t.setAttribute('data-s', pk.s);
+  t.setAttribute('onclick', 'pick(this)');
+  t.querySelector('.p-s').textContent=pk.s;
+  t.querySelector('.p-f').textContent=pk.f;
+  t.querySelector('.p-n').textContent=pk.n;
+  // If user had already picked THIS slot previously, re-select it
+  if(S.p[d][dest.next] && S.p[d][dest.next].n === pk.n) t.classList.add('sel');
+}
+
+function countPicks(){
+  const d = (typeof currentDraw === 'function') ? currentDraw() : 'atp';
+  let c=0;
+  ['q1','q2','q3','q4','s1','s2','fn'].forEach(r=>{if(S.p[d][r])c++;});
+  document.getElementById('pcnt').textContent=c+' / 7';
+  updateMaxRemaining();
+}
+
+function updateMaxRemaining(){
+  // Points available per round per pick
+  const PTS={q1:10,q2:10,q3:10,q4:10,s1:20,s2:20,fn:40};
+  const CHAMP_PTS=80, BONUS_PTS=5;
+  // Demo: simulate some locked results (rounds already decided = win/out classes)
+  // For each pick: if round not yet played, it contributes max remaining pts
+  // Logic: scan each round — if no result locked yet, all picks in that round still earnable
+  let maxR=0;
+  ['atp','wta'].forEach(d=>{
+    Object.keys(PTS).forEach(r=>{
+      // check if result is already locked (win/out visible on the card)
+      const cid=(d==='atp'?'a-':'w-')+r.replace('q','q').replace('s','s').replace('fn','fn');
+      // map round keys to card ids
+      const cardMap={atp:{q1:'a-q1',q2:'a-q2',q3:'a-q3',q4:'a-q4',s1:'a-s1',s2:'a-s2',fn:'a-fn'},wta:{q1:'w-q1',q2:'w-q2',q3:'w-q3',q4:'w-q4',s1:'w-s1',s2:'w-s2',fn:'w-fn'}};
+      const card=document.getElementById(cardMap[d][r]);
+      const hasResult = card && card.querySelector('.ps.win');
+      if(!hasResult){
+        maxR += PTS[r]; // this round not played yet, pts still earnable
+      } else {
+        // result exists — check if user picked the winner
+        const winner=card.querySelector('.ps.win');
+        const userPick=S.p[d][r];
+        if(userPick && winner && userPick.n === winner.dataset.n) maxR += PTS[r];
+        // else 0 — wrong pick or no pick
+      }
+    });
+    // Champion pts
+    const champCard=(d==='atp'?document.getElementById('a-fn'):document.getElementById('w-fn'));
+    const finalHasResult = champCard && champCard.querySelector('.ps.win');
+    if(!finalHasResult) maxR += CHAMP_PTS;
+    else {
+      const winner=champCard.querySelector('.ps.win');
+      const userPick=S.p[d]['fn'];
+      if(userPick && winner && userPick.n === winner.dataset.n) maxR += CHAMP_PTS;
+    }
+    // Set score bonuses (2 total)
+    maxR += BONUS_PTS;
+  });
+  const el=document.getElementById('maxRem');
+  if(el) el.textContent=maxR;
+}
+
+// ── MODAL ──
+function currentDraw(){
+  return document.getElementById('dv-atp').style.display !== 'none' ? 'atp' : 'wta';
+}
+
+function openModal(){
+  const d = currentDraw();
+  const errors = validatePicks(d);
+  if(errors.length){
+    showPickErrors(d, errors);
+    return;
+  }
+  buildModal(d);
+  document.getElementById('modal').classList.add('open');
+}
+
+function validatePicks(d){
+  const rounds = ['q1','q2','q3','q4','s1','s2','fn'];
+  const roundLabels = {q1:'QF Match 1',q2:'QF Match 2',q3:'QF Match 3',q4:'QF Match 4',s1:'Semifinal 1',s2:'Semifinal 2',fn:'Final / Champion'};
+  const errors = [];
+  rounds.forEach(r=>{
+    if(!S.p[d][r]) errors.push('Missing: ' + roundLabels[r]);
+  });
+  // Validate score if entered — must be 6–13
+  const scVal = parseInt(document.getElementById(d+'-sc')?.value || '');
+  if(!isNaN(scVal) && (scVal < 6 || scVal > 13)){
+    errors.push('Final set sum must be between 6 and 13');
+  }
+  return errors;
+}
+
+function showPickErrors(d, errors){
+  document.querySelector('#modal h3').textContent = 'Complete your ' + (d==='atp' ? "ATP" : "WTA") + ' picks first';
+  const errList = errors.map(e=>`<div class="pick-err-item">· ${e}</div>`).join('');
+  document.getElementById('mpl').innerHTML =
+    `<div class="pick-err-box">${errList}</div>
+     <p style="font-size:.73rem;color:var(--ink3);margin-top:.5rem">Make all picks in the bracket, then return to submit.</p>`;
+  document.getElementById('modal').dataset.draw = d;
+  // Grey out and disable confirm button
+  const cfBtn = document.getElementById('confirmBtn');
+  if(cfBtn){
+    cfBtn.disabled = true;
+    cfBtn.textContent = 'Lock in picks';
+    cfBtn.style.background = 'var(--ink3)';
+    cfBtn.style.opacity = '0.5';
+    cfBtn.style.cursor = 'not-allowed';
+    cfBtn.style.transition = 'none';
+  }
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal(){ document.getElementById('modal').classList.remove('open'); }
+function bgClose(e){ if(e.target===document.getElementById('modal')) closeModal(); }
+
+const RLBLS={q1:'QF Match 1',q2:'QF Match 2',q3:'QF Match 3',q4:'QF Match 4',s1:'Semifinal 1',s2:'Semifinal 2',fn:'Final / Champion'};
+function buildModal(d){
+  // Only show the draw currently being submitted
+  const drawName = d==='atp' ? "ATP Men's" : "WTA Women's";
+  // Update modal heading to show which draw
+  document.querySelector('#modal h3').textContent = 'Review ' + drawName + ' Picks';
+  // Show note if other draw still pending
+  const other = d==='atp' ? 'wta' : 'atp';
+  const otherName = other==='atp' ? "ATP Men's" : "WTA Women's";
+  const pendingNote = !S.submitted[other]
+    ? `<div class="modal-pending-note">${otherName} picks can be submitted separately — you'll be prompted after this.</div>`
+    : '';
+  let h = pendingNote;
+  h+=`<div class="mps"><div class="mpt">${drawName}</div>`;
+  Object.keys(RLBLS).forEach(r=>{
+    const p=S.p[d][r];
+    h+=`<div class="mpr"><span class="rnd">${RLBLS[r]}</span><span class="plr ${p?'':'mt'}">${p?p.f+' '+p.n:'No pick yet'}</span></div>`;
+  });
+  const sc=document.getElementById(d==='atp'?'atp-sc':'wta-sc')?.value||'';
+  if(sc) h+=`<div class="mpr"><span class="rnd">Final set bonus</span><span class="plr">${sc}</span></div>`;
+  h+='</div>';
+  document.getElementById('mpl').innerHTML=h;
+  // Store which draw this modal is for
+  document.getElementById('modal').dataset.draw = d;
+  // Ensure confirm button is fully reset from any error state
+  const cfBtn = document.getElementById('confirmBtn');
+  if(cfBtn){
+    cfBtn.disabled = false;
+    cfBtn.textContent = 'Lock in picks →';
+    cfBtn.style.background = '';
+    cfBtn.style.opacity = '';
+    cfBtn.style.cursor = '';
+    cfBtn.style.transition = '';
+  }
+}
+
+function confirm_sub(){
+  const d = document.getElementById('modal').dataset.draw || currentDraw();
+  // Re-validate at confirm time — catches score edits made after modal opened
+  const errors = validatePicks(d);
+  if(errors.length){
+    showPickErrors(d, errors);
+    return;
+  }
+  S.submitted[d] = true;
+  closeModal();
+  // Lock slots only in the submitted draw
+  const bracketDiv = document.getElementById('dv-'+d);
+  bracketDiv.querySelectorAll('.ps:not(.win):not(.out)').forEach(s=>s.classList.add('lk'));
+  // Hide submit bar for this draw
+  document.getElementById('sbar').style.display='none';
+  // Both done — show banner and stop
+  if(S.submitted.atp && S.submitted.wta){
+    const bannerP = document.querySelector('#subBanner .sb-body p');
+    if(bannerP) bannerP.textContent = 'Both brackets locked in. Find your picks on the Leaderboard by clicking your name.';
+    document.getElementById('subBanner').style.display='flex';
+    return;
+  }
+  // One draw done — show post-submit nudge to do the other
+  const other = d==='atp' ? 'wta' : 'atp';
+  const otherLabel = other==='atp' ? 'ATP' : 'WTA';
+  const deadline = other==='atp' ? 'June 2 · 4 AM ET' : 'June 3 · 4 AM ET';
+  document.getElementById('postNudgeText').innerHTML =
+    `<strong>${d.toUpperCase()} picks submitted.</strong> Switch to ${otherLabel} to make your ${otherLabel} picks before the ${otherLabel} deadline (${deadline}).`;
+  document.getElementById('postNudgeBtn').textContent = `Go to ${otherLabel} →`;
+  document.getElementById('postNudgeBtn').onclick = () => {
+    document.getElementById('postNudgeModal').classList.remove('open');
+    draw(other, null);
+  };
+  document.getElementById('postNudgeModal').classList.add('open');
+}
+
+// ── LEADERBOARD TABS ──
+function lbTab(id, btn){
+  document.querySelectorAll('.lb-view').forEach(v=>v.classList.remove('on'));
+  document.querySelectorAll('.lb-tab').forEach(b=>b.classList.remove('on'));
+  document.getElementById('lbv-'+id).classList.add('on');
+  btn.classList.add('on');
+}
+
+// Demo picks data (used when leaderboard rows pass null)
+const DEMO_PICKS = {
+  'Ben Carnevale':  {atp:{q1:'🇮🇹 Sinner',q2:'🇨🇦 Auger-Aliassime',q3:'🇳🇴 Ruud',q4:'🇩🇪 Zverev',s1:'🇮🇹 Sinner',s2:'🇩🇪 Zverev',fn:'🇮🇹 Sinner'},wta:{q1:'🇧🇾 Sabalenka',q2:'🇵🇱 Swiatek',q3:'🇨🇿 Muchová',q4:'🇰🇿 Rybakina',s1:'🇧🇾 Sabalenka',s2:'🇰🇿 Rybakina',fn:'🇧🇾 Sabalenka'}},
+  'Morgan Hayes':   {atp:{q1:'🇮🇹 Sinner',q2:'🇨🇿 Menšík',q3:'🇳🇴 Ruud',q4:'🇷🇸 Djokovic',s1:'🇮🇹 Sinner',s2:'🇷🇸 Djokovic',fn:'🇮🇹 Sinner'},wta:{q1:'🇺🇸 Gauff',q2:'🇵🇱 Swiatek',q3:'🇺🇸 Keys',q4:'🇮🇹 Paolini',s1:'🇺🇸 Gauff',s2:'🇺🇸 Keys',fn:'🇺🇸 Gauff'}},
+  'Kathryn Pryce':  {atp:{q1:'🇮🇹 Sinner',q2:'🇨🇦 Auger-Aliassime',q3:'🇳🇴 Ruud',q4:'🇷🇸 Djokovic',s1:'🇮🇹 Sinner',s2:'🇷🇸 Djokovic',fn:'🇮🇹 Sinner'},wta:{q1:'🇧🇾 Sabalenka',q2:'🇷🇺 Andreeva',q3:'🇨🇿 Muchová',q4:'🇰🇿 Rybakina',s1:'🇧🇾 Sabalenka',s2:'🇰🇿 Rybakina',fn:'🇧🇾 Sabalenka'}},
+  'James Rowlands': {atp:{q1:'🇮🇹 Sinner',q2:'🇨🇦 Auger-Aliassime',q3:'🇺🇸 T. Paul',q4:'🇩🇪 Zverev',s1:'🇮🇹 Sinner',s2:'🇩🇪 Zverev',fn:'🇩🇪 Zverev'},wta:{q1:'🇧🇾 Sabalenka',q2:'🇵🇱 Swiatek',q3:'🇺🇸 Keys',q4:'🇰🇿 Rybakina',s1:'🇵🇱 Swiatek',s2:'🇰🇿 Rybakina',fn:'🇵🇱 Swiatek'}},
+  'Ana López':      {atp:{q1:'🇮🇹 Sinner',q2:'🇨🇿 Menšík',q3:'🇳🇴 Ruud',q4:'🇩🇪 Zverev',s1:'🇮🇹 Sinner',s2:'🇩🇪 Zverev',fn:'🇮🇹 Sinner'},wta:{q1:'🇧🇾 Sabalenka',q2:'🇵🇱 Swiatek',q3:'🇨🇿 Muchová',q4:'🇮🇹 Paolini',s1:'🇧🇾 Sabalenka',s2:'🇨🇿 Muchová',fn:'🇧🇾 Sabalenka'}},
+  'Thomas Webb':    {atp:{q1:'🇨🇦 Auger-Aliassime',q2:'🇨🇦 Auger-Aliassime',q3:'🇳🇴 Ruud',q4:'🇷🇸 Djokovic',s1:'🇨🇦 Auger-Aliassime',s2:'🇷🇸 Djokovic',fn:'🇷🇸 Djokovic'},wta:{q1:'🇺🇸 Gauff',q2:'🇵🇱 Swiatek',q3:'🇺🇸 Keys',q4:'🇰🇿 Rybakina',s1:'🇺🇸 Gauff',s2:'🇰🇿 Rybakina',fn:'🇰🇿 Rybakina'}},
+  'Sophie Park':    {atp:{q1:'🇮🇹 Sinner',q2:'🇨🇦 Auger-Aliassime',q3:'🇺🇸 T. Paul',q4:'🇩🇪 Zverev',s1:'🇮🇹 Sinner',s2:'🇩🇪 Zverev',fn:'🇩🇪 Zverev'},wta:{q1:'🇧🇾 Sabalenka',q2:'🇷🇺 Andreeva',q3:'🇺🇸 Keys',q4:'🇮🇹 Paolini',s1:'🇧🇾 Sabalenka',s2:'🇮🇹 Paolini',fn:'🇧🇾 Sabalenka'}},
+};
+
+// ── VIEW MY PICKS (always uses live S.p state) ──
+function viewMyPicks(drawOnly){
+  if(!S.user) return;
+  const usePicks = {
+    atp: {
+      q1: S.p.atp.q1 ? S.p.atp.q1.f+' '+S.p.atp.q1.n : null,
+      q2: S.p.atp.q2 ? S.p.atp.q2.f+' '+S.p.atp.q2.n : null,
+      q3: S.p.atp.q3 ? S.p.atp.q3.f+' '+S.p.atp.q3.n : null,
+      q4: S.p.atp.q4 ? S.p.atp.q4.f+' '+S.p.atp.q4.n : null,
+      s1: S.p.atp.s1 ? S.p.atp.s1.f+' '+S.p.atp.s1.n : null,
+      s2: S.p.atp.s2 ? S.p.atp.s2.f+' '+S.p.atp.s2.n : null,
+      fn: S.p.atp.fn ? S.p.atp.fn.f+' '+S.p.atp.fn.n : null,
+    },
+    wta: {
+      q1: S.p.wta.q1 ? S.p.wta.q1.f+' '+S.p.wta.q1.n : null,
+      q2: S.p.wta.q2 ? S.p.wta.q2.f+' '+S.p.wta.q2.n : null,
+      q3: S.p.wta.q3 ? S.p.wta.q3.f+' '+S.p.wta.q3.n : null,
+      q4: S.p.wta.q4 ? S.p.wta.q4.f+' '+S.p.wta.q4.n : null,
+      s1: S.p.wta.s1 ? S.p.wta.s1.f+' '+S.p.wta.s1.n : null,
+      s2: S.p.wta.s2 ? S.p.wta.s2.f+' '+S.p.wta.s2.n : null,
+      fn: S.p.wta.fn ? S.p.wta.fn.f+' '+S.p.wta.fn.n : null,
+    }
+  };
+  document.getElementById('pmName').textContent = S.user;
+  document.getElementById('pmRole').textContent = S.role || '';
+  const RL={q1:'QF 1',q2:'QF 2',q3:'QF 3',q4:'QF 4',s1:'Semifinal 1',s2:'Semifinal 2',fn:'Final / Champion'};
+  const draws = drawOnly ? [drawOnly] : ['atp','wta'];
+  let h='';
+  draws.forEach(d=>{
+    h+=`<div class="mps"><div class="mpt">${d==='atp'?"ATP Men's":"WTA Women's"}</div>`;
+    Object.keys(RL).forEach(r=>{
+      const p = usePicks[d][r];
+      h+=`<div class="mpr"><span class="rnd">${RL[r]}</span><span class="plr ${p?'':'mt'}">${p||'—'}</span></div>`;
+    });
+    h+='</div>';
+  });
+  document.getElementById('pmContent').innerHTML = h;
+  document.getElementById('picksModal').classList.add('open');
+}
+
+// ── VIEW PICKS FROM LEADERBOARD ──
+function viewPicks(name, role, picks, drawOnly){
+  // If it's the current user and they've submitted, use their actual picks
+  let usePicks = picks;
+
+  // Fallback to demo picks if no picks object provided
+  if(!usePicks && DEMO_PICKS[name]) usePicks = DEMO_PICKS[name];
+  document.getElementById('pmName').textContent = name;
+  document.getElementById('pmRole').textContent = role;
+  const RL={q1:'QF 1',q2:'QF 2',q3:'QF 3',q4:'QF 4',s1:'Semifinal 1',s2:'Semifinal 2',fn:'Final / Champion'};
+  const draws = drawOnly ? [drawOnly] : ['atp','wta'];
+  let h='';
+  draws.forEach(d=>{
+    h+=`<div class="mps"><div class="mpt">${d==='atp'?"ATP Men's":"WTA Women's"}</div>`;
+    Object.keys(RL).forEach(r=>{
+      const p = usePicks && usePicks[d] && usePicks[d][r];
+      h+=`<div class="mpr"><span class="rnd">${RL[r]}</span><span class="plr ${p?'':'mt'}">${p||'—'}</span></div>`;
+    });
+    h+='</div>';
+  });
+  document.getElementById('pmContent').innerHTML=h;
+  document.getElementById('picksModal').classList.add('open');
+}
+
+// ── MODE INIT (runs on load) ──
+const DEMO_MODE = new URLSearchParams(window.location.search).get('mode') === 'demo';
+
+function initMode(){
+  if(DEMO_MODE){
+    document.getElementById('demoBanner').classList.add('show');
+    const gf = document.getElementById('gateFine');
+    if(gf) gf.textContent = 'Test mode — use code TEST2026 to enter. Picks are not saved.';
+  }
+}
+
+// expose for join() to check
+function isDemoMode(){ return DEMO_MODE; }
+
+function togglePw(){
+  const input = document.getElementById('uC');
+  const btn = document.getElementById('pwBtn');
+  if(input.type === 'password'){
+    input.type = 'text';
+    btn.textContent = 'Hide';
+  } else {
+    input.type = 'password';
+    btn.textContent = 'Show';
+  }
+}
+
+// init
+initMode();
+countPicks();
+</script>
+</body>
+</html>
