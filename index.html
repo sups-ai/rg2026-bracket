@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>ITHF × Roland Garros 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
   --clay:#D45C38;--clay-lt:#F7EDE7;--bg:#FAF7F4;
   --ink:#111;--ink2:#555;--ink3:#999;
@@ -15,10 +15,10 @@
   --green:#2A7A50;--gold:#B8860B;--r:6px;
   --cw:186px;
 }
-body{font-family:'Instrument Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
 
 /* ─ HEADER ─ */
-.hdr{display:flex;flex-direction:column;justify-content:center;padding:0 1.5rem;background:rgba(255,255,255,.97);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:200;min-height:58px}
+.hdr{display:flex;flex-direction:column;justify-content:center;padding:0 1.5rem;background:rgba(255,255,255,.97);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);position:-webkit-sticky;position:sticky;top:0;z-index:200;min-height:58px}
 .hdr-inner{display:flex;align-items:center;justify-content:space-between;width:100%}
 .hdr-sub{font-size:.6rem;letter-spacing:.08em;color:var(--ink3);margin-top:.18rem;padding-left:.02rem}
 .hdr-sub em{color:var(--clay);font-style:normal;font-weight:500}
@@ -32,7 +32,7 @@ body{font-family:'Instrument Sans',sans-serif;background:var(--bg);color:var(--i
 .pts-l{font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink3)}
 
 /* ─ SUBNAV: tabs | sep | draw toggle | sep | deadline strip ─ */
-.snav{display:flex;align-items:center;padding:0 1.5rem;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:58px;z-index:199;min-height:42px;gap:0;overflow-x:auto}
+.snav{display:flex;align-items:center;padding:0 1.5rem;background:rgba(255,255,255,.99);border-bottom:1px solid var(--line);position:-webkit-sticky;position:sticky;top:58px;z-index:199;min-height:42px;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch}
 .tabs{display:flex;flex-shrink:0}
 .tab{background:none;border:none;font-family:'Instrument Sans',sans-serif;font-size:.73rem;font-weight:500;letter-spacing:.04em;color:var(--ink3);padding:.75rem 1rem .65rem;cursor:pointer;border-bottom:2px solid transparent;transition:color .14s,border-color .14s;white-space:nowrap}
 .tab.on{color:var(--ink);border-bottom-color:var(--clay)}
@@ -59,7 +59,7 @@ body{font-family:'Instrument Sans',sans-serif;background:var(--bg);color:var(--i
 .gate h2{font-family:'Instrument Serif',serif;font-size:1.15rem;margin-bottom:.22rem}
 .gate p{font-size:.75rem;color:var(--ink2);line-height:1.55;margin-bottom:.95rem}
 .gate-row{display:flex;gap:.5rem;flex-wrap:wrap}
-.fi{font-family:'Instrument Sans',sans-serif;font-size:.78rem;background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:.52rem .78rem;color:var(--ink);outline:none;transition:border-color .14s}
+.fi{font-family:'Instrument Sans',sans-serif;font-size:16px;background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:.52rem .78rem;color:var(--ink);outline:none;transition:border-color .14s}
 .fi::placeholder{color:var(--ink3)}
 .fi:focus{border-color:var(--clay);background:#fff}
 .bjoin{font-family:'Instrument Sans',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:var(--clay);color:#fff;border:none;border-radius:5px;padding:.52rem 1.1rem;cursor:pointer;transition:all .14s;white-space:nowrap}
@@ -114,11 +114,23 @@ body{font-family:'Instrument Sans',sans-serif;background:var(--bg);color:var(--i
 .bwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:1.2rem 1.5rem 2.5rem}
 .sh{font-size:.6rem;color:var(--ink3);letter-spacing:.06em;text-align:center;padding:.3rem;display:none}
 @media(max-width:860px){.sh{display:block}}
-.bracket{display:flex;align-items:stretch;min-width:840px;gap:0;animation:fu .3s ease}
+.bracket{display:flex;align-items:stretch;min-width:1100px;gap:0;animation:fu .3s ease}
 @keyframes fu{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
 /* columns */
 .col{display:flex;flex-direction:column;min-width:var(--cw)}
+/* R16 column — narrower, display only */
+.col.r16{min-width:160px}
+.col.r16 .mc{width:160px}
+.mc-r16{width:160px;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:#fff;opacity:.85}
+.ps-r16{display:flex;align-items:center;gap:.4rem;padding:.38rem .6rem;min-height:32px;border-top:1px solid var(--line)}
+.ps-r16:first-child{border-top:none}
+.ps-r16 .p-s{font-size:.54rem;color:var(--ink3);width:13px;text-align:right;flex-shrink:0}
+.ps-r16 .p-f{font-size:.8rem;line-height:1;flex-shrink:0}
+.ps-r16 .p-n{font-size:.7rem;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ps-r16.tbd .p-n{color:var(--ink3);font-style:italic}
+.r16-vs{display:flex;align-items:center;justify-content:center;padding:.18rem 0;background:var(--bg);border-top:1px solid var(--line)}
+.r16-vs span{font-size:.54rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3)}
 .col+.col{margin-left:30px}
 .ch{display:flex;flex-direction:column;min-width:148px;margin-left:30px}
 .col-hd{padding:0 0 .7rem;white-space:nowrap}
@@ -141,7 +153,7 @@ body{font-family:'Instrument Sans',sans-serif;background:var(--bg);color:var(--i
 .ch .mc{width:148px}
 
 /* player slot */
-.ps{display:flex;align-items:center;gap:.48rem;padding:.5rem .68rem;cursor:pointer;transition:background .11s;position:relative;min-height:37px}
+.ps{display:flex;align-items:center;gap:.48rem;padding:.52rem .68rem;cursor:pointer;transition:background .11s;position:relative;min-height:44px}
 .ps+.ps{border-top:1px solid var(--line)}
 .ps:hover:not(.tbd):not(.lk){background:var(--clay-lt)}
 .ps.sel{background:#FFF2EC}
@@ -167,7 +179,7 @@ body{font-family:'Instrument Sans',sans-serif;background:var(--bg);color:var(--i
 .sr-top{display:flex;align-items:center;gap:.38rem}
 .sr-hint{font-size:.56rem;color:var(--ink3);line-height:1}
 .sl{font-size:.56rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3);white-space:nowrap}
-.sf-in{font-family:'Instrument Sans',sans-serif;font-size:.68rem;background:#fff;border:1px solid var(--line);border-radius:4px;padding:.2rem .42rem;color:var(--ink);outline:none;flex:1;min-width:0;transition:border-color .14s}
+.sf-in{font-family:'Instrument Sans',sans-serif;font-size:16px;background:#fff;border:1px solid var(--line);border-radius:4px;padding:.2rem .42rem;color:var(--ink);outline:none;flex:1;min-width:0;transition:border-color .14s}
 .sf-in:focus{border-color:var(--clay)}
 .sf-in::placeholder{color:var(--ink3)}
 .sb{font-size:.56rem;font-weight:600;color:var(--gold);white-space:nowrap}
@@ -181,7 +193,7 @@ body{font-family:'Instrument Sans',sans-serif;background:var(--bg);color:var(--i
 .cpt{font-size:.56rem;color:var(--ink3);margin-top:.22rem}
 
 /* ─ SUBMIT BAR ─ */
-.sbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding:.8rem 1.5rem;background:#fff;border-top:1px solid var(--line);position:sticky;bottom:0;z-index:150}
+.sbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding:.8rem 1.5rem;background:#fff;border-top:1px solid var(--line);position:-webkit-sticky;position:sticky;bottom:0;z-index:150}
 .ss{font-size:.73rem;color:var(--ink2)}
 .ss strong{color:var(--ink)}
 .bsub{font-family:'Instrument Sans',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:var(--clay);color:#fff;border:none;border-radius:5px;padding:.58rem 1.3rem;cursor:pointer;transition:all .14s}
@@ -375,28 +387,84 @@ body{font-family:'Instrument Sans',sans-serif;background:var(--bg);color:var(--i
     <div class="bwrap">
       <div class="bracket">
 
+        <!-- R16 column — display only, populated from Draw sheet -->
+        <div class="col r16">
+          <div class="col-hd"><div class="cr">Round of 16</div><div class="cp">Display only</div></div>
+          <div class="col-b" id="atp-r16-col">
+            <!-- R16 match pairs: R16-1+R16-2 feed QF1, R16-3+R16-4 feed QF2, etc -->
+            <div class="r16-pair" id="atp-r16-pair-1">
+              <div class="mu"><div class="mc-r16" id="atp-r16-1">
+                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
+                <div class="r16-vs"><span>vs</span></div>
+                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
+              </div></div>
+              <div class="mu" style="margin-top:4px"><div class="mc-r16" id="atp-r16-2">
+                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
+                <div class="r16-vs"><span>vs</span></div>
+                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
+              </div></div>
+            </div>
+            <div class="r16-pair" id="atp-r16-pair-2" style="margin-top:8px">
+              <div class="mu"><div class="mc-r16" id="atp-r16-3">
+                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
+                <div class="r16-vs"><span>vs</span></div>
+                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
+              </div></div>
+              <div class="mu" style="margin-top:4px"><div class="mc-r16" id="atp-r16-4">
+                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
+                <div class="r16-vs"><span>vs</span></div>
+                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
+              </div></div>
+            </div>
+            <div class="r16-pair" id="atp-r16-pair-3" style="margin-top:8px">
+              <div class="mu"><div class="mc-r16" id="atp-r16-5">
+                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
+                <div class="r16-vs"><span>vs</span></div>
+                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
+              </div></div>
+              <div class="mu" style="margin-top:4px"><div class="mc-r16" id="atp-r16-6">
+                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
+                <div class="r16-vs"><span>vs</span></div>
+                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
+              </div></div>
+            </div>
+            <div class="r16-pair" id="atp-r16-pair-4" style="margin-top:8px">
+              <div class="mu"><div class="mc-r16" id="atp-r16-7">
+                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
+                <div class="r16-vs"><span>vs</span></div>
+                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
+              </div></div>
+              <div class="mu" style="margin-top:4px"><div class="mc-r16" id="atp-r16-8">
+                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
+                <div class="r16-vs"><span>vs</span></div>
+                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
+              </div></div>
+            </div>
+          </div>
+        </div>
+
         <div class="col qf">
           <div class="col-hd"><div class="cr">Quarterfinals</div><div class="cp">10 pts each</div></div>
           <div class="col-b">
 
             <div class="mu"><div class="mc" id="a-q1">
-              <div class="ps" data-d="atp" data-r="q1" data-i="0" data-pl="sinner"   data-n="Sinner"           data-s="1"  data-f="🇮🇹" onclick="pick(this)"><span class="p-s">1</span><span class="p-f">🇮🇹</span><span class="p-n">Sinner</span><span class="p-c">✓</span></div>
-              <div class="ps" data-d="atp" data-r="q1" data-i="1" data-pl="shelton"  data-n="Shelton"          data-s="5"  data-f="🇺🇸" onclick="pick(this)"><span class="p-s">5</span><span class="p-f">🇺🇸</span><span class="p-n">Shelton</span><span class="p-c">✓</span></div>
+              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-1</span></div>
+              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-2</span></div>
             </div></div>
 
             <div class="mu"><div class="mc" id="a-q2">
-              <div class="ps" data-d="atp" data-r="q2" data-i="0" data-pl="faa"      data-n="Auger-Aliassime"  data-s="4"  data-f="🇨🇦" onclick="pick(this)"><span class="p-s">4</span><span class="p-f">🇨🇦</span><span class="p-n">Auger-Aliassime</span><span class="p-c">✓</span></div>
-              <div class="ps"     data-d="atp" data-r="q2" data-i="1" data-pl="mensik"   data-n="Menšík"           data-s="26" data-f="🇨🇿" onclick="pick(this)"><span class="p-s">26</span><span class="p-f">🇨🇿</span><span class="p-n">Menšík</span><span class="p-c">✓</span></div>
+              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-3</span></div>
+              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-4</span></div>
             </div></div>
 
             <div class="mu"><div class="mc" id="a-q3">
-              <div class="ps" data-d="atp" data-r="q3" data-i="0" data-pl="ruud"     data-n="Ruud"             data-s="15" data-f="🇳🇴" onclick="pick(this)"><span class="p-s">15</span><span class="p-f">🇳🇴</span><span class="p-n">Ruud</span><span class="p-c">✓</span></div>
-              <div class="ps" data-d="atp" data-r="q3" data-i="1" data-pl="paul"     data-n="T. Paul"          data-s="24" data-f="🇺🇸" onclick="pick(this)"><span class="p-s">24</span><span class="p-f">🇺🇸</span><span class="p-n">T. Paul</span><span class="p-c">✓</span></div>
+              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-5</span></div>
+              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-6</span></div>
             </div></div>
 
             <div class="mu"><div class="mc" id="a-q4">
-              <div class="ps" data-d="atp" data-r="q4" data-i="0" data-pl="djokovic" data-n="Djokovic"         data-s="3"  data-f="🇷🇸" onclick="pick(this)"><span class="p-s">3</span><span class="p-f">🇷🇸</span><span class="p-n">Djokovic</span><span class="p-c">✓</span></div>
-              <div class="ps"     data-d="atp" data-r="q4" data-i="1" data-pl="zverev"   data-n="Zverev"           data-s="2"  data-f="🇩🇪" onclick="pick(this)"><span class="p-s">2</span><span class="p-f">🇩🇪</span><span class="p-n">Zverev</span><span class="p-c">✓</span></div>
+              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-7</span></div>
+              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-8</span></div>
             </div></div>
 
           </div>
@@ -425,7 +493,7 @@ body{font-family:'Instrument Sans',sans-serif;background:var(--bg);color:var(--i
             <div class="mu"><div class="mc" id="a-fn" style="width:var(--cw)">
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner SF1</span></div>
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner SF2</span></div>
-              <div class="sr"><div class="sr-top"><span class="sl">Final set games</span><input class="sf-in" id="atp-sc" type="number" min="6" max="13" placeholder="12" style="max-width:58px"><span class="sb">+5 pts</span></div><span class="sr-hint">Sum of games in deciding set only</span></div>
+              <div class="sr"><div class="sr-top"><span class="sl">Final set games</span><input class="sf-in" id="atp-sc" type="number" min="6" max="13" inputmode="numeric" placeholder="12" style="max-width:58px"><span class="sb">+5 pts</span></div><span class="sr-hint">Sum of games in deciding set only</span></div>
             </div></div>
           </div>
         </div>
@@ -452,28 +520,83 @@ body{font-family:'Instrument Sans',sans-serif;background:var(--bg);color:var(--i
     <div class="bwrap">
       <div class="bracket">
 
+        <!-- WTA R16 column -->
+        <div class="col r16">
+          <div class="col-hd"><div class="cr">Round of 16</div><div class="cp">Display only</div></div>
+          <div class="col-b" id="wta-r16-col">
+            <div class="r16-pair" id="wta-r16-pair-1">
+              <div class="mu"><div class="mc-r16" id="wta-r16-1">
+                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
+                <div class="r16-vs"><span>vs</span></div>
+                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
+              </div></div>
+              <div class="mu" style="margin-top:4px"><div class="mc-r16" id="wta-r16-2">
+                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
+                <div class="r16-vs"><span>vs</span></div>
+                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
+              </div></div>
+            </div>
+            <div class="r16-pair" id="wta-r16-pair-2" style="margin-top:8px">
+              <div class="mu"><div class="mc-r16" id="wta-r16-3">
+                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
+                <div class="r16-vs"><span>vs</span></div>
+                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
+              </div></div>
+              <div class="mu" style="margin-top:4px"><div class="mc-r16" id="wta-r16-4">
+                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
+                <div class="r16-vs"><span>vs</span></div>
+                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
+              </div></div>
+            </div>
+            <div class="r16-pair" id="wta-r16-pair-3" style="margin-top:8px">
+              <div class="mu"><div class="mc-r16" id="wta-r16-5">
+                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
+                <div class="r16-vs"><span>vs</span></div>
+                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
+              </div></div>
+              <div class="mu" style="margin-top:4px"><div class="mc-r16" id="wta-r16-6">
+                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
+                <div class="r16-vs"><span>vs</span></div>
+                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
+              </div></div>
+            </div>
+            <div class="r16-pair" id="wta-r16-pair-4" style="margin-top:8px">
+              <div class="mu"><div class="mc-r16" id="wta-r16-7">
+                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
+                <div class="r16-vs"><span>vs</span></div>
+                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
+              </div></div>
+              <div class="mu" style="margin-top:4px"><div class="mc-r16" id="wta-r16-8">
+                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
+                <div class="r16-vs"><span>vs</span></div>
+                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
+              </div></div>
+            </div>
+          </div>
+        </div>
+
         <div class="col qf">
           <div class="col-hd"><div class="cr">Quarterfinals</div><div class="cp">10 pts each</div></div>
           <div class="col-b">
 
             <div class="mu"><div class="mc" id="w-q1">
-              <div class="ps" data-d="wta" data-r="q1" data-i="0" data-pl="sabalenka" data-n="Sabalenka" data-s="1"  data-f="🇧🇾" onclick="pick(this)"><span class="p-s">1</span><span class="p-f">🇧🇾</span><span class="p-n">Sabalenka</span><span class="p-c">✓</span></div>
-              <div class="ps"     data-d="wta" data-r="q1" data-i="1" data-pl="gauff"      data-n="Gauff"     data-s="4"  data-f="🇺🇸" onclick="pick(this)"><span class="p-s">4</span><span class="p-f">🇺🇸</span><span class="p-n">Gauff</span><span class="p-c">✓</span></div>
+              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-1</span></div>
+              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-2</span></div>
             </div></div>
 
             <div class="mu"><div class="mc" id="w-q2">
-              <div class="ps" data-d="wta" data-r="q2" data-i="0" data-pl="swiatek"    data-n="Swiatek"   data-s="3"  data-f="🇵🇱" onclick="pick(this)"><span class="p-s">3</span><span class="p-f">🇵🇱</span><span class="p-n">Swiatek</span><span class="p-c">✓</span></div>
-              <div class="ps"     data-d="wta" data-r="q2" data-i="1" data-pl="andreeva"   data-n="Andreeva"  data-s="8"  data-f="🇷🇺" onclick="pick(this)"><span class="p-s">8</span><span class="p-f">🇷🇺</span><span class="p-n">Andreeva</span><span class="p-c">✓</span></div>
+              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-3</span></div>
+              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-4</span></div>
             </div></div>
 
             <div class="mu"><div class="mc" id="w-q3">
-              <div class="ps"     data-d="wta" data-r="q3" data-i="0" data-pl="keys"       data-n="Keys"      data-s="19" data-f="🇺🇸" onclick="pick(this)"><span class="p-s">19</span><span class="p-f">🇺🇸</span><span class="p-n">Keys</span><span class="p-c">✓</span></div>
-              <div class="ps"     data-d="wta" data-r="q3" data-i="1" data-pl="muchova"    data-n="Muchová"   data-s="10" data-f="🇨🇿" onclick="pick(this)"><span class="p-s">10</span><span class="p-f">🇨🇿</span><span class="p-n">Muchová</span><span class="p-c">✓</span></div>
+              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-5</span></div>
+              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-6</span></div>
             </div></div>
 
             <div class="mu"><div class="mc" id="w-q4">
-              <div class="ps"     data-d="wta" data-r="q4" data-i="0" data-pl="paolini"    data-n="Paolini"   data-s="13" data-f="🇮🇹" onclick="pick(this)"><span class="p-s">13</span><span class="p-f">🇮🇹</span><span class="p-n">Paolini</span><span class="p-c">✓</span></div>
-              <div class="ps"     data-d="wta" data-r="q4" data-i="1" data-pl="rybakina"   data-n="Rybakina"  data-s="2"  data-f="🇰🇿" onclick="pick(this)"><span class="p-s">2</span><span class="p-f">🇰🇿</span><span class="p-n">Rybakina</span><span class="p-c">✓</span></div>
+              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-7</span></div>
+              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-8</span></div>
             </div></div>
 
           </div>
@@ -502,7 +625,7 @@ body{font-family:'Instrument Sans',sans-serif;background:var(--bg);color:var(--i
             <div class="mu"><div class="mc" id="w-fn" style="width:var(--cw)">
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner SF1</span></div>
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner SF2</span></div>
-              <div class="sr"><div class="sr-top"><span class="sl">Final set games</span><input class="sf-in" id="wta-sc" type="number" min="6" max="13" placeholder="12" style="max-width:58px"><span class="sb">+5 pts</span></div><span class="sr-hint">Sum of games in deciding set only</span></div>
+              <div class="sr"><div class="sr-top"><span class="sl">Final set games</span><input class="sf-in" id="wta-sc" type="number" min="6" max="13" inputmode="numeric" placeholder="12" style="max-width:58px"><span class="sb">+5 pts</span></div><span class="sr-hint">Sum of games in deciding set only</span></div>
             </div></div>
           </div>
         </div>
@@ -680,7 +803,7 @@ body{font-family:'Instrument Sans',sans-serif;background:var(--bg);color:var(--i
 <script>
 // ── STATE ──
 const S = {
-  user: null, role: null, code: null,
+  user: null, role: null, code: null, serverMode: null,
   submitted: {atp: false, wta: false},
   p: {
     atp: {q1:null,q2:null,q3:null,q4:null,s1:null,s2:null,fn:null},
@@ -744,35 +867,55 @@ function updateSubmitBarText(d){
 }
 
 // ── JOIN ──
-function join(){
+async function join(){
   const n=document.getElementById('uN').value.trim();
   const r=document.getElementById('uR').value.trim();
   const c=document.getElementById('uC').value.trim().toUpperCase();
-  // email removed from gate
   const err=document.getElementById('gErr');
   [document.getElementById('uN'),document.getElementById('uR'),document.getElementById('uC')].forEach(el=>el.classList.remove('err'));
   err.textContent='';
   if(!n){ document.getElementById('uN').classList.add('err'); err.textContent='Please enter your full name.'; return; }
   if(!r){ document.getElementById('uR').classList.add('err'); err.textContent='Please enter your role or affiliation.'; return; }
   if(!c){ document.getElementById('uC').classList.add('err'); err.textContent='An invite code is required to access the challenge.'; return; }
-  const validCode = DEMO_MODE ? (c==='TEST2026') : (c==='ITHF2026ELC');
-  if(!validCode){ document.getElementById('uC').classList.add('err'); err.textContent = DEMO_MODE ? 'Use code TEST2026 for demo access.' : 'Incorrect invite code. Please contact ITHF to join.'; return; }
+
+  setGateLoading(true);
+  try {
+    const result = await apiPost({ action: 'validate', code: c });
+    if(!result.ok){
+      document.getElementById('uC').classList.add('err');
+      err.textContent = 'Incorrect invite code. Please contact ITHF to join.';
+      setGateLoading(false);
+      return;
+    }
+    // Code valid — mode comes back from server ('demo' or 'live')
+    S.serverMode = result.mode;
+  } catch(e) {
+    // Network error — fall back to client-side check so site works offline/in demo
+    const validCode = DEMO_MODE ? (c==='TEST2026') : (c==='ITHF2026ELC');
+    if(!validCode){
+      document.getElementById('uC').classList.add('err');
+      err.textContent = 'Incorrect invite code. Please contact ITHF to join.';
+      setGateLoading(false);
+      return;
+    }
+    S.serverMode = DEMO_MODE ? 'demo' : 'live';
+  }
+
+  setGateLoading(false);
   S.user=n; S.role=r;
   document.getElementById('gateOverlay').classList.add('gone');
   document.getElementById('ptsL').textContent=n.split(' ')[0]+"'s pts";
-  // Update leaderboard rows with real name, initials, and role
   const initials = n.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
-  // Combined row — shows name + affiliation
   document.getElementById('lb-me-name').textContent    = n;
   document.getElementById('lb-me-av').textContent      = initials;
   document.getElementById('lb-me-role').textContent    = r;
-  // ATP row — shows name + champion pick (updates live as picks are made)
   document.getElementById('lb-me-name-atp').textContent = n;
   document.getElementById('lb-me-av-atp').textContent   = initials;
-  // WTA row
   document.getElementById('lb-me-name-wta').textContent = n;
   document.getElementById('lb-me-av-wta').textContent   = initials;
   updateMaxRemaining();
+  loadDraw();       // load real QF players from sheet
+  loadLeaderboard(); // load real leaderboard
 }
 
 // ── PICK FLOW ──
@@ -970,12 +1113,34 @@ function confirm_sub(){
   }
   S.submitted[d] = true;
   closeModal();
+
+  // Save to sheet (skip in demo mode)
+  if(S.serverMode !== 'demo'){
+    const picks = S.p[d];
+    apiPost({
+      action: 'submit',
+      mode: S.serverMode || 'live',
+      name: S.user,
+      role: S.role,
+      draw: d,
+      picks: {
+        q1: picks.q1 ? picks.q1.f+' '+picks.q1.n : '',
+        q2: picks.q2 ? picks.q2.f+' '+picks.q2.n : '',
+        q3: picks.q3 ? picks.q3.f+' '+picks.q3.n : '',
+        q4: picks.q4 ? picks.q4.f+' '+picks.q4.n : '',
+        s1: picks.s1 ? picks.s1.f+' '+picks.s1.n : '',
+        s2: picks.s2 ? picks.s2.f+' '+picks.s2.n : '',
+        fn: picks.fn ? picks.fn.f+' '+picks.fn.n : '',
+      },
+      finalSetSum: document.getElementById(d+'-sc')?.value || ''
+    }).catch(()=>{}); // fire and forget — don't block UI
+  }
+
   // Lock slots only in the submitted draw
   const bracketDiv = document.getElementById('dv-'+d);
   bracketDiv.querySelectorAll('.ps:not(.win):not(.out)').forEach(s=>s.classList.add('lk'));
-  // Hide submit bar for this draw
   document.getElementById('sbar').style.display='none';
-  // Both done — show banner and stop
+
   if(S.submitted.atp && S.submitted.wta){
     const bannerP = document.querySelector('#subBanner .sb-body p');
     if(bannerP) bannerP.textContent = 'Both brackets locked in. Find your picks on the Leaderboard by clicking your name.';
@@ -1079,8 +1244,140 @@ function viewPicks(name, role, picks, drawOnly){
   document.getElementById('picksModal').classList.add('open');
 }
 
+// ── LOAD DRAW FROM SHEET ──
+async function loadDraw(){
+  try {
+    const data = await apiGet('draw');
+    if(!data.ok) return;
+    ['atp','wta'].forEach(d=>{
+      const r16 = data[d]?.r16 || [];
+      const qfs = data[d]?.qf  || [];
+      // Populate R16 display cards
+      r16.forEach(m=>{
+        const num = m.match.replace('R16-','');
+        const cardId = d+'-r16-'+num;
+        const card = document.getElementById(cardId);
+        if(!card) return;
+        const slots = card.querySelectorAll('.ps-r16');
+        if(slots[0]) populateR16Slot(slots[0], m.p1Name, m.p1Seed, m.p1Flag);
+        if(slots[1]) populateR16Slot(slots[1], m.p2Name, m.p2Seed, m.p2Flag);
+      });
+      // Populate QF selectable slots from derived winners
+      qfs.forEach((qf, i)=>{
+        const cardId = d==='atp' ? 'a-q'+(i+1) : 'w-q'+(i+1);
+        const card = document.getElementById(cardId);
+        if(!card) return;
+        const slots = card.querySelectorAll('.ps');
+        // p1: winner of first R16 match in this pair
+        if(qf.p1 && slots[0] && !slots[0].classList.contains('win')){
+          if(qf.p1.p1 && qf.p1.p2){
+            // R16 match not played yet — show both candidates
+            populateSlot(slots[0], d, 'q'+(i+1), qf.p1.p1);
+            populateSlot(slots[1], d, 'q'+(i+1), qf.p1.p2);
+          } else if(qf.p1.name && qf.p1.name !== 'TBD'){
+            populateSlot(slots[0], d, 'q'+(i+1), qf.p1);
+          }
+        }
+        // p2: winner of second R16 match in this pair
+        if(qf.p2 && !qf.p1?.p2 && slots[1] && !slots[1].classList.contains('win')){
+          if(qf.p2.name && qf.p2.name !== 'TBD'){
+            populateSlot(slots[1], d, 'q'+(i+1), qf.p2);
+          }
+        }
+      });
+    });
+  } catch(e){ /* silently fail — bracket shows as-is */ }
+}
+
+function populateR16Slot(slot, name, seed, flag){
+  if(!slot) return;
+  const isEmpty = !name || name === 'TBD';
+  slot.classList.toggle('tbd', isEmpty);
+  slot.querySelector('.p-s').textContent = isEmpty ? '' : (seed||'');
+  slot.querySelector('.p-f').textContent = isEmpty ? '' : (flag||'');
+  slot.querySelector('.p-n').textContent = isEmpty ? 'TBD' : name;
+}
+
+function populateSlot(slot, draw, round, player){
+  if(!slot || !player || !player.name || player.name === 'TBD') return;
+  slot.classList.remove('tbd');
+  slot.dataset.d = draw;
+  slot.dataset.r = round;
+  slot.dataset.n = player.name;
+  slot.dataset.f = player.flag || '';
+  slot.dataset.s = player.seed || '';
+  slot.setAttribute('onclick','pick(this)');
+  slot.querySelector('.p-s').textContent = player.seed || '';
+  slot.querySelector('.p-f').textContent = player.flag || '';
+  slot.querySelector('.p-n').textContent = player.name;
+}
+
+// ── LOAD LEADERBOARD FROM SHEET ──
+async function loadLeaderboard(){
+  try {
+    const data = await apiGet('leaderboard');
+    if(!data.ok || !data.leaderboard?.length) return;
+    renderLeaderboard(data.leaderboard);
+  } catch(e){ /* keep demo leaderboard */ }
+}
+
+function renderLeaderboard(entries){
+  ['combined','atp','wta'].forEach(view=>{
+    const container = document.getElementById('lbv-'+view);
+    if(!container) return;
+    // Keep the lbs label, replace rows
+    const label = container.querySelector('.lbs');
+    const labelText = label ? label.outerHTML : '';
+    let rows = '';
+    entries.forEach((entry, i) => {
+      const pts = view==='atp' ? entry.atpScore : view==='wta' ? entry.wtaScore : entry.total;
+      const sub = view==='combined' ? (entry.role||'') :
+                  view==='atp'      ? 'Champion: '+(entry.atpChamp||'—') :
+                                      'Champion: '+(entry.wtaChamp||'—');
+      const isMe = S.user && entry.name === S.user;
+      const initials = entry.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+      const avatarColors = ['#5A3E28','#2A3E6B','#D45C38','#5A2A6B','#2A5A3E','#3E2A5A','#5A3E28','#28405A'];
+      const bg = isMe ? '#D45C38' : avatarColors[i % avatarColors.length];
+      const meClass = isMe ? ' me' : '';
+      const clickFn = isMe
+        ? `viewMyPicks(${view!=='combined'?"'"+view+"'":''})` 
+        : `viewPicks('${entry.name}','${entry.role||''}',null${view!=='combined'?`,'${view}'`:''})`;
+      rows += `<div class="lbr${meClass}" onclick="${clickFn}">
+        <div class="lrk">${i+1}</div>
+        <div class="lav" style="background:${bg}">${isMe ? initials : initials}</div>
+        <div class="li"><div class="ln">${entry.name}</div><div class="lsu">${sub}</div></div>
+        <div class="lr"><div class="lp">${pts}</div><div class="lpl">pts</div></div>
+        <div class="lb-arr">›</div>
+      </div>`;
+    });
+    container.innerHTML = labelText + rows;
+  });
+}
+
 // ── MODE INIT (runs on load) ──
 const DEMO_MODE = new URLSearchParams(window.location.search).get('mode') === 'demo';
+const AS_URL = 'https://script.google.com/macros/s/AKfycbxFivV3z4fm5SQLL6FysP-MiSq1XVY-9riWjrWMqs8XTIb5d_NswEcF93OOiQsY38-ikQ/exec';
+
+// ── API HELPERS ──
+async function apiGet(action){
+  const res = await fetch(AS_URL + '?action=' + action);
+  return res.json();
+}
+async function apiPost(body){
+  const res = await fetch(AS_URL, {
+    method: 'POST',
+    body: JSON.stringify(body)
+  });
+  return res.json();
+}
+
+// Show/hide a loading state on the gate button
+function setGateLoading(loading){
+  const btn = document.querySelector('.bjoin');
+  if(!btn) return;
+  btn.disabled = loading;
+  btn.textContent = loading ? 'Checking…' : 'Enter Challenge →';
+}
 
 function initMode(){
   if(DEMO_MODE){
