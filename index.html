@@ -16,7 +16,7 @@
   --cw:186px;
 }
 body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
-
+ 
 /* ─ HEADER ─ */
 .hdr{display:flex;flex-direction:column;justify-content:center;padding:0 1.5rem;background:rgba(255,255,255,.97);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);position:-webkit-sticky;position:sticky;top:0;z-index:200;min-height:58px}
 .hdr-inner{display:flex;align-items:center;justify-content:space-between;width:100%}
@@ -30,7 +30,7 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
 .pts-chip{display:flex;align-items:baseline;gap:.22rem}
 .pts-n{font-family:'Instrument Serif',serif;font-size:1.3rem;color:var(--clay);line-height:1}
 .pts-l{font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink3)}
-
+ 
 /* ─ SUBNAV: tabs | sep | draw toggle | sep | deadline strip ─ */
 .snav{display:flex;align-items:center;padding:0 1.5rem;background:rgba(255,255,255,.99);border-bottom:1px solid var(--line);position:-webkit-sticky;position:sticky;top:58px;z-index:199;min-height:42px;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch}
 .tabs{display:flex;flex-shrink:0}
@@ -50,10 +50,10 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
 .dtog-label{font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink3);white-space:nowrap}
 @media(max-width:860px){.dlst{display:none}}
 @media(max-width:560px){.snav{padding:0 .75rem}.tab{padding:.72rem .72rem .62rem;font-size:.68rem}}
-
+ 
 /* ─ PAGES ─ */
 .pg{display:none}.pg.on{display:block}
-
+ 
 /* ─ GATE ─ */
 .gate{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:1.3rem 1.4rem;margin:1.2rem 1.5rem}
 .gate h2{font-family:'Instrument Serif',serif;font-size:1.15rem;margin-bottom:.22rem}
@@ -64,7 +64,7 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
 .fi:focus{border-color:var(--clay);background:#fff}
 .bjoin{font-family:'Instrument Sans',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:var(--clay);color:#fff;border:none;border-radius:5px;padding:.52rem 1.1rem;cursor:pointer;transition:all .14s;white-space:nowrap}
 .bjoin:hover{background:#c14e2a;transform:translateY(-1px)}
-
+ 
 /* ─ GATE OVERLAY ─ */
 .gate-overlay{position:fixed;inset:0;background:var(--bg);z-index:300;display:flex;align-items:center;justify-content:center;padding:1.5rem}
 .gate-overlay.gone{display:none}
@@ -97,26 +97,26 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
 .pw-fi{padding-right:3.5rem !important}
 .pw-toggle{position:absolute;right:.6rem;background:none;border:none;font-family:'Instrument Sans',sans-serif;font-size:.65rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--clay);cursor:pointer;padding:.2rem .1rem;transition:opacity .14s}
 .pw-toggle:hover{opacity:.7}
-
+ 
 /* ─ DEMO BANNER ─ */
 .demo-banner{display:none;background:#FFF8E7;border-bottom:1px solid #F0D080;padding:.45rem 1.5rem;font-size:.68rem;color:#7A5C00;letter-spacing:.02em;align-items:center;gap:.5rem}
 .demo-banner.show{display:flex}
 .demo-banner strong{font-weight:600}
 .demo-banner .db-pill{background:#F0D080;color:#5A4200;font-size:.58rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.15rem .45rem;border-radius:3px}
-
+ 
 /* ─ SUBMITTED BANNER ─ */
 .sub-banner{background:#fff;border:1.5px solid var(--green);border-radius:var(--r);padding:1.1rem 1.3rem;margin:1.2rem 1.5rem;display:flex;align-items:flex-start;gap:.9rem;display:none}
 .sb-ico{font-size:1.4rem;flex-shrink:0;margin-top:.05rem}
 .sb-body h3{font-family:'Instrument Serif',serif;font-size:1.05rem;color:var(--green);margin-bottom:.18rem}
 .sb-body p{font-size:.73rem;color:var(--ink2);line-height:1.55;margin-bottom:.65rem}
-
+ 
 /* ─ BRACKET ─ */
 .bwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:1.2rem 1.5rem 2.5rem}
 .sh{font-size:.6rem;color:var(--ink3);letter-spacing:.06em;text-align:center;padding:.3rem;display:none}
 @media(max-width:860px){.sh{display:block}}
 .bracket{display:flex;align-items:stretch;min-width:1100px;gap:0;animation:fu .3s ease}
 @keyframes fu{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-
+ 
 /* columns */
 .col{display:flex;flex-direction:column;min-width:var(--cw)}
 /* R16 column — narrower, display only */
@@ -141,17 +141,17 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
 .col.sf .col-b{justify-content:space-around}
 .col.fn .col-b{justify-content:center}
 .ch .col-b{justify-content:center}
-
+ 
 /* match unit — card + connector line via pseudo */
 .mu{display:flex;align-items:center;position:relative}
 .mu::after{content:'';position:absolute;right:-30px;top:50%;width:30px;height:1px;background:var(--line)}
 .ch .mu::after{display:none}
-
+ 
 /* card */
 .mc{width:var(--cw);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:#fff;transition:border-color .15s,box-shadow .15s}
 .mc:hover{border-color:#C5B5A8;box-shadow:0 2px 10px rgba(0,0,0,.07)}
 .ch .mc{width:148px}
-
+ 
 /* player slot */
 .ps{display:flex;align-items:center;gap:.48rem;padding:.52rem .68rem;cursor:pointer;transition:background .11s;position:relative;min-height:44px}
 .ps+.ps{border-top:1px solid var(--line)}
@@ -173,7 +173,7 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
 .ps.tbd .p-n{color:var(--ink3);font-weight:400;font-style:italic;font-size:.7rem}
 .p-c{font-size:.6rem;color:var(--green);opacity:0;margin-left:.05rem}
 .ps.win .p-c{opacity:1}
-
+ 
 /* final score row */
 .sr{display:flex;flex-direction:column;gap:.28rem;padding:.45rem .68rem;background:var(--bg);border-top:1px solid var(--line)}
 .sr-top{display:flex;align-items:center;gap:.38rem}
@@ -183,7 +183,7 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
 .sf-in:focus{border-color:var(--clay)}
 .sf-in::placeholder{color:var(--ink3)}
 .sb{font-size:.56rem;font-weight:600;color:var(--gold);white-space:nowrap}
-
+ 
 /* champion */
 .cc{width:148px;border:1.5px solid var(--clay);border-radius:var(--r);background:#fff;padding:1.1rem .9rem;text-align:center;position:relative;overflow:hidden}
 .cc::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(212,92,56,.04),transparent);pointer-events:none}
@@ -191,14 +191,14 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
 .cl{font-size:.54rem;text-transform:uppercase;letter-spacing:.14em;color:var(--ink3);display:block;margin-bottom:.28rem}
 .cn{font-family:'Instrument Serif',serif;font-size:.92rem;font-style:italic;color:var(--clay);display:block}
 .cpt{font-size:.56rem;color:var(--ink3);margin-top:.22rem}
-
+ 
 /* ─ SUBMIT BAR ─ */
 .sbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding:.8rem 1.5rem;background:#fff;border-top:1px solid var(--line);position:-webkit-sticky;position:sticky;bottom:0;z-index:150}
 .ss{font-size:.73rem;color:var(--ink2)}
 .ss strong{color:var(--ink)}
 .bsub{font-family:'Instrument Sans',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:var(--clay);color:#fff;border:none;border-radius:5px;padding:.58rem 1.3rem;cursor:pointer;transition:all .14s}
 .bsub:hover{background:#c14e2a;transform:translateY(-1px)}
-
+ 
 /* ─ MODAL ─ */
 .mbk{position:fixed;inset:0;background:rgba(0,0,0,.38);z-index:500;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .2s}
 .mbk.open{opacity:1;pointer-events:all}
@@ -222,7 +222,7 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
 .bcf:hover{background:#c14e2a}
 .bcc{font-family:'Instrument Sans',sans-serif;font-size:.7rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;background:none;border:1px solid var(--line);border-radius:5px;color:var(--ink2);padding:.6rem 1rem;cursor:pointer;transition:all .14s}
 .bcc:hover{border-color:#aaa;color:var(--ink)}
-
+ 
 /* ─ LEADERBOARD ─ */
 .lbw{padding:1.2rem 1.5rem;max-width:600px}
 .lbs{font-size:.6rem;text-transform:uppercase;letter-spacing:.12em;color:var(--ink3);margin-bottom:.6rem}
@@ -247,13 +247,13 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
 .lp{font-family:'Instrument Serif',serif;font-size:1.25rem;color:var(--ink);line-height:1}
 .lbr.me .lp{color:var(--clay)}
 .lpl{font-size:.54rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3)}
-
+ 
 /* ─ RULES PAGE ─ */
 .rlw{padding:1.2rem 1.5rem;max-width:560px}
 .rl-section{margin-bottom:2rem}
 .rl-section:last-child{margin-bottom:0}
 .rl-head{font-size:.62rem;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--clay);margin-bottom:.85rem;padding-bottom:.5rem;border-bottom:1px solid var(--line)}
-
+ 
 /* ─ SCORING ─ */
 .scw{padding:1.2rem 1.5rem;max-width:520px}
 .sci{font-size:.78rem;color:var(--ink2);line-height:1.65;margin-bottom:1.3rem}
@@ -269,7 +269,7 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
 .smx .ml{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink2)}
 .smx .ms{font-size:.56rem;color:var(--ink3);margin-top:.1rem}
 .smx .mv{font-family:'Instrument Serif',serif;font-size:1.85rem;color:var(--clay);line-height:1}
-
+ 
 /* ─ DEADLINES ─ */
 .dlw{padding:1.2rem 1.5rem;max-width:560px}
 .dlw h2{font-family:'Instrument Serif',serif;font-size:1.3rem;margin-bottom:.9rem}
@@ -285,7 +285,7 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
 .dlv2{font-size:.74rem;font-weight:600;color:var(--ink)}
 .dlal{background:#FFF2EC;border:1px solid #E8C4B2;border-radius:var(--r);padding:.82rem .95rem;margin-top:.7rem;font-size:.74rem;color:var(--ink2);line-height:1.6}
 .dlal strong{color:var(--clay)}
-
+ 
 /* ─ MY PICKS ─ */
 .mpw{padding:1.2rem 1.5rem;max-width:460px}
 .mpw h2{font-family:'Instrument Serif',serif;font-size:1.2rem;margin-bottom:.22rem}
@@ -298,7 +298,7 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
 </style>
 </head>
 <body>
-
+ 
 <!-- HEADER -->
 <header class="hdr">
   <div class="hdr-inner">
@@ -314,7 +314,7 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
   </div>
   <div class="hdr-sub">Presented by the <em>Emerging Leaders Council</em> · Quarterfinal Bracket Challenge for ITHF &amp; Friends</div>
 </header>
-
+ 
 <nav class="snav">
   <div class="tabs">
     <button class="tab on"  onclick="pg('bracket',this)">Bracket</button>
@@ -326,13 +326,13 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
     <div class="dli"><div class="dld"></div><span class="dll">WTA locks</span><span class="dlv">June 3 · 4:00 AM ET</span></div>
   </div>
 </nav>
-
+ 
 <!-- DEMO BANNER -->
 <div class="demo-banner" id="demoBanner"><span class="db-pill">Demo</span> <strong>Test mode active</strong> — picks are not saved. Use invite code <strong>TEST2026</strong> to enter.</div>
-
+ 
 <!-- ════════ BRACKET PAGE ════════ -->
 <div class="pg on" id="pg-bracket">
-
+ 
   <!-- Gate overlay - covers everything until user enters correctly -->
   <div class="gate-overlay" id="gateOverlay">
     <div class="gate-box">
@@ -366,7 +366,7 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
       <div class="gate-fine" id="gateFine">Access restricted to ITHF staff, board &amp; ELC members.</div>
     </div>
   </div>
-
+ 
   <div class="sub-banner" id="subBanner">
     <div class="sb-ico">✅</div>
     <div class="sb-body">
@@ -374,19 +374,19 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
       <p>Your bracket is locked in. Find your picks anytime on the Leaderboard by clicking your name. Scores update automatically as matches complete.</p>
     </div>
   </div>
-
+ 
   <!-- ATP -->
   <!-- Bracket draw sub-tabs — same pattern as leaderboard -->
   <div class="lb-tabs" id="bracketTabs" style="padding:0 1.5rem;margin-bottom:0">
     <button class="lb-tab on" id="btab-atp" onclick="draw('atp',this)">ATP</button>
     <button class="lb-tab"    id="btab-wta" onclick="draw('wta',this)">WTA</button>
   </div>
-
+ 
   <div id="dv-atp">
     <div class="sh">← Swipe to see full bracket →</div>
     <div class="bwrap">
       <div class="bracket">
-
+ 
         <!-- R16 column — display only, populated from Draw sheet -->
         <div class="col r16">
           <div class="col-hd"><div class="cr">Round of 16</div><div class="cp">Display only</div></div>
@@ -442,51 +442,51 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
             </div>
           </div>
         </div>
-
+ 
         <div class="col qf">
           <div class="col-hd"><div class="cr">Quarterfinals</div><div class="cp">10 pts each</div></div>
           <div class="col-b">
-
+ 
             <div class="mu"><div class="mc" id="a-q1">
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-1</span></div>
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-2</span></div>
             </div></div>
-
+ 
             <div class="mu"><div class="mc" id="a-q2">
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-3</span></div>
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-4</span></div>
             </div></div>
-
+ 
             <div class="mu"><div class="mc" id="a-q3">
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-5</span></div>
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-6</span></div>
             </div></div>
-
+ 
             <div class="mu"><div class="mc" id="a-q4">
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-7</span></div>
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-8</span></div>
             </div></div>
-
+ 
           </div>
         </div>
-
+ 
         <div class="col sf">
           <div class="col-hd"><div class="cr">Semifinals</div><div class="cp">20 pts each</div></div>
           <div class="col-b">
-
+ 
             <div class="mu"><div class="mc" id="a-s1" style="width:var(--cw)">
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner QF1</span></div>
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner QF2</span></div>
             </div></div>
-
+ 
             <div class="mu"><div class="mc" id="a-s2" style="width:var(--cw)">
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner QF3</span></div>
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner QF4</span></div>
             </div></div>
-
+ 
           </div>
         </div>
-
+ 
         <div class="col fn">
           <div class="col-hd"><div class="cr">Final</div><div class="cp">40 pts · +5 final set bonus</div></div>
           <div class="col-b">
@@ -497,7 +497,7 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
             </div></div>
           </div>
         </div>
-
+ 
         <div class="ch">
           <div class="col-hd"><div class="cr">Champion</div><div class="cp">80 pts</div></div>
           <div class="col-b">
@@ -509,17 +509,17 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
             </div></div>
           </div>
         </div>
-
+ 
       </div>
     </div>
   </div><!-- /atp -->
-
+ 
   <!-- WTA -->
   <div id="dv-wta" style="display:none">
     <div class="sh">← Swipe to see full bracket →</div>
     <div class="bwrap">
       <div class="bracket">
-
+ 
         <!-- WTA R16 column -->
         <div class="col r16">
           <div class="col-hd"><div class="cr">Round of 16</div><div class="cp">Display only</div></div>
@@ -574,51 +574,51 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
             </div>
           </div>
         </div>
-
+ 
         <div class="col qf">
           <div class="col-hd"><div class="cr">Quarterfinals</div><div class="cp">10 pts each</div></div>
           <div class="col-b">
-
+ 
             <div class="mu"><div class="mc" id="w-q1">
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-1</span></div>
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-2</span></div>
             </div></div>
-
+ 
             <div class="mu"><div class="mc" id="w-q2">
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-3</span></div>
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-4</span></div>
             </div></div>
-
+ 
             <div class="mu"><div class="mc" id="w-q3">
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-5</span></div>
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-6</span></div>
             </div></div>
-
+ 
             <div class="mu"><div class="mc" id="w-q4">
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-7</span></div>
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-8</span></div>
             </div></div>
-
+ 
           </div>
         </div>
-
+ 
         <div class="col sf">
           <div class="col-hd"><div class="cr">Semifinals</div><div class="cp">20 pts each</div></div>
           <div class="col-b">
-
+ 
             <div class="mu"><div class="mc" id="w-s1" style="width:var(--cw)">
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner QF1</span></div>
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner QF2</span></div>
             </div></div>
-
+ 
             <div class="mu"><div class="mc" id="w-s2" style="width:var(--cw)">
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner QF3</span></div>
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner QF4</span></div>
             </div></div>
-
+ 
           </div>
         </div>
-
+ 
         <div class="col fn">
           <div class="col-hd"><div class="cr">Final</div><div class="cp">40 pts · +5 final set bonus</div></div>
           <div class="col-b">
@@ -629,7 +629,7 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
             </div></div>
           </div>
         </div>
-
+ 
         <div class="ch">
           <div class="col-hd"><div class="cr">Champion</div><div class="cp">80 pts</div></div>
           <div class="col-b">
@@ -641,11 +641,11 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
             </div></div>
           </div>
         </div>
-
+ 
       </div>
     </div>
   </div><!-- /wta -->
-
+ 
   <div class="sbar" id="sbar">
     <div style="display:flex;flex-direction:column;gap:.18rem">
       <div class="ss"><strong id="pcnt">0 / 7</strong> <span id="sbarLabel">picks made this draw</span></div>
@@ -653,9 +653,9 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
     </div>
     <button class="bsub" onclick="openModal()">Review &amp; Submit →</button>
   </div>
-
+ 
 </div><!-- /bracket page -->
-
+ 
 <!-- ════════ LEADERBOARD ════════ -->
 <div class="pg" id="pg-leaderboard">
   <div class="lbw">
@@ -665,7 +665,7 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
       <button class="lb-tab" onclick="lbTab('wta',this)">WTA</button>
       <button class="lb-tab" onclick="lbTab('combined',this)">Combined</button>
     </div>
-
+ 
     <!-- Combined leaderboard -->
     <div class="lb-view" id="lbv-combined">
       <div class="lbs">8 participants · Combined ATP + WTA · Click a name to view picks</div>
@@ -678,7 +678,7 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
       <div class="lbr" onclick="viewPicks('Thomas Webb','ELC Member',{atp:{q1:'🇨🇦 Auger-Aliassime',q2:'🇨🇦 Auger-Aliassime',q3:'🇳🇴 Ruud',q4:'🇷🇸 Djokovic',s1:'🇨🇦 Auger-Aliassime',s2:'🇷🇸 Djokovic',fn:'🇷🇸 Djokovic'},wta:{q1:'🇺🇸 Gauff',q2:'🇵🇱 Swiatek',q3:'🇺🇸 Keys',q4:'🇰🇿 Rybakina',s1:'🇺🇸 Gauff',s2:'🇰🇿 Rybakina',fn:'🇰🇿 Rybakina'}})"><div class="lrk">7</div><div class="lav" style="background:#5A3E28">TW</div><div class="li"><div class="ln">Thomas Webb</div><div class="lsu">ELC Member</div></div><div class="lr"><div class="lp">100</div><div class="lpl">pts</div></div><div class="lb-arr">›</div></div>
       <div class="lbr" onclick="viewPicks('Sophie Park','ITHF Staff',{atp:{q1:'🇮🇹 Sinner',q2:'🇨🇦 Auger-Aliassime',q3:'🇺🇸 T. Paul',q4:'🇩🇪 Zverev',s1:'🇮🇹 Sinner',s2:'🇩🇪 Zverev',fn:'🇩🇪 Zverev'},wta:{q1:'🇧🇾 Sabalenka',q2:'🇷🇺 Andreeva',q3:'🇺🇸 Keys',q4:'🇮🇹 Paolini',s1:'🇧🇾 Sabalenka',s2:'🇮🇹 Paolini',fn:'🇧🇾 Sabalenka'}})"><div class="lrk">8</div><div class="lav" style="background:#28405A">SP</div><div class="li"><div class="ln">Sophie Park</div><div class="lsu">ITHF Staff</div></div><div class="lr"><div class="lp">85</div><div class="lpl">pts</div></div><div class="lb-arr">›</div></div>
     </div>
-
+ 
     <!-- ATP leaderboard -->
     <div class="lb-view on" id="lbv-atp">
       <div class="lbs">ATP Men's Singles · Click a name to view picks</div>
@@ -691,7 +691,7 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
       <div class="lbr" onclick="viewPicks('Thomas Webb','ELC Member',null,'atp')"><div class="lrk">7</div><div class="lav" style="background:#5A3E28">TW</div><div class="li"><div class="ln">Thomas Webb</div><div class="lsu">Champion pick: 🇷🇸 Djokovic</div></div><div class="lr"><div class="lp">40</div><div class="lpl">pts</div></div><div class="lb-arr">›</div></div>
       <div class="lbr" onclick="viewPicks('Sophie Park','ITHF Staff',null,'atp')"><div class="lrk">8</div><div class="lav" style="background:#28405A">SP</div><div class="li"><div class="ln">Sophie Park</div><div class="lsu">Champion pick: 🇩🇪 Zverev</div></div><div class="lr"><div class="lp">20</div><div class="lpl">pts</div></div><div class="lb-arr">›</div></div>
     </div>
-
+ 
     <!-- WTA leaderboard -->
     <div class="lb-view" id="lbv-wta">
       <div class="lbs">WTA Women's Singles · Click a name to view picks</div>
@@ -706,7 +706,7 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
     </div>
   </div>
 </div>
-
+ 
 <!-- Picks modal (triggered from leaderboard) -->
 <div class="mbk" id="picksModal" onclick="if(event.target===this)this.classList.remove('open')">
   <div class="mdl">
@@ -720,12 +720,12 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
     <div id="pmContent"></div>
   </div>
 </div>
-
+ 
 <!-- ════════ SCORING ════════ -->
 <!-- ════════ RULES ════════ -->
 <div class="pg" id="pg-rules">
   <div class="rlw">
-
+ 
     <div class="rl-section">
       <div class="rl-head">Deadlines</div>
       <div class="dlc">
@@ -750,7 +750,7 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
         <strong>Picks are final once submitted.</strong> You cannot edit your bracket after the deadline. WTA QF slots marked TBD will be confirmed around June 1 — but you must submit before June 3 by 4 AM ET regardless.
       </div>
     </div>
-
+ 
     <div class="rl-section">
       <div class="rl-head">Scoring</div>
       <p class="sci">Points double each round — the later the pick, the more it's worth. Bonus points are available for the Final only: guess the sum of games in the deciding set.</p>
@@ -770,12 +770,12 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
         <div><div class="mv">550</div><div style="font-size:.58rem;color:var(--ink3);text-align:right">pts</div></div>
       </div>
     </div>
-
+ 
   </div>
 </div>
-
-
-
+ 
+ 
+ 
 <!-- POST-SUBMIT NUDGE: shown after one draw is locked -->
 <div class="mbk" id="postNudgeModal" onclick="if(event.target===this)this.classList.remove('open')">
   <div class="mdl" style="max-width:360px">
@@ -786,7 +786,7 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
     </div>
   </div>
 </div>
-
+ 
 <!-- MODAL -->
 <div class="mbk" id="modal" onclick="bgClose(event)">
   <div class="mdl">
@@ -799,7 +799,7 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
     </div>
   </div>
 </div>
-
+ 
 <script>
 // ── STATE ──
 const S = {
@@ -810,8 +810,8 @@ const S = {
     wta: {q1:null,q2:null,q3:null,q4:null,s1:null,s2:null,fn:null}
   }
 };
-
-
+ 
+ 
 // ── TABS ──
 function pg(id,btn){
   document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
@@ -829,7 +829,7 @@ function pg(id,btn){
     sb.style.display = S.submitted[curDraw] ? 'none' : 'flex';
   } else if(sb){ sb.style.display='none'; }
 }
-
+ 
 // ── DRAW TOGGLE ──
 function draw(d, btn){
   // Hide both draws
@@ -854,7 +854,7 @@ function draw(d, btn){
   updateSubmitBarText(d);
   countPicks();
 }
-
+ 
 function updateSubmitBarText(d){
   const other = d==='atp' ? 'wta' : 'atp';
   const label = document.getElementById('sbarLabel');
@@ -865,7 +865,7 @@ function updateSubmitBarText(d){
     label.textContent = 'picks made';
   }
 }
-
+ 
 // ── JOIN ──
 async function join(){
   const n=document.getElementById('uN').value.trim();
@@ -877,7 +877,7 @@ async function join(){
   if(!n){ document.getElementById('uN').classList.add('err'); err.textContent='Please enter your full name.'; return; }
   if(!r){ document.getElementById('uR').classList.add('err'); err.textContent='Please enter your role or affiliation.'; return; }
   if(!c){ document.getElementById('uC').classList.add('err'); err.textContent='An invite code is required to access the challenge.'; return; }
-
+ 
   setGateLoading(true);
   try {
     const result = await apiPost({ action: 'validate', code: c });
@@ -900,7 +900,7 @@ async function join(){
     }
     S.serverMode = DEMO_MODE ? 'demo' : 'live';
   }
-
+ 
   setGateLoading(false);
   S.user=n; S.role=r;
   document.getElementById('gateOverlay').classList.add('gone');
@@ -917,12 +917,12 @@ async function join(){
   loadDraw();       // load real QF players from sheet
   loadLeaderboard(); // load real leaderboard
 }
-
+ 
 // ── PICK FLOW ──
 const NEXT={q1:{next:'s1',slot:0},q2:{next:'s1',slot:1},q3:{next:'s2',slot:0},q4:{next:'s2',slot:1},s1:{next:'fn',slot:0},s2:{next:'fn',slot:1}};
 const CARD_MAP={atp:{q1:'a-q1',q2:'a-q2',q3:'a-q3',q4:'a-q4',s1:'a-s1',s2:'a-s2',fn:'a-fn'},wta:{q1:'w-q1',q2:'w-q2',q3:'w-q3',q4:'w-q4',s1:'w-s1',s2:'w-s2',fn:'w-fn'}};
 const CHAMP={atp:'a-cn',wta:'w-cn'};
-
+ 
 function pick(el){
   if(el.classList.contains('tbd')||el.classList.contains('win')||el.classList.contains('out')||S.submitted[el.dataset.d]) return;
   const d=el.dataset.d, r=el.dataset.r;
@@ -940,7 +940,7 @@ function pick(el){
   }
   countPicks();
 }
-
+ 
 function propagate(d,r,pk){
   const dest=NEXT[r]; if(!dest) return;
   const cid=CARD_MAP[d][dest.next]; if(!cid) return;
@@ -963,7 +963,7 @@ function propagate(d,r,pk){
   // If user had already picked THIS slot previously, re-select it
   if(S.p[d][dest.next] && S.p[d][dest.next].n === pk.n) t.classList.add('sel');
 }
-
+ 
 function countPicks(){
   const d = (typeof currentDraw === 'function') ? currentDraw() : 'atp';
   let c=0;
@@ -971,7 +971,7 @@ function countPicks(){
   document.getElementById('pcnt').textContent=c+' / 7';
   updateMaxRemaining();
 }
-
+ 
 function updateMaxRemaining(){
   // Points available per round per pick
   const PTS={q1:10,q2:10,q3:10,q4:10,s1:20,s2:20,fn:40};
@@ -1013,12 +1013,12 @@ function updateMaxRemaining(){
   const el=document.getElementById('maxRem');
   if(el) el.textContent=maxR;
 }
-
+ 
 // ── MODAL ──
 function currentDraw(){
   return document.getElementById('dv-atp').style.display !== 'none' ? 'atp' : 'wta';
 }
-
+ 
 function openModal(){
   const d = currentDraw();
   const errors = validatePicks(d);
@@ -1029,7 +1029,7 @@ function openModal(){
   buildModal(d);
   document.getElementById('modal').classList.add('open');
 }
-
+ 
 function validatePicks(d){
   const rounds = ['q1','q2','q3','q4','s1','s2','fn'];
   const roundLabels = {q1:'QF Match 1',q2:'QF Match 2',q3:'QF Match 3',q4:'QF Match 4',s1:'Semifinal 1',s2:'Semifinal 2',fn:'Final / Champion'};
@@ -1044,7 +1044,7 @@ function validatePicks(d){
   }
   return errors;
 }
-
+ 
 function showPickErrors(d, errors){
   document.querySelector('#modal h3').textContent = 'Complete your ' + (d==='atp' ? "ATP" : "WTA") + ' picks first';
   const errList = errors.map(e=>`<div class="pick-err-item">· ${e}</div>`).join('');
@@ -1066,7 +1066,7 @@ function showPickErrors(d, errors){
 }
 function closeModal(){ document.getElementById('modal').classList.remove('open'); }
 function bgClose(e){ if(e.target===document.getElementById('modal')) closeModal(); }
-
+ 
 const RLBLS={q1:'QF Match 1',q2:'QF Match 2',q3:'QF Match 3',q4:'QF Match 4',s1:'Semifinal 1',s2:'Semifinal 2',fn:'Final / Champion'};
 function buildModal(d){
   // Only show the draw currently being submitted
@@ -1102,7 +1102,7 @@ function buildModal(d){
     cfBtn.style.transition = '';
   }
 }
-
+ 
 function confirm_sub(){
   const d = document.getElementById('modal').dataset.draw || currentDraw();
   // Re-validate at confirm time — catches score edits made after modal opened
@@ -1113,7 +1113,7 @@ function confirm_sub(){
   }
   S.submitted[d] = true;
   closeModal();
-
+ 
   // Save to sheet (skip in demo mode)
   if(S.serverMode !== 'demo'){
     const picks = S.p[d];
@@ -1135,12 +1135,12 @@ function confirm_sub(){
       finalSetSum: document.getElementById(d+'-sc')?.value || ''
     }).catch(()=>{}); // fire and forget — don't block UI
   }
-
+ 
   // Lock slots only in the submitted draw
   const bracketDiv = document.getElementById('dv-'+d);
   bracketDiv.querySelectorAll('.ps:not(.win):not(.out)').forEach(s=>s.classList.add('lk'));
   document.getElementById('sbar').style.display='none';
-
+ 
   if(S.submitted.atp && S.submitted.wta){
     const bannerP = document.querySelector('#subBanner .sb-body p');
     if(bannerP) bannerP.textContent = 'Both brackets locked in. Find your picks on the Leaderboard by clicking your name.';
@@ -1160,7 +1160,7 @@ function confirm_sub(){
   };
   document.getElementById('postNudgeModal').classList.add('open');
 }
-
+ 
 // ── LEADERBOARD TABS ──
 function lbTab(id, btn){
   document.querySelectorAll('.lb-view').forEach(v=>v.classList.remove('on'));
@@ -1168,7 +1168,7 @@ function lbTab(id, btn){
   document.getElementById('lbv-'+id).classList.add('on');
   btn.classList.add('on');
 }
-
+ 
 // Demo picks data (used when leaderboard rows pass null)
 const DEMO_PICKS = {
   'Ben Carnevale':  {atp:{q1:'🇮🇹 Sinner',q2:'🇨🇦 Auger-Aliassime',q3:'🇳🇴 Ruud',q4:'🇩🇪 Zverev',s1:'🇮🇹 Sinner',s2:'🇩🇪 Zverev',fn:'🇮🇹 Sinner'},wta:{q1:'🇧🇾 Sabalenka',q2:'🇵🇱 Swiatek',q3:'🇨🇿 Muchová',q4:'🇰🇿 Rybakina',s1:'🇧🇾 Sabalenka',s2:'🇰🇿 Rybakina',fn:'🇧🇾 Sabalenka'}},
@@ -1179,7 +1179,7 @@ const DEMO_PICKS = {
   'Thomas Webb':    {atp:{q1:'🇨🇦 Auger-Aliassime',q2:'🇨🇦 Auger-Aliassime',q3:'🇳🇴 Ruud',q4:'🇷🇸 Djokovic',s1:'🇨🇦 Auger-Aliassime',s2:'🇷🇸 Djokovic',fn:'🇷🇸 Djokovic'},wta:{q1:'🇺🇸 Gauff',q2:'🇵🇱 Swiatek',q3:'🇺🇸 Keys',q4:'🇰🇿 Rybakina',s1:'🇺🇸 Gauff',s2:'🇰🇿 Rybakina',fn:'🇰🇿 Rybakina'}},
   'Sophie Park':    {atp:{q1:'🇮🇹 Sinner',q2:'🇨🇦 Auger-Aliassime',q3:'🇺🇸 T. Paul',q4:'🇩🇪 Zverev',s1:'🇮🇹 Sinner',s2:'🇩🇪 Zverev',fn:'🇩🇪 Zverev'},wta:{q1:'🇧🇾 Sabalenka',q2:'🇷🇺 Andreeva',q3:'🇺🇸 Keys',q4:'🇮🇹 Paolini',s1:'🇧🇾 Sabalenka',s2:'🇮🇹 Paolini',fn:'🇧🇾 Sabalenka'}},
 };
-
+ 
 // ── VIEW MY PICKS (always uses live S.p state) ──
 function viewMyPicks(drawOnly){
   if(!S.user) return;
@@ -1219,12 +1219,12 @@ function viewMyPicks(drawOnly){
   document.getElementById('pmContent').innerHTML = h;
   document.getElementById('picksModal').classList.add('open');
 }
-
+ 
 // ── VIEW PICKS FROM LEADERBOARD ──
 function viewPicks(name, role, picks, drawOnly){
   // If it's the current user and they've submitted, use their actual picks
   let usePicks = picks;
-
+ 
   // Fallback to demo picks if no picks object provided
   if(!usePicks && DEMO_PICKS[name]) usePicks = DEMO_PICKS[name];
   document.getElementById('pmName').textContent = name;
@@ -1243,7 +1243,7 @@ function viewPicks(name, role, picks, drawOnly){
   document.getElementById('pmContent').innerHTML=h;
   document.getElementById('picksModal').classList.add('open');
 }
-
+ 
 // ── LOAD DRAW FROM SHEET ──
 async function loadDraw(){
   try {
@@ -1262,33 +1262,24 @@ async function loadDraw(){
         if(slots[0]) populateR16Slot(slots[0], m.p1Name, m.p1Seed, m.p1Flag);
         if(slots[1]) populateR16Slot(slots[1], m.p2Name, m.p2Seed, m.p2Flag);
       });
-      // Populate QF selectable slots from derived winners
+      // Populate QF slots only when R16 winner confirmed (p1/p2 non-null)
       qfs.forEach((qf, i)=>{
         const cardId = d==='atp' ? 'a-q'+(i+1) : 'w-q'+(i+1);
         const card = document.getElementById(cardId);
         if(!card) return;
         const slots = card.querySelectorAll('.ps');
-        // p1: winner of first R16 match in this pair
-        if(qf.p1 && slots[0] && !slots[0].classList.contains('win')){
-          if(qf.p1.p1 && qf.p1.p2){
-            // R16 match not played yet — show both candidates
-            populateSlot(slots[0], d, 'q'+(i+1), qf.p1.p1);
-            populateSlot(slots[1], d, 'q'+(i+1), qf.p1.p2);
-          } else if(qf.p1.name && qf.p1.name !== 'TBD'){
-            populateSlot(slots[0], d, 'q'+(i+1), qf.p1);
-          }
+        // Only populate if winner is confirmed — otherwise leave as TBD
+        if(qf.p1 && qf.p1.name && qf.p1.name !== 'TBD' && slots[0] && !slots[0].classList.contains('win')){
+          populateSlot(slots[0], d, 'q'+(i+1), qf.p1);
         }
-        // p2: winner of second R16 match in this pair
-        if(qf.p2 && !qf.p1?.p2 && slots[1] && !slots[1].classList.contains('win')){
-          if(qf.p2.name && qf.p2.name !== 'TBD'){
-            populateSlot(slots[1], d, 'q'+(i+1), qf.p2);
-          }
+        if(qf.p2 && qf.p2.name && qf.p2.name !== 'TBD' && slots[1] && !slots[1].classList.contains('win')){
+          populateSlot(slots[1], d, 'q'+(i+1), qf.p2);
         }
       });
     });
   } catch(e){ /* silently fail — bracket shows as-is */ }
 }
-
+ 
 function populateR16Slot(slot, name, seed, flag){
   if(!slot) return;
   const isEmpty = !name || name === 'TBD';
@@ -1297,7 +1288,7 @@ function populateR16Slot(slot, name, seed, flag){
   slot.querySelector('.p-f').textContent = isEmpty ? '' : (flag||'');
   slot.querySelector('.p-n').textContent = isEmpty ? 'TBD' : name;
 }
-
+ 
 function populateSlot(slot, draw, round, player){
   if(!slot || !player || !player.name || player.name === 'TBD') return;
   slot.classList.remove('tbd');
@@ -1311,7 +1302,7 @@ function populateSlot(slot, draw, round, player){
   slot.querySelector('.p-f').textContent = player.flag || '';
   slot.querySelector('.p-n').textContent = player.name;
 }
-
+ 
 // ── LOAD LEADERBOARD FROM SHEET ──
 async function loadLeaderboard(){
   try {
@@ -1320,7 +1311,7 @@ async function loadLeaderboard(){
     renderLeaderboard(data.leaderboard);
   } catch(e){ /* keep demo leaderboard */ }
 }
-
+ 
 function renderLeaderboard(entries){
   ['combined','atp','wta'].forEach(view=>{
     const container = document.getElementById('lbv-'+view);
@@ -1353,11 +1344,11 @@ function renderLeaderboard(entries){
     container.innerHTML = labelText + rows;
   });
 }
-
+ 
 // ── MODE INIT (runs on load) ──
 const DEMO_MODE = new URLSearchParams(window.location.search).get('mode') === 'demo';
 const AS_URL = 'https://script.google.com/macros/s/AKfycbxFivV3z4fm5SQLL6FysP-MiSq1XVY-9riWjrWMqs8XTIb5d_NswEcF93OOiQsY38-ikQ/exec';
-
+ 
 // ── API HELPERS ──
 async function apiGet(action){
   const res = await fetch(AS_URL + '?action=' + action);
@@ -1370,7 +1361,7 @@ async function apiPost(body){
   });
   return res.json();
 }
-
+ 
 // Show/hide a loading state on the gate button
 function setGateLoading(loading){
   const btn = document.querySelector('.bjoin');
@@ -1378,7 +1369,7 @@ function setGateLoading(loading){
   btn.disabled = loading;
   btn.textContent = loading ? 'Checking…' : 'Enter Challenge →';
 }
-
+ 
 function initMode(){
   if(DEMO_MODE){
     document.getElementById('demoBanner').classList.add('show');
@@ -1386,10 +1377,10 @@ function initMode(){
     if(gf) gf.textContent = 'Test mode — use code TEST2026 to enter. Picks are not saved.';
   }
 }
-
+ 
 // expose for join() to check
 function isDemoMode(){ return DEMO_MODE; }
-
+ 
 function togglePw(){
   const input = document.getElementById('uC');
   const btn = document.getElementById('pwBtn');
@@ -1401,7 +1392,7 @@ function togglePw(){
     btn.textContent = 'Show';
   }
 }
-
+ 
 // init
 initMode();
 countPicks();
