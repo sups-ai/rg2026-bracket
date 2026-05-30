@@ -137,9 +137,9 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
 /* Arrow from R16 pair to QF card */
 .r16-pair{position:relative}
 .r16-pair::after{content:'→';position:absolute;right:-22px;top:50%;transform:translateY(-50%);font-size:.65rem;color:var(--ink3);pointer-events:none}
-.col+.col{margin-left:28px}
-.col.qf{margin-left:40px}
-.ch{display:flex;flex-direction:column;min-width:148px;margin-left:28px}
+.col+.col{margin-left:0}
+.col.qf{margin-left:0}
+.ch{display:flex;flex-direction:column;min-width:148px;margin-left:0}
 .col-hd{padding:0 0 .7rem;white-space:nowrap}
 .cr{font-size:.6rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
 .cp{font-size:.56rem;color:var(--ink3);margin-top:.1rem}
@@ -149,10 +149,12 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
 .col.fn .col-b{justify-content:center}
 .ch .col-b{justify-content:center}
  
-/* match unit — card + connector line via pseudo */
+/* match unit — card only, no pseudo connectors */
 .mu{display:flex;align-items:center;position:relative}
-.mu::after{content:'';position:absolute;right:-30px;top:50%;width:30px;height:1px;background:var(--line)}
 .ch .mu::after{display:none}
+/* connector columns between bracket stages */
+.conn{display:flex;flex-direction:column;justify-content:space-around;width:32px;flex-shrink:0;align-self:stretch;position:relative}
+.conn svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
  
 /* card */
 .mc{width:var(--cw);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:#fff;transition:border-color .15s,box-shadow .15s}
@@ -186,7 +188,7 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
 .sr-top{display:flex;align-items:center;gap:.38rem}
 .sr-hint{font-size:.56rem;color:var(--ink3);line-height:1}
 .sl{font-size:.56rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3);white-space:nowrap}
-.sf-in{font-family:'Instrument Sans',sans-serif;font-size:16px;background:#fff;border:1px solid var(--line);border-radius:4px;padding:.18rem .38rem;color:var(--ink);outline:none;width:52px;flex-shrink:0;transition:border-color .14s}
+.sf-in{font-family:'Instrument Sans',sans-serif;font-size:16px;background:#fff;border:1px solid var(--line);border-radius:4px;padding:.18rem .38rem;color:var(--ink);outline:none;width:52px;flex-shrink:0;transition:border-color .14s;transform:scale(0.8);transform-origin:left center;margin-right:-10px}
 .sf-in:focus{border-color:var(--clay)}
 .sf-in::placeholder{color:var(--ink3)}
 .sb{font-size:.56rem;font-weight:600;color:var(--gold);white-space:nowrap}
@@ -329,8 +331,8 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
     <button class="tab"     onclick="pg('rules',this)">Rules</button>
   </div>
   <div class="dlst" id="dlst">
-    <div class="dli"><div class="dld"></div><span class="dll">ATP locks</span><span class="dlv">June 2 · 4:00 AM ET</span></div>
-    <div class="dli"><div class="dld"></div><span class="dll">WTA locks</span><span class="dlv">June 3 · 4:00 AM ET</span></div>
+    <div class="dli"><div class="dld"></div><span class="dll">ATP locks</span><span class="dlv">Tue Tue June 2 · 4 AM ET</span></div>
+    <div class="dli"><div class="dld"></div><span class="dll">WTA locks</span><span class="dlv">Wed June 3 · 4 AM ET</span></div>
   </div>
 </nav>
  
@@ -350,7 +352,7 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
       </div>
       <h2 class="gate-h2">Roland Garros <em>'26</em></h2>
       <p class="gate-h3">Quarterfinal Bracket Challenge</p>
-      <p class="gate-desc">Pick QF winners through the champion for both ATP &amp; WTA draws. Picks lock when quarterfinals begin — ATP June 2 (4 AM ET) · WTA June 3 (4 AM ET).</p>
+      <p class="gate-desc">Pick QF winners through the champion for both ATP &amp; WTA draws. Picks lock when quarterfinals begin — ATP Tue June 2 (4 AM ET) · WTA Wed June 3 (4 AM ET).</p>
       <div class="gate-fields">
         <div class="fi-wrap">
           <label class="fi-lbl">Full name <span class="req">*</span></label>
@@ -477,6 +479,11 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
           </div>
         </div>
  
+        <!-- QF→SF connector -->
+        <div class="conn" id="atp-conn-qsf">
+          <svg><polyline points="0,25% 16,25% 16,50% 32,50%" fill="none" stroke="#E5DDD5" stroke-width="1.5" vector-effect="non-scaling-stroke" style="display:none"/></svg>
+        </div>
+ 
         <div class="col sf">
           <div class="col-hd"><div class="cr">Semifinals</div><div class="cp">20 pts each</div></div>
           <div class="col-b">
@@ -494,6 +501,11 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
           </div>
         </div>
  
+        <!-- SF→Final connector -->
+        <div class="conn" id="atp-conn-sf">
+          <svg><polyline points="0,25% 16,25% 16,50% 32,50%" fill="none" stroke="#E5DDD5" stroke-width="1.5" vector-effect="non-scaling-stroke" style="display:none"/></svg>
+        </div>
+ 
         <div class="col fn">
           <div class="col-hd"><div class="cr">Final</div><div class="cp">40 pts · +5 final set bonus</div></div>
           <div class="col-b">
@@ -503,6 +515,11 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
               <div class="sr"><div class="sr-top"><span class="sl">Final set games</span><input class="sf-in" id="atp-sc" type="number" min="6" max="13" inputmode="numeric" oninput="validateSetSum(this)" placeholder="12" style="max-width:58px"><span class="sb">+5 pts</span></div><span class="sr-hint">Sum of games in deciding set (6–10, 12 or 13)</span></div>
             </div></div>
           </div>
+        </div>
+ 
+        <!-- Final→Champion connector -->
+        <div class="conn" style="width:20px">
+          <svg><line x1="0" y1="50%" x2="20" y2="50%" stroke="#E5DDD5" stroke-width="1.5" vector-effect="non-scaling-stroke"/></svg>
         </div>
  
         <div class="ch">
@@ -609,6 +626,9 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
           </div>
         </div>
  
+        <!-- QF→SF connector -->
+        <div class="conn" id="wta-conn-qsf"></div>
+ 
         <div class="col sf">
           <div class="col-hd"><div class="cr">Semifinals</div><div class="cp">20 pts each</div></div>
           <div class="col-b">
@@ -626,6 +646,9 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
           </div>
         </div>
  
+        <!-- SF→Final connector -->
+        <div class="conn" id="wta-conn-sf"></div>
+ 
         <div class="col fn">
           <div class="col-hd"><div class="cr">Final</div><div class="cp">40 pts · +5 final set bonus</div></div>
           <div class="col-b">
@@ -635,6 +658,10 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
               <div class="sr"><div class="sr-top"><span class="sl">Final set games</span><input class="sf-in" id="wta-sc" type="number" min="6" max="13" inputmode="numeric" oninput="validateSetSum(this)" placeholder="12" style="max-width:58px"><span class="sb">+5 pts</span></div><span class="sr-hint">Sum of games in deciding set (6–10, 12 or 13)</span></div>
             </div></div>
           </div>
+        </div>
+ 
+        <div class="conn" style="width:20px">
+          <svg><line x1="0" y1="50%" x2="20" y2="50%" stroke="#E5DDD5" stroke-width="1.5" vector-effect="non-scaling-stroke"/></svg>
         </div>
  
         <div class="ch">
@@ -738,8 +765,8 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
       <div class="dlc">
         <div class="dlch"><div class="dlcd"></div><div class="dlcn">Men's Draw · ATP</div><div class="dlcs">⏳ Open</div></div>
         <div class="dlcb">
-          <div class="dli2"><span class="dlr">Picks deadline</span><span class="dlv2">Mon June 2 · 4:00 AM ET (10:00 AM Paris)</span></div>
-          <div class="dli2"><span class="dlr">QF start</span><span class="dlv2">Mon June 2 · ~5:00 AM ET (11:00 AM Paris)</span></div>
+          <div class="dli2"><span class="dlr">Picks deadline</span><span class="dlv2">Tue Tue Tue June 2 · 4 AM ET (10:00 AM Paris)</span></div>
+          <div class="dli2"><span class="dlr">QF start</span><span class="dlv2">Tue June 2 · ~5:00 AM ET (11:00 AM Paris)</span></div>
           <div class="dli2"><span class="dlr">Semifinals</span><span class="dlv2">Thu June 5</span></div>
           <div class="dli2"><span class="dlr">Final</span><span class="dlv2">Sun June 7</span></div>
         </div>
@@ -747,10 +774,10 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
       <div class="dlc">
         <div class="dlch"><div class="dlcd"></div><div class="dlcn">Women's Draw · WTA</div><div class="dlcs">⏳ Open</div></div>
         <div class="dlcb">
-          <div class="dli2"><span class="dlr">Picks deadline</span><span class="dlv2">Tue June 3 · 4:00 AM ET (10:00 AM Paris)</span></div>
-          <div class="dli2"><span class="dlr">QF start</span><span class="dlv2">Tue June 3 · ~5:00 AM ET (11:00 AM Paris)</span></div>
+          <div class="dli2"><span class="dlr">Picks deadline</span><span class="dlv2">Tue Wed June 3 · 4 AM ET (10:00 AM Paris)</span></div>
+          <div class="dli2"><span class="dlr">QF start</span><span class="dlv2">Wed June 3 · ~5:00 AM ET (11:00 AM Paris)</span></div>
           <div class="dli2"><span class="dlr">Semifinals</span><span class="dlv2">Thu–Fri June 5–6</span></div>
-          <div class="dli2"><span class="dlr">Final</span><span class="dlv2">Sat June 7</span></div>
+          <div class="dli2"><span class="dlr">Final</span><span class="dlv2">Sat June 6</span></div>
         </div>
       </div>
       <div class="dlal">
@@ -1158,7 +1185,7 @@ function confirm_sub(){
   // One draw done — show post-submit nudge to do the other
   const other = d==='atp' ? 'wta' : 'atp';
   const otherLabel = other==='atp' ? 'ATP' : 'WTA';
-  const deadline = other==='atp' ? 'June 2 · 4 AM ET' : 'June 3 · 4 AM ET';
+  const deadline = other==='atp' ? 'Tue June 2 · 4 AM ET' : 'Wed June 3 · 4 AM ET';
   document.getElementById('postNudgeText').innerHTML =
     `<strong>${d.toUpperCase()} picks submitted.</strong> Switch to ${otherLabel} to make your ${otherLabel} picks before the ${otherLabel} deadline (${deadline}).`;
   document.getElementById('postNudgeBtn').textContent = `Go to ${otherLabel} →`;
@@ -1412,9 +1439,74 @@ function togglePw(){
   }
 }
  
+// ── DRAW BRACKET CONNECTORS ──
+function drawConnectors(){
+  // For each bracket (atp, wta), draw lines connecting:
+  // QF1+QF2 → SF1 centre, QF3+QF4 → SF2 centre
+  // SF1+SF2 → Final centre
+  ['atp','wta'].forEach(d=>{
+    const prefix = d==='atp' ? 'a' : 'w';
+    drawBracketArm(
+      document.getElementById(prefix+'-q1'),
+      document.getElementById(prefix+'-q2'),
+      document.getElementById(prefix+'-s1'),
+      document.getElementById(d+'-conn-qsf'), 0
+    );
+    drawBracketArm(
+      document.getElementById(prefix+'-q3'),
+      document.getElementById(prefix+'-q4'),
+      document.getElementById(prefix+'-s2'),
+      document.getElementById(d+'-conn-qsf'), 1
+    );
+    drawBracketArm(
+      document.getElementById(prefix+'-s1'),
+      document.getElementById(prefix+'-s2'),
+      document.getElementById(prefix+'-fn'),
+      document.getElementById(d+'-conn-sf'), 0
+    );
+  });
+}
+ 
+function drawBracketArm(topCard, bottomCard, targetCard, connDiv, index){
+  if(!topCard||!bottomCard||!targetCard||!connDiv) return;
+  const connRect = connDiv.getBoundingClientRect();
+  if(connRect.height < 1) return;
+  const topRect    = topCard.getBoundingClientRect();
+  const bottomRect = bottomCard.getBoundingClientRect();
+  const targetRect = targetCard.getBoundingClientRect();
+  // Y positions relative to connDiv
+  const y1 = topRect.top    + topRect.height/2    - connRect.top;
+  const y2 = bottomRect.top + bottomRect.height/2 - connRect.top;
+  const yMid = (y1+y2)/2;
+  const yTarget = targetRect.top + targetRect.height/2 - connRect.top;
+  const w = connRect.width;
+  // Ensure SVG exists
+  let svg = connDiv.querySelector('svg');
+  if(!svg){ svg = document.createElementNS('http://www.w3.org/2000/svg','svg'); svg.style.cssText='position:absolute;inset:0;width:100%;height:100%;overflow:visible;'; connDiv.appendChild(svg); }
+  // Draw: horizontal from card edge to midpoint, vertical arm, horizontal to target
+  const path = document.createElementNS('http://www.w3.org/2000/svg','polyline');
+  path.setAttribute('points', `0,${y1} ${w*0.4},${y1} ${w*0.4},${yTarget} ${w},${yTarget}`);
+  path.setAttribute('fill','none');
+  path.setAttribute('stroke','#E5DDD5');
+  path.setAttribute('stroke-width','1.5');
+  svg.appendChild(path);
+  // Second arm (bottom card to same midpoint)
+  const path2 = document.createElementNS('http://www.w3.org/2000/svg','polyline');
+  path2.setAttribute('points', `0,${y2} ${w*0.4},${y2} ${w*0.4},${yTarget}`);
+  path2.setAttribute('fill','none');
+  path2.setAttribute('stroke','#E5DDD5');
+  path2.setAttribute('stroke-width','1.5');
+  svg.appendChild(path2);
+}
+ 
+// Redraw on resize
+window.addEventListener('resize', ()=>{ setTimeout(drawConnectors,100); });
+ 
 // init
 initMode();
 countPicks();
+// Draw connectors after layout settles
+setTimeout(drawConnectors, 300);
 </script>
 </body>
 </html>
