@@ -119,25 +119,32 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
  
 /* columns */
 .col{display:flex;flex-direction:column;min-width:var(--cw)}
-/* R16 column — narrower, display only */
-.col.r16{min-width:160px}
-.col.r16 .mc{width:160px}
-.mc-r16{width:160px;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:#fff;opacity:.85}
-.ps-r16{display:flex;align-items:center;gap:.4rem;padding:.38rem .6rem;min-height:32px;border-top:1px solid var(--line)}
+/* R16 column — narrower, display only, no connector lines */
+.col.r16{min-width:155px}
+.col.r16 .mu::after{display:none}
+.mc-r16{width:155px;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:#fff;opacity:.9}
+.ps-r16{display:flex;align-items:center;gap:.4rem;padding:.36rem .58rem;min-height:30px;border-top:1px solid var(--line)}
 .ps-r16:first-child{border-top:none}
 .ps-r16 .p-s{font-size:.54rem;color:var(--ink3);width:13px;text-align:right;flex-shrink:0}
 .ps-r16 .p-f{font-size:.8rem;line-height:1;flex-shrink:0}
-.ps-r16 .p-n{font-size:.7rem;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ps-r16 .p-n{font-size:.68rem;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ps-r16.tbd .p-n{color:var(--ink3);font-style:italic}
-.r16-vs{display:flex;align-items:center;justify-content:center;padding:.18rem 0;background:var(--bg);border-top:1px solid var(--line)}
-.r16-vs span{font-size:.54rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3)}
-.col+.col{margin-left:30px}
-.ch{display:flex;flex-direction:column;min-width:148px;margin-left:30px}
+.r16-vs{display:flex;align-items:center;justify-content:center;padding:.15rem 0;background:var(--bg);border-top:1px solid var(--line)}
+.r16-vs span{font-size:.52rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3)}
+/* R16 pairs — each pair aligns with one QF card */
+.r16-pair{display:flex;flex-direction:column;gap:4px;flex:1}
+.col.r16 .col-b{display:flex;flex-direction:column;justify-content:space-between;gap:0}
+/* Arrow from R16 pair to QF card */
+.r16-pair{position:relative}
+.r16-pair::after{content:'→';position:absolute;right:-22px;top:50%;transform:translateY(-50%);font-size:.65rem;color:var(--ink3);pointer-events:none}
+.col+.col{margin-left:28px}
+.col.qf{margin-left:40px}
+.ch{display:flex;flex-direction:column;min-width:148px;margin-left:28px}
 .col-hd{padding:0 0 .7rem;white-space:nowrap}
 .cr{font-size:.6rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
 .cp{font-size:.56rem;color:var(--ink3);margin-top:.1rem}
 .col-b{flex:1;display:flex;flex-direction:column}
-.col.qf .col-b{justify-content:space-between}
+.col.qf .col-b{justify-content:space-between;gap:0}
 .col.sf .col-b{justify-content:space-around}
 .col.fn .col-b{justify-content:center}
 .ch .col-b{justify-content:center}
@@ -179,7 +186,7 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
 .sr-top{display:flex;align-items:center;gap:.38rem}
 .sr-hint{font-size:.56rem;color:var(--ink3);line-height:1}
 .sl{font-size:.56rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3);white-space:nowrap}
-.sf-in{font-family:'Instrument Sans',sans-serif;font-size:16px;background:#fff;border:1px solid var(--line);border-radius:4px;padding:.2rem .42rem;color:var(--ink);outline:none;flex:1;min-width:0;transition:border-color .14s}
+.sf-in{font-family:'Instrument Sans',sans-serif;font-size:16px;background:#fff;border:1px solid var(--line);border-radius:4px;padding:.18rem .38rem;color:var(--ink);outline:none;width:52px;flex-shrink:0;transition:border-color .14s}
 .sf-in:focus{border-color:var(--clay)}
 .sf-in::placeholder{color:var(--ink3)}
 .sb{font-size:.56rem;font-weight:600;color:var(--gold);white-space:nowrap}
@@ -398,43 +405,43 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
                 <div class="r16-vs"><span>vs</span></div>
                 <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
               </div></div>
-              <div class="mu" style="margin-top:4px"><div class="mc-r16" id="atp-r16-2">
+              <div class="mu"><div class="mc-r16" id="atp-r16-2">
                 <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
                 <div class="r16-vs"><span>vs</span></div>
                 <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
               </div></div>
             </div>
-            <div class="r16-pair" id="atp-r16-pair-2" style="margin-top:8px">
+            <div class="r16-pair" id="atp-r16-pair-2">
               <div class="mu"><div class="mc-r16" id="atp-r16-3">
                 <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
                 <div class="r16-vs"><span>vs</span></div>
                 <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
               </div></div>
-              <div class="mu" style="margin-top:4px"><div class="mc-r16" id="atp-r16-4">
+              <div class="mu"><div class="mc-r16" id="atp-r16-4">
                 <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
                 <div class="r16-vs"><span>vs</span></div>
                 <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
               </div></div>
             </div>
-            <div class="r16-pair" id="atp-r16-pair-3" style="margin-top:8px">
+            <div class="r16-pair" id="atp-r16-pair-3">
               <div class="mu"><div class="mc-r16" id="atp-r16-5">
                 <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
                 <div class="r16-vs"><span>vs</span></div>
                 <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
               </div></div>
-              <div class="mu" style="margin-top:4px"><div class="mc-r16" id="atp-r16-6">
+              <div class="mu"><div class="mc-r16" id="atp-r16-6">
                 <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
                 <div class="r16-vs"><span>vs</span></div>
                 <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
               </div></div>
             </div>
-            <div class="r16-pair" id="atp-r16-pair-4" style="margin-top:8px">
+            <div class="r16-pair" id="atp-r16-pair-4">
               <div class="mu"><div class="mc-r16" id="atp-r16-7">
                 <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
                 <div class="r16-vs"><span>vs</span></div>
                 <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
               </div></div>
-              <div class="mu" style="margin-top:4px"><div class="mc-r16" id="atp-r16-8">
+              <div class="mu"><div class="mc-r16" id="atp-r16-8">
                 <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
                 <div class="r16-vs"><span>vs</span></div>
                 <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
@@ -493,7 +500,7 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
             <div class="mu"><div class="mc" id="a-fn" style="width:var(--cw)">
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner SF1</span></div>
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner SF2</span></div>
-              <div class="sr"><div class="sr-top"><span class="sl">Final set games</span><input class="sf-in" id="atp-sc" type="number" min="6" max="13" inputmode="numeric" placeholder="12" style="max-width:58px"><span class="sb">+5 pts</span></div><span class="sr-hint">Sum of games in deciding set only</span></div>
+              <div class="sr"><div class="sr-top"><span class="sl">Final set games</span><input class="sf-in" id="atp-sc" type="number" min="6" max="13" inputmode="numeric" oninput="validateSetSum(this)" placeholder="12" style="max-width:58px"><span class="sb">+5 pts</span></div><span class="sr-hint">Sum of games in deciding set (6–10, 12 or 13)</span></div>
             </div></div>
           </div>
         </div>
@@ -530,43 +537,43 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
                 <div class="r16-vs"><span>vs</span></div>
                 <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
               </div></div>
-              <div class="mu" style="margin-top:4px"><div class="mc-r16" id="wta-r16-2">
+              <div class="mu"><div class="mc-r16" id="wta-r16-2">
                 <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
                 <div class="r16-vs"><span>vs</span></div>
                 <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
               </div></div>
             </div>
-            <div class="r16-pair" id="wta-r16-pair-2" style="margin-top:8px">
+            <div class="r16-pair" id="wta-r16-pair-2">
               <div class="mu"><div class="mc-r16" id="wta-r16-3">
                 <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
                 <div class="r16-vs"><span>vs</span></div>
                 <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
               </div></div>
-              <div class="mu" style="margin-top:4px"><div class="mc-r16" id="wta-r16-4">
+              <div class="mu"><div class="mc-r16" id="wta-r16-4">
                 <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
                 <div class="r16-vs"><span>vs</span></div>
                 <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
               </div></div>
             </div>
-            <div class="r16-pair" id="wta-r16-pair-3" style="margin-top:8px">
+            <div class="r16-pair" id="wta-r16-pair-3">
               <div class="mu"><div class="mc-r16" id="wta-r16-5">
                 <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
                 <div class="r16-vs"><span>vs</span></div>
                 <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
               </div></div>
-              <div class="mu" style="margin-top:4px"><div class="mc-r16" id="wta-r16-6">
+              <div class="mu"><div class="mc-r16" id="wta-r16-6">
                 <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
                 <div class="r16-vs"><span>vs</span></div>
                 <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
               </div></div>
             </div>
-            <div class="r16-pair" id="wta-r16-pair-4" style="margin-top:8px">
+            <div class="r16-pair" id="wta-r16-pair-4">
               <div class="mu"><div class="mc-r16" id="wta-r16-7">
                 <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
                 <div class="r16-vs"><span>vs</span></div>
                 <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
               </div></div>
-              <div class="mu" style="margin-top:4px"><div class="mc-r16" id="wta-r16-8">
+              <div class="mu"><div class="mc-r16" id="wta-r16-8">
                 <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
                 <div class="r16-vs"><span>vs</span></div>
                 <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
@@ -625,7 +632,7 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
             <div class="mu"><div class="mc" id="w-fn" style="width:var(--cw)">
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner SF1</span></div>
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner SF2</span></div>
-              <div class="sr"><div class="sr-top"><span class="sl">Final set games</span><input class="sf-in" id="wta-sc" type="number" min="6" max="13" inputmode="numeric" placeholder="12" style="max-width:58px"><span class="sb">+5 pts</span></div><span class="sr-hint">Sum of games in deciding set only</span></div>
+              <div class="sr"><div class="sr-top"><span class="sl">Final set games</span><input class="sf-in" id="wta-sc" type="number" min="6" max="13" inputmode="numeric" oninput="validateSetSum(this)" placeholder="12" style="max-width:58px"><span class="sb">+5 pts</span></div><span class="sr-hint">Sum of games in deciding set (6–10, 12 or 13)</span></div>
             </div></div>
           </div>
         </div>
@@ -1039,8 +1046,9 @@ function validatePicks(d){
   });
   // Validate score if entered — must be 6–13
   const scVal = parseInt(document.getElementById(d+'-sc')?.value || '');
-  if(!isNaN(scVal) && (scVal < 6 || scVal > 13)){
-    errors.push('Final set sum must be between 6 and 13');
+  const invalidScores = [11];
+  if(!isNaN(scVal) && (scVal < 6 || scVal > 13 || invalidScores.includes(scVal))){
+    errors.push('Final set sum must be 6–10, 12 or 13 (11 is not possible).');
   }
   return errors;
 }
@@ -1380,6 +1388,17 @@ function initMode(){
  
 // expose for join() to check
 function isDemoMode(){ return DEMO_MODE; }
+ 
+function validateSetSum(input){
+  const v = parseInt(input.value);
+  if(!isNaN(v) && v === 11){
+    input.value = '';
+    input.setCustomValidity('11 is not a valid set score. Enter 6-10, 12 or 13.');
+    input.reportValidity();
+  } else {
+    input.setCustomValidity('');
+  }
+}
  
 function togglePw(){
   const input = document.getElementById('uC');
