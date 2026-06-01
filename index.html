@@ -1189,6 +1189,27 @@ function viewMyPicks(drawOnly){
 
 
 // -- VIEW PICKS FROM LEADERBOARD --
+function viewPicksFromCache(idx, drawOnly){
+  if(!S.leaderboardCache || !S.leaderboardCache[idx]) return;
+  const entry = S.leaderboardCache[idx];
+  // Build picks object from entry data
+  const picks = {
+    atp: entry.atpPicks ? {
+      q1: entry.atpPicks.q1, q2: entry.atpPicks.q2,
+      q3: entry.atpPicks.q3, q4: entry.atpPicks.q4,
+      s1: entry.atpPicks.s1, s2: entry.atpPicks.s2,
+      fn: entry.atpPicks.fn
+    } : null,
+    wta: entry.wtaPicks ? {
+      q1: entry.wtaPicks.q1, q2: entry.wtaPicks.q2,
+      q3: entry.wtaPicks.q3, q4: entry.wtaPicks.q4,
+      s1: entry.wtaPicks.s1, s2: entry.wtaPicks.s2,
+      fn: entry.wtaPicks.fn
+    } : null
+  };
+  viewPicks(entry.name, entry.role || '', picks, drawOnly);
+}
+
 function viewPicks(name, role, picks, drawOnly){
   // If it's the current user and they've submitted, use their actual picks
   let usePicks = picks;
@@ -1270,6 +1291,8 @@ async function loadLeaderboard(){
 }
 
 function renderLeaderboard(entries){
+  // Cache for pick lookups when rows are clicked
+  S.leaderboardCache = entries;
   // Update timestamp
   const now = new Date();
   const timeStr = now.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
@@ -1300,9 +1323,11 @@ function renderLeaderboard(entries){
       const avatarColors = ['#5A3E28','#2A3E6B','#D45C38','#5A2A6B','#2A5A3E','#3E2A5A','#5A3E28','#28405A'];
       const bg = isMe ? '#D45C38' : avatarColors[i % avatarColors.length];
       const meClass = isMe ? ' me' : '';
+      // Store picks in a temp lookup by index so onclick can retrieve them
+      const entryIdx = S.leaderboardCache ? S.leaderboardCache.indexOf(entry) : -1;
       const clickFn = isMe
         ? `viewMyPicks(${view!=='combined'?"'"+view+"'":''})` 
-        : `viewPicks('${entry.name}','${entry.role||''}',null${view!=='combined'?`,'${view}'`:''})`;
+        : `viewPicksFromCache(${entryIdx}${view!=='combined'?`,'${view}'`:''})`;
       rows += `<div class="lbr${meClass}" onclick="${clickFn}">
         <div class="lrk">${i+1}</div>
         <div class="lav" style="background:${bg}">${initials}</div>
