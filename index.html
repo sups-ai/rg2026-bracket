@@ -114,29 +114,27 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
 .bwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:1.2rem 1.5rem 2.5rem}
 .sh{font-size:.6rem;color:var(--ink3);letter-spacing:.06em;text-align:center;padding:.3rem;display:none}
 @media(max-width:860px){.sh{display:block}}
-.bracket{display:flex;align-items:stretch;min-width:1100px;gap:0;animation:fu .3s ease}
+.bracket{display:flex;align-items:stretch;min-width:860px;gap:0;animation:fu .3s ease}
 @keyframes fu{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
 /* columns */
 .col{display:flex;flex-direction:column;min-width:var(--cw)}
-/* R16 column — narrower, display only, no connector lines */
-.col.r16{min-width:155px}
-.col.r16 .mu::after{display:none}
-.mc-r16{width:155px;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:#fff;opacity:.9}
-.ps-r16{display:flex;align-items:center;gap:.4rem;padding:.36rem .58rem;min-height:30px;border-top:1px solid var(--line)}
-.ps-r16:first-child{border-top:none}
-.ps-r16 .p-s{font-size:.54rem;color:var(--ink3);width:13px;text-align:right;flex-shrink:0}
-.ps-r16 .p-f{font-size:.8rem;line-height:1;flex-shrink:0}
-.ps-r16 .p-n{font-size:.68rem;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ps-r16.tbd .p-n{color:var(--ink3);font-style:italic}
-.r16-vs{display:flex;align-items:center;justify-content:center;padding:.15rem 0;background:var(--bg);border-top:1px solid var(--line)}
-.r16-vs span{font-size:.52rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3)}
+
+
+
+
+
+
+
+
+
+
+
 /* R16 pairs — each pair aligns with one QF card */
-.r16-pair{display:flex;flex-direction:column;gap:4px;flex:1}
-.col.r16 .col-b{display:flex;flex-direction:column;justify-content:space-between;gap:0}
+
+
 /* Arrow from R16 pair to QF card */
-.r16-pair{position:relative}
-.r16-pair::after{content:'→';position:absolute;right:-22px;top:50%;transform:translateY(-50%);font-size:.65rem;color:var(--ink3);pointer-events:none}
+
 .col+.col{margin-left:0}
 .col.qf{margin-left:0}
 .ch{display:flex;flex-direction:column;min-width:148px;margin-left:0}
@@ -407,83 +405,28 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
       <div class="bracket">
 
         <!-- R16 column — display only, populated from Draw sheet -->
-        <div class="col r16">
-          <div class="col-hd"><div class="cr">Round of 16</div><div class="cp">Display only</div></div>
-          <div class="col-b" id="atp-r16-col">
-            <!-- R16 match pairs: R16-1+R16-2 feed QF1, R16-3+R16-4 feed QF2, etc -->
-            <div class="r16-pair" id="atp-r16-pair-1">
-              <div class="mu"><div class="mc-r16" id="atp-r16-1">
-                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
-                <div class="r16-vs"><span>vs</span></div>
-                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
-              </div></div>
-              <div class="mu"><div class="mc-r16" id="atp-r16-2">
-                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
-                <div class="r16-vs"><span>vs</span></div>
-                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
-              </div></div>
-            </div>
-            <div class="r16-pair" id="atp-r16-pair-2">
-              <div class="mu"><div class="mc-r16" id="atp-r16-3">
-                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
-                <div class="r16-vs"><span>vs</span></div>
-                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
-              </div></div>
-              <div class="mu"><div class="mc-r16" id="atp-r16-4">
-                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
-                <div class="r16-vs"><span>vs</span></div>
-                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
-              </div></div>
-            </div>
-            <div class="r16-pair" id="atp-r16-pair-3">
-              <div class="mu"><div class="mc-r16" id="atp-r16-5">
-                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
-                <div class="r16-vs"><span>vs</span></div>
-                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
-              </div></div>
-              <div class="mu"><div class="mc-r16" id="atp-r16-6">
-                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
-                <div class="r16-vs"><span>vs</span></div>
-                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
-              </div></div>
-            </div>
-            <div class="r16-pair" id="atp-r16-pair-4">
-              <div class="mu"><div class="mc-r16" id="atp-r16-7">
-                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
-                <div class="r16-vs"><span>vs</span></div>
-                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
-              </div></div>
-              <div class="mu"><div class="mc-r16" id="atp-r16-8">
-                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
-                <div class="r16-vs"><span>vs</span></div>
-                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
-              </div></div>
-            </div>
-          </div>
-        </div>
-
         <div class="col qf">
           <div class="col-hd"><div class="cr">Quarterfinals</div><div class="cp">10 pts each</div></div>
           <div class="col-b">
 
-            <div class="mu"><div class="mc" id="a-q1">
-              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-1</span></div>
-              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-2</span></div>
+                        <div class="mu"><div class="mc" id="a-q1">
+              <div class="ps" data-d="atp" data-r="q1" data-i="0" data-pl="berrettini" data-n="Berrettini" data-s="" data-f="🇮🇹" onclick="pick(this)"><span class="p-s"></span><span class="p-f">🇮🇹</span><span class="p-n">Berrettini</span><span class="p-c">&#10003;</span></div>
+              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
             </div></div>
 
-            <div class="mu"><div class="mc" id="a-q2">
-              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-3</span></div>
-              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-4</span></div>
+                        <div class="mu"><div class="mc" id="a-q2">
+              <div class="ps" data-d="atp" data-r="q2" data-i="0" data-pl="auger-aliassime" data-n="Auger-Aliassime" data-s="4" data-f="🇨🇦" onclick="pick(this)"><span class="p-s">4</span><span class="p-f">🇨🇦</span><span class="p-n">Auger-Aliassime</span><span class="p-c">&#10003;</span></div>
+              <div class="ps" data-d="atp" data-r="q2" data-i="1" data-pl="cobolli" data-n="Cobolli" data-s="10" data-f="🇮🇹" onclick="pick(this)"><span class="p-s">10</span><span class="p-f">🇮🇹</span><span class="p-n">Cobolli</span><span class="p-c">&#10003;</span></div>
             </div></div>
 
-            <div class="mu"><div class="mc" id="a-q3">
-              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-5</span></div>
-              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-6</span></div>
+                        <div class="mu"><div class="mc" id="a-q3">
+              <div class="ps" data-d="atp" data-r="q3" data-i="0" data-pl="mensik" data-n="Mensik" data-s="26" data-f="🇨🇿" onclick="pick(this)"><span class="p-s">26</span><span class="p-f">🇨🇿</span><span class="p-n">Mensik</span><span class="p-c">&#10003;</span></div>
+              <div class="ps" data-d="atp" data-r="q3" data-i="1" data-pl="zverev" data-n="Zverev" data-s="2" data-f="🇩🇪" onclick="pick(this)"><span class="p-s">2</span><span class="p-f">🇩🇪</span><span class="p-n">Zverev</span><span class="p-c">&#10003;</span></div>
             </div></div>
 
-            <div class="mu"><div class="mc" id="a-q4">
-              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-7</span></div>
-              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-8</span></div>
+                        <div class="mu"><div class="mc" id="a-q4">
+              <div class="ps" data-d="atp" data-r="q4" data-i="0" data-pl="jodar" data-n="Jodar" data-s="27" data-f="🇪🇸" onclick="pick(this)"><span class="p-s">27</span><span class="p-f">🇪🇸</span><span class="p-n">Jodar</span><span class="p-c">&#10003;</span></div>
+              <div class="ps" data-d="atp" data-r="q4" data-i="1" data-pl="fonseca" data-n="Fonseca" data-s="28" data-f="🇧🇷" onclick="pick(this)"><span class="p-s">28</span><span class="p-f">🇧🇷</span><span class="p-n">Fonseca</span><span class="p-c">&#10003;</span></div>
             </div></div>
 
           </div>
@@ -553,83 +496,28 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
     <div class="bwrap">
       <div class="bracket">
 
-        <!-- WTA R16 column -->
-        <div class="col r16">
-          <div class="col-hd"><div class="cr">Round of 16</div><div class="cp">Display only</div></div>
-          <div class="col-b" id="wta-r16-col">
-            <div class="r16-pair" id="wta-r16-pair-1">
-              <div class="mu"><div class="mc-r16" id="wta-r16-1">
-                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
-                <div class="r16-vs"><span>vs</span></div>
-                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
-              </div></div>
-              <div class="mu"><div class="mc-r16" id="wta-r16-2">
-                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
-                <div class="r16-vs"><span>vs</span></div>
-                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
-              </div></div>
-            </div>
-            <div class="r16-pair" id="wta-r16-pair-2">
-              <div class="mu"><div class="mc-r16" id="wta-r16-3">
-                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
-                <div class="r16-vs"><span>vs</span></div>
-                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
-              </div></div>
-              <div class="mu"><div class="mc-r16" id="wta-r16-4">
-                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
-                <div class="r16-vs"><span>vs</span></div>
-                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
-              </div></div>
-            </div>
-            <div class="r16-pair" id="wta-r16-pair-3">
-              <div class="mu"><div class="mc-r16" id="wta-r16-5">
-                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
-                <div class="r16-vs"><span>vs</span></div>
-                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
-              </div></div>
-              <div class="mu"><div class="mc-r16" id="wta-r16-6">
-                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
-                <div class="r16-vs"><span>vs</span></div>
-                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
-              </div></div>
-            </div>
-            <div class="r16-pair" id="wta-r16-pair-4">
-              <div class="mu"><div class="mc-r16" id="wta-r16-7">
-                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
-                <div class="r16-vs"><span>vs</span></div>
-                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
-              </div></div>
-              <div class="mu"><div class="mc-r16" id="wta-r16-8">
-                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
-                <div class="r16-vs"><span>vs</span></div>
-                <div class="ps-r16 tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">TBD</span></div>
-              </div></div>
-            </div>
-          </div>
-        </div>
-
         <div class="col qf">
           <div class="col-hd"><div class="cr">Quarterfinals</div><div class="cp">10 pts each</div></div>
           <div class="col-b">
 
-            <div class="mu"><div class="mc" id="w-q1">
-              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-1</span></div>
-              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-2</span></div>
+                        <div class="mu"><div class="mc" id="w-q1">
+              <div class="ps" data-d="wta" data-r="q1" data-i="0" data-pl="sabalenka" data-n="Sabalenka" data-s="1" data-f="🇧🇾" onclick="pick(this)"><span class="p-s">1</span><span class="p-f">🇧🇾</span><span class="p-n">Sabalenka</span><span class="p-c">&#10003;</span></div>
+              <div class="ps" data-d="wta" data-r="q1" data-i="1" data-pl="shnaider" data-n="Shnaider" data-s="25" data-f="🇷🇺" onclick="pick(this)"><span class="p-s">25</span><span class="p-f">🇷🇺</span><span class="p-n">Shnaider</span><span class="p-c">&#10003;</span></div>
             </div></div>
 
-            <div class="mu"><div class="mc" id="w-q2">
-              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-3</span></div>
-              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-4</span></div>
+                        <div class="mu"><div class="mc" id="w-q2">
+              <div class="ps" data-d="wta" data-r="q2" data-i="0" data-pl="potapova" data-n="Potapova" data-s="28" data-f="🇷🇺" onclick="pick(this)"><span class="p-s">28</span><span class="p-f">🇷🇺</span><span class="p-n">Potapova</span><span class="p-c">&#10003;</span></div>
+              <div class="ps" data-d="wta" data-r="q2" data-i="1" data-pl="kalinskaya" data-n="Kalinskaya" data-s="22" data-f="🇷🇺" onclick="pick(this)"><span class="p-s">22</span><span class="p-f">🇷🇺</span><span class="p-n">Kalinskaya</span><span class="p-c">&#10003;</span></div>
             </div></div>
 
-            <div class="mu"><div class="mc" id="w-q3">
-              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-5</span></div>
-              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-6</span></div>
+                        <div class="mu"><div class="mc" id="w-q3">
+              <div class="ps" data-d="wta" data-r="q3" data-i="0" data-pl="svitolina" data-n="Svitolina" data-s="7" data-f="🇺🇦" onclick="pick(this)"><span class="p-s">7</span><span class="p-f">🇺🇦</span><span class="p-n">Svitolina</span><span class="p-c">&#10003;</span></div>
+              <div class="ps" data-d="wta" data-r="q3" data-i="1" data-pl="kostyuk" data-n="Kostyuk" data-s="15" data-f="🇺🇦" onclick="pick(this)"><span class="p-s">15</span><span class="p-f">🇺🇦</span><span class="p-n">Kostyuk</span><span class="p-c">&#10003;</span></div>
             </div></div>
 
-            <div class="mu"><div class="mc" id="w-q4">
-              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-7</span></div>
-              <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner R16-8</span></div>
+                        <div class="mu"><div class="mc" id="w-q4">
+              <div class="ps" data-d="wta" data-r="q4" data-i="0" data-pl="andreeva" data-n="Andreeva" data-s="8" data-f="🇷🇺" onclick="pick(this)"><span class="p-s">8</span><span class="p-f">🇷🇺</span><span class="p-n">Andreeva</span><span class="p-c">&#10003;</span></div>
+              <div class="ps" data-d="wta" data-r="q4" data-i="1" data-pl="cirstea" data-n="Cirstea" data-s="18" data-f="🇷🇴" onclick="pick(this)"><span class="p-s">18</span><span class="p-f">🇷🇴</span><span class="p-n">Cirstea</span><span class="p-c">&#10003;</span></div>
             </div></div>
 
           </div>
@@ -1304,101 +1192,9 @@ function viewPicks(name, role, picks, drawOnly){
 
 // -- LOAD DRAW FROM SHEET --
 async function loadDraw(){
-  // In demo mode, use hardcoded R16 data so bracket isn't blank
-  if(DEMO_MODE){
-    const demoData = {
-      ok: true,
-      atp: { r16: [
-        {match:'R16-1',p1Name:'Zverev',p1Seed:'2',p1Flag:'🇩🇪',p2Name:'de Jong',p2Seed:'LL',p2Flag:'🇳🇱'},
-        {match:'R16-2',p1Name:'Cerundolo',p1Seed:'',p1Flag:'🇦🇷',p2Name:'TBD',p2Seed:'',p2Flag:''},
-        {match:'R16-3',p1Name:'Auger-Aliassime',p1Seed:'4',p1Flag:'🇨🇦',p2Name:'TBD',p2Seed:'',p2Flag:''},
-        {match:'R16-4',p1Name:'TBD',p1Seed:'',p1Flag:'',p2Name:'TBD',p2Seed:'',p2Flag:''},
-        {match:'R16-5',p1Name:'Ruud',p1Seed:'15',p1Flag:'🇳🇴',p2Name:'Fonseca',p2Seed:'28',p2Flag:'🇧🇷'},
-        {match:'R16-6',p1Name:'TBD',p1Seed:'',p1Flag:'',p2Name:'TBD',p2Seed:'',p2Flag:''},
-        {match:'R16-7',p1Name:'TBD',p1Seed:'',p1Flag:'',p2Name:'TBD',p2Seed:'',p2Flag:''},
-        {match:'R16-8',p1Name:'TBD',p1Seed:'',p1Flag:'',p2Name:'TBD',p2Seed:'',p2Flag:''},
-      ], qf: [{p1:null,p2:null},{p1:null,p2:null},{p1:null,p2:null},{p1:null,p2:null}] },
-      wta: { r16: [
-        {match:'R16-1',p1Name:'Sabalenka',p1Seed:'1',p1Flag:'🇧🇾',p2Name:'TBD',p2Seed:'',p2Flag:''},
-        {match:'R16-2',p1Name:'TBD',p1Seed:'',p1Flag:'',p2Name:'TBD',p2Seed:'',p2Flag:''},
-        {match:'R16-3',p1Name:'Gauff',p1Seed:'3',p1Flag:'🇺🇸',p2Name:'TBD',p2Seed:'',p2Flag:''},
-        {match:'R16-4',p1Name:'TBD',p1Seed:'',p1Flag:'',p2Name:'TBD',p2Seed:'',p2Flag:''},
-        {match:'R16-5',p1Name:'Kostyuk',p1Seed:'15',p1Flag:'🇺🇦',p2Name:'TBD',p2Seed:'',p2Flag:''},
-        {match:'R16-6',p1Name:'TBD',p1Seed:'',p1Flag:'',p2Name:'TBD',p2Seed:'',p2Flag:''},
-        {match:'R16-7',p1Name:'TBD',p1Seed:'',p1Flag:'',p2Name:'TBD',p2Seed:'',p2Flag:''},
-        {match:'R16-8',p1Name:'TBD',p1Seed:'',p1Flag:'',p2Name:'TBD',p2Seed:'',p2Flag:''},
-      ], qf: [{p1:null,p2:null},{p1:null,p2:null},{p1:null,p2:null},{p1:null,p2:null}] }
-    };
-    populateBracketFromData(demoData);
-    return;
-  }
-  try {
-    const data = await apiGet('draw');
-    if(!data.ok) return;
-    ['atp','wta'].forEach(d=>{
-      const r16 = data[d]?.r16 || [];
-      const qfs = data[d]?.qf  || [];
-      // Populate R16 display cards
-      r16.forEach(m=>{
-        const num = m.match.replace('R16-','');
-        const cardId = d+'-r16-'+num;
-        const card = document.getElementById(cardId);
-        if(!card) return;
-        const slots = card.querySelectorAll('.ps-r16');
-        if(slots[0]) populateR16Slot(slots[0], m.p1Name, m.p1Seed, m.p1Flag);
-        if(slots[1]) populateR16Slot(slots[1], m.p2Name, m.p2Seed, m.p2Flag);
-      });
-      // Populate QF slots only when R16 winner confirmed (p1/p2 non-null)
-      qfs.forEach((qf, i)=>{
-        const cardId = d==='atp' ? 'a-q'+(i+1) : 'w-q'+(i+1);
-        const card = document.getElementById(cardId);
-        if(!card) return;
-        const slots = card.querySelectorAll('.ps');
-        // Only populate if winner is confirmed -- otherwise leave as TBD
-        if(qf.p1 && qf.p1.name && qf.p1.name !== 'TBD' && slots[0] && !slots[0].classList.contains('win')){
-          populateSlot(slots[0], d, 'q'+(i+1), qf.p1);
-        }
-        if(qf.p2 && qf.p2.name && qf.p2.name !== 'TBD' && slots[1] && !slots[1].classList.contains('win')){
-          populateSlot(slots[1], d, 'q'+(i+1), qf.p2);
-        }
-      });
-    });
-  } catch(e){ /* silently fail -- bracket shows as-is */ }
-}
-
-function populateBracketFromData(data){
-  ['atp','wta'].forEach(d=>{
-    const r16 = data[d]?.r16 || [];
-    const qfs = data[d]?.qf  || [];
-    r16.forEach(m=>{
-      const num = m.match.replace('R16-','');
-      const card = document.getElementById(d+'-r16-'+num);
-      if(!card) return;
-      const slots = card.querySelectorAll('.ps-r16');
-      if(slots[0]) populateR16Slot(slots[0], m.p1Name, m.p1Seed, m.p1Flag);
-      if(slots[1]) populateR16Slot(slots[1], m.p2Name, m.p2Seed, m.p2Flag);
-    });
-    qfs.forEach((qf, i)=>{
-      const cardId = d==='atp' ? 'a-q'+(i+1) : 'w-q'+(i+1);
-      const card = document.getElementById(cardId);
-      if(!card) return;
-      const slots = card.querySelectorAll('.ps');
-      if(qf.p1 && qf.p1.name && qf.p1.name !== 'TBD' && slots[0] && !slots[0].classList.contains('win'))
-        populateSlot(slots[0], d, 'q'+(i+1), qf.p1);
-      if(qf.p2 && qf.p2.name && qf.p2.name !== 'TBD' && slots[1] && !slots[1].classList.contains('win'))
-        populateSlot(slots[1], d, 'q'+(i+1), qf.p2);
-    });
-  });
-  setTimeout(drawConnectors, 200);
-}
-
-function populateR16Slot(slot, name, seed, flag){
-  if(!slot) return;
-  const isEmpty = !name || name === 'TBD';
-  slot.classList.toggle('tbd', isEmpty);
-  slot.querySelector('.p-s').textContent = isEmpty ? '' : (seed||'');
-  slot.querySelector('.p-f').textContent = isEmpty ? '' : (flag||'');
-  slot.querySelector('.p-n').textContent = isEmpty ? 'TBD' : name;
+  // QF players are set directly in HTML from confirmed matchups
+  // SF/Final slots populate as users make picks
+  setTimeout(drawConnectors, 400);
 }
 
 function populateSlot(slot, draw, round, player){
