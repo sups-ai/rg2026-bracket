@@ -912,14 +912,7 @@ async function join(){
   S.user=n; S.role=r;
   document.getElementById('gateOverlay').classList.add('gone');
   document.getElementById('ptsL').textContent=n.split(' ')[0]+"'s pts";
-  const initials = n.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
-  document.getElementById('lb-me-name').textContent    = n;
-  document.getElementById('lb-me-av').textContent      = initials;
-  document.getElementById('lb-me-role').textContent    = r;
-  document.getElementById('lb-me-name-atp').textContent = n;
-  document.getElementById('lb-me-av-atp').textContent   = initials;
-  document.getElementById('lb-me-name-wta').textContent = n;
-  document.getElementById('lb-me-av-wta').textContent   = initials;
+  // Leaderboard rows are rendered dynamically from API — no static IDs to update
   checkAndEnforceDeadlines();
   updateMaxRemaining();
   loadDraw();
@@ -954,8 +947,7 @@ function pick(el){
   if(r==='fn'){
     document.getElementById(CHAMP[d]).textContent=pk.f+' '+pk.n;
     // Update leaderboard champion subtitle live
-    const champEl = document.getElementById('lb-me-champ-'+d);
-    if(champEl) champEl.textContent = 'Champion pick: '+pk.f+' '+pk.n;
+    // Champion pick subtitle updated in leaderboard via API refresh
   }
   countPicks();
 }
