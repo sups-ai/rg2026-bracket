@@ -795,6 +795,14 @@ function join(){
   S.role = r;
   S.serverMode = DEMO_MODE ? 'demo' : 'live';
 
+  // Save session so reload skips the gate
+  if(!DEMO_MODE){
+    try {
+      localStorage.setItem('rg26_user', n);
+      localStorage.setItem('rg26_role', r);
+    } catch(e){}
+  }
+
   document.getElementById('gateOverlay').classList.add('gone');
 
   const pl = document.getElementById('ptsL');
@@ -1137,60 +1145,48 @@ function lbTab(id, btn){
 
 // -- VIEW MY PICKS (always uses live S.p state) --
 function viewMyPicks(drawOnly){
-  if(!S.user) return;
-  const usePicks = {
-    atp: {
-      q1: S.p.atp.q1 ? S.p.atp.q1.f+' '+S.p.atp.q1.n : null,
-      q2: S.p.atp.q2 ? S.p.atp.q2.f+' '+S.p.atp.q2.n : null,
-      q3: S.p.atp.q3 ? S.p.atp.q3.f+' '+S.p.atp.q3.n : null,
-      q4: S.p.atp.q4 ? S.p.atp.q4.f+' '+S.p.atp.q4.n : null,
-      s1: S.p.atp.s1 ? S.p.atp.s1.f+' '+S.p.atp.s1.n : null,
-      s2: S.p.atp.s2 ? S.p.atp.s2.f+' '+S.p.atp.s2.n : null,
-      fn: S.p.atp.fn ? S.p.atp.fn.f+' '+S.p.atp.fn.n : null,
-    },
-    wta: {
-      q1: S.p.wta.q1 ? S.p.wta.q1.f+' '+S.p.wta.q1.n : null,
-      q2: S.p.wta.q2 ? S.p.wta.q2.f+' '+S.p.wta.q2.n : null,
-      q3: S.p.wta.q3 ? S.p.wta.q3.f+' '+S.p.wta.q3.n : null,
-      q4: S.p.wta.q4 ? S.p.wta.q4.f+' '+S.p.wta.q4.n : null,
-      s1: S.p.wta.s1 ? S.p.wta.s1.f+' '+S.p.wta.s1.n : null,
-      s2: S.p.wta.s2 ? S.p.wta.s2.f+' '+S.p.wta.s2.n : null,
-      fn: S.p.wta.fn ? S.p.wta.fn.f+' '+S.p.wta.fn.n : null,
-    }
-  };
+  if(!S.user){ return; }
+
   document.getElementById('pmName').textContent = S.user;
   document.getElementById('pmRole').textContent = S.role || '';
 
-  // If not submitted yet, show a CTA instead of empty picks
   const drawsToShow = drawOnly ? [drawOnly] : ['atp','wta'];
-  // Check if we have any actual picks data (either submitted this session or restored from API)
-  const hasPicks = drawsToShow.some(d => S.submitted[d] || Object.values(S.p[d]).some(v=>v));
-  const noneSubmitted = !hasPicks;
-  if(noneSubmitted){
+  const RL = {q1:'QF 1',q2:'QF 2',q3:'QF 3',q4:'QF 4',s1:'Semifinal 1',s2:'Semifinal 2',fn:'Final / Champion'};
+
+  // Check if we have any picks at all in S.p
+  const hasPicks = drawsToShow.some(d =>
+    Object.values(S.p[d]).some(v => v && v.n)
+  );
+
+  if(!hasPicks){
+    // No picks in memory - they may be in the sheet but not yet restored
+    // Show a helpful message with button to go back to bracket
     document.getElementById('pmContent').innerHTML =
-      '<p style="font-size:.75rem;color:var(--ink3);padding:.4rem 0 .7rem">No picks submitted yet.</p>' +
-      '<button class="bjoin" style="font-size:.68rem;padding:.45rem 1rem;width:auto" onclick="closePicksAndGoToBracket()">Go make your picks -></button>';
+      '<p style="font-size:.75rem;color:var(--ink3);padding:.4rem 0 .7rem">Your picks were submitted. Reload the page to view them here.</p>';
     document.getElementById('picksModal').classList.add('open');
     return;
   }
 
-  const RL={q1:'QF 1',q2:'QF 2',q3:'QF 3',q4:'QF 4',s1:'Semifinal 1',s2:'Semifinal 2',fn:'Final / Champion'};
-  let h='';
-  drawsToShow.forEach(d=>{
-    h+=`<div class="mps"><div class="mpt">${d==='atp'?"ATP Men's":"WTA Women's"}</div>`;
-    if(!S.submitted[d]){
-      h+=`<div class="mpr"><span class="rnd" style="font-style:italic;color:var(--ink3)">Not yet submitted</span></div>`;
+  let h = '';
+  drawsToShow.forEach(d => {
+    const submitted = S.submitted[d] || Object.values(S.p[d]).some(v => v && v.n);
+    h += '<div class="mps"><div class="mpt">' + (d==='atp' ? "ATP Men's" : "WTA Women's") + '</div>';
+    if(!submitted){
+      h += '<div class="mpr"><span class="rnd" style="font-style:italic;color:var(--ink3)">Not yet submitted</span></div>';
     } else {
-      Object.keys(RL).forEach(r=>{
-        const p = usePicks[d][r];
-        h+=`<div class="mpr"><span class="rnd">${RL[r]}</span><span class="plr ${p?'':'mt'}">${p||'--'}</span></div>`;
+      Object.keys(RL).forEach(r => {
+        const p = S.p[d][r];
+        const display = p && p.n ? (p.f ? p.f + ' ' + p.n : p.n) : null;
+        h += '<div class="mpr"><span class="rnd">' + RL[r] + '</span><span class="plr ' + (display ? '' : 'mt') + '">' + (display || '--') + '</span></div>';
       });
     }
-    h+='</div>';
+    h += '</div>';
   });
+
   document.getElementById('pmContent').innerHTML = h;
   document.getElementById('picksModal').classList.add('open');
 }
+
 
 // -- VIEW PICKS FROM LEADERBOARD --
 function viewPicks(name, role, picks, drawOnly){
@@ -1324,12 +1320,16 @@ function renderLeaderboard(entries){
         const myPts = myEntry.total || 0;
         const ptsEl = document.getElementById('pts');
         if(ptsEl) ptsEl.textContent = myPts;
-        // Restore submitted state so viewMyPicks shows picks not CTA
+        // Mark as submitted so picks are shown not CTA
         if(myEntry.atpPicks || myEntry.atpChamp) S.submitted.atp = true;
         if(myEntry.wtaPicks || myEntry.wtaChamp) S.submitted.wta = true;
-        // Restore actual pick data so modal can show them
-        if(myEntry.atpPicks) restorePicksFromEntry('atp', myEntry.atpPicks);
-        if(myEntry.wtaPicks) restorePicksFromEntry('wta', myEntry.wtaPicks);
+        // Restore pick objects into S.p so viewMyPicks can display them
+        if(myEntry.atpPicks && typeof myEntry.atpPicks === 'object') {
+          restorePicksFromEntry('atp', myEntry.atpPicks);
+        }
+        if(myEntry.wtaPicks && typeof myEntry.wtaPicks === 'object') {
+          restorePicksFromEntry('wta', myEntry.wtaPicks);
+        }
       }
     }
   });
@@ -1359,6 +1359,7 @@ function initMode(){
     document.getElementById('demoBanner').classList.add('show');
     const gf = document.getElementById('gateFine');
     if(gf) gf.textContent = 'Test mode -- use code TEST2026 to enter. Picks are not saved.';
+    try { localStorage.removeItem('rg26_user'); localStorage.removeItem('rg26_role'); } catch(e){}
   }
 }
 
@@ -1482,6 +1483,25 @@ window.addEventListener('resize', ()=>{ setTimeout(drawConnectors,100); });
 initMode();
 countPicks();
 checkAndEnforceDeadlines();
+
+// Auto-restore session from localStorage (skip gate on reload)
+if(!DEMO_MODE){
+  try {
+    const savedUser = localStorage.getItem('rg26_user');
+    const savedRole = localStorage.getItem('rg26_role');
+    if(savedUser && savedRole){
+      S.user = savedUser;
+      S.role = savedRole;
+      S.serverMode = 'live';
+      document.getElementById('gateOverlay').classList.add('gone');
+      const pl = document.getElementById('ptsL');
+      if(pl) pl.textContent = savedUser.split(' ')[0] + "'s pts";
+      try { checkAndEnforceDeadlines(); } catch(e){}
+      try { loadDraw(); } catch(e){}
+      try { loadLeaderboard(); } catch(e){}
+    }
+  } catch(e){}
+}
 // Draw connectors after layout settles
 // Scroll bracket to start (leftmost = R16 column)
 document.querySelectorAll('.bwrap').forEach(el => { el.scrollLeft = 0; });
