@@ -1507,5 +1507,31 @@ if(!DEMO_MODE){
 document.querySelectorAll('.bwrap').forEach(el => { el.scrollLeft = 0; });
 setTimeout(drawConnectors, 400);
 </script>
+
+<!-- Picks modal (triggered from leaderboard) -->
+<div class="mbk" id="picksModal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="mdl">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.1rem">
+      <div>
+        <div style="font-family:'Instrument Serif',serif;font-size:1.15rem" id="pmName">--</div>
+        <div style="font-size:.62rem;color:var(--ink3);margin-top:.08rem" id="pmRole">--</div>
+      </div>
+      <button onclick="document.getElementById('picksModal').classList.remove('open')" style="background:none;border:none;font-size:1.4rem;color:var(--ink3);cursor:pointer;padding:.2rem .5rem">x</button>
+    </div>
+    <div id="pmContent"></div>
+  </div>
+</div>
+
+<!-- Post-submit nudge -->
+<div class="mbk" id="postNudgeModal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="mdl" style="max-width:360px">
+    <div id="postNudgeText" style="font-size:.82rem;color:var(--ink2);margin-bottom:1.25rem;line-height:1.6"></div>
+    <div class="mact">
+      <button class="bcf" id="postNudgeBtn">Go to WTA -></button>
+      <button class="bcc" onclick="closePostNudge()">Later</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
