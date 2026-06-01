@@ -787,7 +787,7 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
     <div id="postNudgeText" style="font-size:.82rem;color:var(--ink2);margin-bottom:1.25rem;line-height:1.6"></div>
     <div class="mact">
       <button class="bcf" id="postNudgeBtn">Go to WTA →</button>
-      <button class="bcc" onclick="document.getElementById('postNudgeModal').classList.remove('open')">Later</button>
+      <button class="bcc" onclick="closePostNudge()">Later</button>
     </div>
   </div>
 </div>
@@ -806,7 +806,7 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
 </div>
 
 <script>
-// ── STATE ──
+// -- STATE --
 const S = {
   user: null, role: null, code: null, serverMode: null,
   submitted: {atp: false, wta: false},
@@ -817,7 +817,7 @@ const S = {
 };
 
 
-// ── TABS ──
+// -- TABS --
 function pg(id,btn){
   document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
   document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
@@ -835,7 +835,7 @@ function pg(id,btn){
   } else if(sb){ sb.style.display='none'; }
 }
 
-// ── DRAW TOGGLE ──
+// -- DRAW TOGGLE --
 function draw(d, btn){
   // Hide both draws
   ['atp','wta'].forEach(id=>{
@@ -850,7 +850,7 @@ function draw(d, btn){
   // Show selected draw
   const dvEl = document.getElementById('dv-'+d);
   if(dvEl) dvEl.style.display='';
-  // Activate bracket tab — use the element directly, never relies on btn arg
+  // Activate bracket tab -- use the element directly, never relies on btn arg
   const tab = document.getElementById('btab-'+d);
   if(tab) tab.classList.add('on');
   // Show/hide submit bar
@@ -867,69 +867,60 @@ function updateSubmitBarText(d){
   const label = document.getElementById('sbarLabel');
   if(!label) return;
   if(S.submitted[other] && !S.submitted[d]){
-    label.textContent = (d==='atp'?'ATP':'WTA') + ' picks — submit when ready';
+    label.textContent = (d==='atp'?'ATP':'WTA') + ' picks -- submit when ready';
   } else {
     label.textContent = 'picks made';
   }
 }
 
-// ── JOIN ──
-async function join(){
-  const n=document.getElementById('uN').value.trim();
-  const r=document.getElementById('uR').value.trim();
-  const c=document.getElementById('uC').value.trim().toUpperCase();
-  const err=document.getElementById('gErr');
-  [document.getElementById('uN'),document.getElementById('uR'),document.getElementById('uC')].forEach(el=>el.classList.remove('err'));
-  err.textContent='';
+// -- JOIN --
+function join(){
+  const n = document.getElementById('uN').value.trim();
+  const r = document.getElementById('uR').value.trim();
+  const c = document.getElementById('uC').value.trim().toUpperCase();
+  const err = document.getElementById('gErr');
+
+  // Clear errors
+  ['uN','uR','uC'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.classList.remove('err');
+  });
+  err.textContent = '';
+
+  // Validate fields
   if(!n){ document.getElementById('uN').classList.add('err'); err.textContent='Please enter your full name.'; return; }
   if(!r){ document.getElementById('uR').classList.add('err'); err.textContent='Please enter your role or affiliation.'; return; }
-  if(!c){ document.getElementById('uC').classList.add('err'); err.textContent='An invite code is required to access the challenge.'; return; }
+  if(!c){ document.getElementById('uC').classList.add('err'); err.textContent='An invite code is required.'; return; }
 
-  setGateLoading(true);
-  try {
-    const result = await apiPost({ action: 'validate', code: c });
-    if(!result.ok){
-      document.getElementById('uC').classList.add('err');
-      err.textContent = 'Incorrect invite code. Please contact ITHF to join.';
-      setGateLoading(false);
-      return;
-    }
-    // Code valid — mode comes back from server ('demo' or 'live')
-    S.serverMode = result.mode;
-  } catch(e) {
-    // Network error — fall back to client-side check so site works offline/in demo
-    const validCode = DEMO_MODE ? (c==='TEST2026') : (c==='ITHF2026ELC');
-    if(!validCode){
-      document.getElementById('uC').classList.add('err');
-      err.textContent = 'Incorrect invite code. Please contact ITHF to join.';
-      setGateLoading(false);
-      return;
-    }
-    S.serverMode = DEMO_MODE ? 'demo' : 'live';
+  // Check invite code client-side
+  const validCode = DEMO_MODE ? (c === 'TEST2026') : (c === 'ITHF2026ELC');
+  if(!validCode){
+    document.getElementById('uC').classList.add('err');
+    err.textContent = 'Incorrect invite code. Contact ELC to join.';
+    return;
   }
 
-  setGateLoading(false);
-  S.user=n; S.role=r;
+  // All good -- open the site
+  S.user = n;
+  S.role = r;
+  S.serverMode = DEMO_MODE ? 'demo' : 'live';
+
   document.getElementById('gateOverlay').classList.add('gone');
-  document.getElementById('ptsL').textContent=n.split(' ')[0]+"'s pts";
-  // Leaderboard rows are rendered dynamically from API — no static IDs to update
+
+  const pl = document.getElementById('ptsL');
+  if(pl) pl.textContent = n.split(' ')[0] + "'s pts";
+
   checkAndEnforceDeadlines();
   updateMaxRemaining();
   loadDraw();
+
   if(!DEMO_MODE){
-    // Clear demo rows and show loading state
-    ['combined','atp','wta'].forEach(view=>{
-      const c = document.getElementById('lbv-'+view);
-      if(!c) return;
-      const label = c.querySelector('.lbs');
-      const labelHTML = label ? label.outerHTML : '';
-      c.innerHTML = labelHTML + '<div class="lb-loading">Loading standings…</div>';
-    });
     loadLeaderboard();
   }
 }
 
-// ── PICK FLOW ──
+
+// -- PICK FLOW --
 const NEXT={q1:{next:'s1',slot:0},q2:{next:'s1',slot:1},q3:{next:'s2',slot:0},q4:{next:'s2',slot:1},s1:{next:'fn',slot:0},s2:{next:'fn',slot:1}};
 const CARD_MAP={atp:{q1:'a-q1',q2:'a-q2',q3:'a-q3',q4:'a-q4',s1:'a-s1',s2:'a-s2',fn:'a-fn'},wta:{q1:'w-q1',q2:'w-q2',q3:'w-q3',q4:'w-q4',s1:'w-s1',s2:'w-s2',fn:'w-fn'}};
 const CHAMP={atp:'a-cn',wta:'w-cn'};
@@ -990,7 +981,7 @@ function updateMaxRemaining(){
   const CHAMP_PTS=80, BONUS_PTS=5;
   // Demo: simulate some locked results (rounds already decided = win/out classes)
   // For each pick: if round not yet played, it contributes max remaining pts
-  // Logic: scan each round — if no result locked yet, all picks in that round still earnable
+  // Logic: scan each round -- if no result locked yet, all picks in that round still earnable
   let maxR=0;
   ['atp','wta'].forEach(d=>{
     Object.keys(PTS).forEach(r=>{
@@ -1003,11 +994,11 @@ function updateMaxRemaining(){
       if(!hasResult){
         maxR += PTS[r]; // this round not played yet, pts still earnable
       } else {
-        // result exists — check if user picked the winner
+        // result exists -- check if user picked the winner
         const winner=card.querySelector('.ps.win');
         const userPick=S.p[d][r];
         if(userPick && winner && userPick.n === winner.dataset.n) maxR += PTS[r];
-        // else 0 — wrong pick or no pick
+        // else 0 -- wrong pick or no pick
       }
     });
     // Champion pts
@@ -1026,7 +1017,7 @@ function updateMaxRemaining(){
   if(el) el.textContent=maxR;
 }
 
-// ── MODAL ──
+// -- MODAL --
 function currentDraw(){
   return document.getElementById('dv-atp').style.display !== 'none' ? 'atp' : 'wta';
 }
@@ -1090,18 +1081,18 @@ function validatePicks(d){
   rounds.forEach(r=>{
     if(!S.p[d][r]) errors.push('Missing: ' + roundLabels[r]);
   });
-  // Validate score if entered — must be 6–13
+  // Validate score if entered -- must be 6-13
   const scVal = parseInt(document.getElementById(d+'-sc')?.value || '');
   if(!isNaN(scVal)){
     const validScore = (scVal>=6 && scVal<=10) || scVal===12 || scVal===13;
-    if(!validScore) errors.push('Final set sum must be 6–10, 12 or 13 (11 is not possible).');
+    if(!validScore) errors.push('Final set sum must be 6-10, 12 or 13 (11 is not possible).');
   }
   return errors;
 }
 
 function showPickErrors(d, errors){
   document.querySelector('#modal h3').textContent = 'Complete your ' + (d==='atp' ? "ATP" : "WTA") + ' picks first';
-  const errList = errors.map(e=>`<div class="pick-err-item">· ${e}</div>`).join('');
+  const errList = errors.map(e=>`<div class="pick-err-item">. ${e}</div>`).join('');
   document.getElementById('mpl').innerHTML =
     `<div class="pick-err-box">${errList}</div>
      <p style="font-size:.73rem;color:var(--ink3);margin-top:.5rem">Make all picks in the bracket, then return to submit.</p>`;
@@ -1119,6 +1110,14 @@ function showPickErrors(d, errors){
   document.getElementById('modal').classList.add('open');
 }
 function closeModal(){ document.getElementById('modal').classList.remove('open'); }
+function closePostNudge(){
+  document.getElementById('postNudgeModal').classList.remove('open');
+}
+function closePicksAndGoToBracket(){
+  document.getElementById('picksModal').classList.remove('open');
+  const b = document.querySelector('.tab');
+  if(b) pg('bracket', b);
+}
 function bgClose(e){ if(e.target===document.getElementById('modal')) closeModal(); }
 
 const RLBLS={q1:'QF Match 1',q2:'QF Match 2',q3:'QF Match 3',q4:'QF Match 4',s1:'Semifinal 1',s2:'Semifinal 2',fn:'Final / Champion'};
@@ -1131,7 +1130,7 @@ function buildModal(d){
   const other = d==='atp' ? 'wta' : 'atp';
   const otherName = other==='atp' ? "ATP Men's" : "WTA Women's";
   const pendingNote = !S.submitted[other]
-    ? `<div class="modal-pending-note">${otherName} picks can be submitted separately — you'll be prompted after this.</div>`
+    ? `<div class="modal-pending-note">${otherName} picks can be submitted separately -- you'll be prompted after this.</div>`
     : '';
   let h = pendingNote;
   h+=`<div class="mps"><div class="mpt">${drawName}</div>`;
@@ -1149,7 +1148,7 @@ function buildModal(d){
   const cfBtn = document.getElementById('confirmBtn');
   if(cfBtn){
     cfBtn.disabled = false;
-    cfBtn.textContent = 'Lock in picks →';
+    cfBtn.textContent = 'Lock in picks ->';
     cfBtn.style.background = '';
     cfBtn.style.opacity = '';
     cfBtn.style.cursor = '';
@@ -1159,7 +1158,7 @@ function buildModal(d){
 
 function confirm_sub(){
   const d = document.getElementById('modal').dataset.draw || currentDraw();
-  // Re-validate at confirm time — catches score edits made after modal opened
+  // Re-validate at confirm time -- catches score edits made after modal opened
   const errors = validatePicks(d);
   if(errors.length){
     showPickErrors(d, errors);
@@ -1187,7 +1186,7 @@ function confirm_sub(){
         fn: picks.fn ? picks.fn.f+' '+picks.fn.n : '',
       },
       finalSetSum: document.getElementById(d+'-sc')?.value || ''
-    }).catch(()=>{}); // fire and forget — don't block UI
+    }).catch(()=>{}); // fire and forget -- don't block UI
   }
 
   // Lock slots only in the submitted draw
@@ -1201,13 +1200,13 @@ function confirm_sub(){
     document.getElementById('subBanner').style.display='flex';
     return;
   }
-  // One draw done — show post-submit nudge to do the other
+  // One draw done -- show post-submit nudge to do the other
   const other = d==='atp' ? 'wta' : 'atp';
   const otherLabel = other==='atp' ? 'ATP' : 'WTA';
-  const deadline = other==='atp' ? 'Tue June 2 · 4 AM ET' : 'Wed June 3 · 4 AM ET';
+  const deadline = other==='atp' ? 'Tue June 2 . 4 AM ET' : 'Wed June 3 . 4 AM ET';
   document.getElementById('postNudgeText').innerHTML =
     `<strong>${d.toUpperCase()} picks submitted.</strong> Switch to ${otherLabel} to make your ${otherLabel} picks before the ${otherLabel} deadline (${deadline}).`;
-  document.getElementById('postNudgeBtn').textContent = `Go to ${otherLabel} →`;
+  document.getElementById('postNudgeBtn').textContent = `Go to ${otherLabel} ->`;
   document.getElementById('postNudgeBtn').onclick = () => {
     document.getElementById('postNudgeModal').classList.remove('open');
     draw(other, null);
@@ -1215,7 +1214,7 @@ function confirm_sub(){
   document.getElementById('postNudgeModal').classList.add('open');
 }
 
-// ── LEADERBOARD TABS ──
+// -- LEADERBOARD TABS --
 function lbTab(id, btn){
   document.querySelectorAll('.lb-view').forEach(v=>v.classList.remove('on'));
   document.querySelectorAll('.lb-tab').forEach(b=>b.classList.remove('on'));
@@ -1223,9 +1222,9 @@ function lbTab(id, btn){
   btn.classList.add('on');
 }
 
-// Demo picks: removed — only real data used
+// Demo picks: removed - only real data used
 
-// ── VIEW MY PICKS (always uses live S.p state) ──
+// -- VIEW MY PICKS (always uses live S.p state) --
 function viewMyPicks(drawOnly){
   if(!S.user) return;
   const usePicks = {
@@ -1257,7 +1256,7 @@ function viewMyPicks(drawOnly){
   if(noneSubmitted){
     document.getElementById('pmContent').innerHTML =
       '<p style="font-size:.75rem;color:var(--ink3);padding:.4rem 0 .7rem">No picks submitted yet.</p>' +
-      '<button class="bjoin" style="font-size:.68rem;padding:.45rem 1rem;width:auto" onclick="document.getElementById('picksModal').classList.remove('open');const b=document.querySelector('.tab');if(b)pg('bracket',b);">Go make your picks →</button>';
+      '<button class="bjoin" style="font-size:.68rem;padding:.45rem 1rem;width:auto" onclick="closePicksAndGoToBracket()">Go make your picks -></button>';
     document.getElementById('picksModal').classList.add('open');
     return;
   }
@@ -1271,7 +1270,7 @@ function viewMyPicks(drawOnly){
     } else {
       Object.keys(RL).forEach(r=>{
         const p = usePicks[d][r];
-        h+=`<div class="mpr"><span class="rnd">${RL[r]}</span><span class="plr ${p?'':'mt'}">${p||'—'}</span></div>`;
+        h+=`<div class="mpr"><span class="rnd">${RL[r]}</span><span class="plr ${p?'':'mt'}">${p||'--'}</span></div>`;
       });
     }
     h+='</div>';
@@ -1280,12 +1279,12 @@ function viewMyPicks(drawOnly){
   document.getElementById('picksModal').classList.add('open');
 }
 
-// ── VIEW PICKS FROM LEADERBOARD ──
+// -- VIEW PICKS FROM LEADERBOARD --
 function viewPicks(name, role, picks, drawOnly){
   // If it's the current user and they've submitted, use their actual picks
   let usePicks = picks;
 
-  // No demo fallback — only real submitted picks shown
+  // No demo fallback -- only real submitted picks shown
   document.getElementById('pmName').textContent = name;
   document.getElementById('pmRole').textContent = role;
   const RL={q1:'QF 1',q2:'QF 2',q3:'QF 3',q4:'QF 4',s1:'Semifinal 1',s2:'Semifinal 2',fn:'Final / Champion'};
@@ -1295,7 +1294,7 @@ function viewPicks(name, role, picks, drawOnly){
     h+=`<div class="mps"><div class="mpt">${d==='atp'?"ATP Men's":"WTA Women's"}</div>`;
     Object.keys(RL).forEach(r=>{
       const p = usePicks && usePicks[d] && usePicks[d][r];
-      h+=`<div class="mpr"><span class="rnd">${RL[r]}</span><span class="plr ${p?'':'mt'}">${p||'—'}</span></div>`;
+      h+=`<div class="mpr"><span class="rnd">${RL[r]}</span><span class="plr ${p?'':'mt'}">${p||'--'}</span></div>`;
     });
     h+='</div>';
   });
@@ -1303,7 +1302,7 @@ function viewPicks(name, role, picks, drawOnly){
   document.getElementById('picksModal').classList.add('open');
 }
 
-// ── LOAD DRAW FROM SHEET ──
+// -- LOAD DRAW FROM SHEET --
 async function loadDraw(){
   // In demo mode, use hardcoded R16 data so bracket isn't blank
   if(DEMO_MODE){
@@ -1355,7 +1354,7 @@ async function loadDraw(){
         const card = document.getElementById(cardId);
         if(!card) return;
         const slots = card.querySelectorAll('.ps');
-        // Only populate if winner is confirmed — otherwise leave as TBD
+        // Only populate if winner is confirmed -- otherwise leave as TBD
         if(qf.p1 && qf.p1.name && qf.p1.name !== 'TBD' && slots[0] && !slots[0].classList.contains('win')){
           populateSlot(slots[0], d, 'q'+(i+1), qf.p1);
         }
@@ -1364,7 +1363,7 @@ async function loadDraw(){
         }
       });
     });
-  } catch(e){ /* silently fail — bracket shows as-is */ }
+  } catch(e){ /* silently fail -- bracket shows as-is */ }
 }
 
 function populateBracketFromData(data){
@@ -1416,19 +1415,19 @@ function populateSlot(slot, draw, round, player){
   slot.querySelector('.p-n').textContent = player.name;
 }
 
-// ── LOAD LEADERBOARD FROM SHEET ──
+// -- LOAD LEADERBOARD FROM SHEET --
 async function loadLeaderboard(){
   // Show loading in all views
   ['atp','wta','combined'].forEach(v=>{
     const el = document.getElementById('lb-loading-'+v);
-    if(el){ el.textContent='Loading standings…'; el.style.display=''; }
+    if(el){ el.textContent='Loading standings...'; el.style.display=''; }
   });
   try {
     const data = await apiGet('leaderboard');
     if(!data.ok || !data.leaderboard?.length){
       ['atp','wta','combined'].forEach(v=>{
         const el=document.getElementById('lb-loading-'+v);
-        if(el) el.textContent='No entries yet — be the first to submit!';
+        if(el) el.textContent='No entries yet -- be the first to submit!';
       });
       return;
     }
@@ -1470,8 +1469,8 @@ function renderLeaderboard(entries){
     sorted.forEach((entry, i) => {
       const pts = view==='atp' ? entry.atpScore : view==='wta' ? entry.wtaScore : entry.total;
       const sub = view==='combined' ? (entry.role||'') :
-                  view==='atp'      ? 'Champion: '+(entry.atpChamp||'—') :
-                                      'Champion: '+(entry.wtaChamp||'—');
+                  view==='atp'      ? 'Champion: '+(entry.atpChamp||'--') :
+                                      'Champion: '+(entry.wtaChamp||'--');
       const isMe = S.user && entry.name === S.user;
       const initials = entry.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
       const avatarColors = ['#5A3E28','#2A3E6B','#D45C38','#5A2A6B','#2A5A3E','#3E2A5A','#5A3E28','#28405A'];
@@ -1485,7 +1484,7 @@ function renderLeaderboard(entries){
         <div class="lav" style="background:${bg}">${initials}</div>
         <div class="li"><div class="ln">${entry.name}</div><div class="lsu">${sub}</div></div>
         <div class="lr"><div class="lp">${pts}</div><div class="lpl">pts</div></div>
-        <div class="lb-arr">›</div>
+        <div class="lb-arr">></div>
       </div>`;
     });
     container.innerHTML = labelText + rows;
@@ -1502,11 +1501,11 @@ function renderLeaderboard(entries){
   });
 }
 
-// ── MODE INIT (runs on load) ──
+// -- MODE INIT (runs on load) --
 const DEMO_MODE = new URLSearchParams(window.location.search).get('mode') === 'demo';
 const AS_URL = 'https://script.google.com/macros/s/AKfycbxFivV3z4fm5SQLL6FysP-MiSq1XVY-9riWjrWMqs8XTIb5d_NswEcF93OOiQsY38-ikQ/exec';
 
-// ── API HELPERS ──
+// -- API HELPERS --
 async function apiGet(action){
   const res = await fetch(AS_URL + '?action=' + action);
   return res.json();
@@ -1519,19 +1518,13 @@ async function apiPost(body){
   return res.json();
 }
 
-// Show/hide a loading state on the gate button
-function setGateLoading(loading){
-  const btn = document.querySelector('.bjoin');
-  if(!btn) return;
-  btn.disabled = loading;
-  btn.textContent = loading ? 'Checking…' : 'Enter Challenge →';
-}
+// setGateLoading removed -- using synchronous validation
 
 function initMode(){
   if(DEMO_MODE){
     document.getElementById('demoBanner').classList.add('show');
     const gf = document.getElementById('gateFine');
-    if(gf) gf.textContent = 'Test mode — use code TEST2026 to enter. Picks are not saved.';
+    if(gf) gf.textContent = 'Test mode -- use code TEST2026 to enter. Picks are not saved.';
   }
 }
 
@@ -1565,11 +1558,11 @@ function togglePw(){
   }
 }
 
-// ── DRAW BRACKET CONNECTORS ──
+// -- DRAW BRACKET CONNECTORS --
 function drawConnectors(){
   // For each bracket (atp, wta), draw lines connecting:
-  // QF1+QF2 → SF1 centre, QF3+QF4 → SF2 centre
-  // SF1+SF2 → Final centre
+  // QF1+QF2 -> SF1 centre, QF3+QF4 -> SF2 centre
+  // SF1+SF2 -> Final centre
   ['atp','wta'].forEach(d=>{
     const prefix = d==='atp' ? 'a' : 'w';
     drawBracketArm(
@@ -1629,7 +1622,7 @@ function drawBracketArm(topCard, bottomCard, targetCard, connDiv, index){
     connDiv.appendChild(svg);
   }
 
-  // Top arm: from source card → vertical → into target
+  // Top arm: from source card -> vertical -> into target
   const path1 = document.createElementNS('http://www.w3.org/2000/svg','polyline');
   path1.setAttribute('points', `0,${y1} ${mid},${y1} ${mid},${yTarget} ${w},${yTarget}`);
   path1.setAttribute('fill','none');
@@ -1638,7 +1631,7 @@ function drawBracketArm(topCard, bottomCard, targetCard, connDiv, index){
   path1.setAttribute('stroke-linecap','round');
   svg.appendChild(path1);
 
-  // Bottom arm: from source card → up to same junction point
+  // Bottom arm: from source card -> up to same junction point
   const path2 = document.createElementNS('http://www.w3.org/2000/svg','polyline');
   path2.setAttribute('points', `0,${y2} ${mid},${y2} ${mid},${yTarget}`);
   path2.setAttribute('fill','none');
