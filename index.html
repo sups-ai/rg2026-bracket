@@ -1000,6 +1000,27 @@ function showPickErrors(d, errors){
   document.getElementById('modal').classList.add('open');
 }
 function closeModal(){ document.getElementById('modal').classList.remove('open'); }
+function restorePicksFromEntry(draw, entry){
+  const rounds = ['q1','q2','q3','q4','s1','s2','fn'];
+  rounds.forEach(r => {
+    const val = entry[r];
+    if(!val || !val.trim()) return;
+    const parts = val.trim().split(' ');
+    // Flag emoji are always 2 chars but have codePoint > 127000
+    // Simple check: if first "word" is short and has high codepoint it's a flag
+    let flag = '', name = val.trim();
+    if(parts.length >= 2){
+      let firstCodePoint = 0;
+      try { firstCodePoint = parts[0].codePointAt(0) || 0; } catch(e){}
+      if(firstCodePoint > 127000){
+        flag = parts[0];
+        name = parts.slice(1).join(' ');
+      }
+    }
+    S.p[draw][r] = { f: flag, n: name, s: '' };
+  });
+}
+
 function closePostNudge(){
   document.getElementById('postNudgeModal').classList.remove('open');
 }
@@ -1142,7 +1163,9 @@ function viewMyPicks(drawOnly){
 
   // If not submitted yet, show a CTA instead of empty picks
   const drawsToShow = drawOnly ? [drawOnly] : ['atp','wta'];
-  const noneSubmitted = drawsToShow.every(d => !S.submitted[d]);
+  // Check if we have any actual picks data (either submitted this session or restored from API)
+  const hasPicks = drawsToShow.some(d => S.submitted[d] || Object.values(S.p[d]).some(v=>v));
+  const noneSubmitted = !hasPicks;
   if(noneSubmitted){
     document.getElementById('pmContent').innerHTML =
       '<p style="font-size:.75rem;color:var(--ink3);padding:.4rem 0 .7rem">No picks submitted yet.</p>' +
@@ -1294,13 +1317,19 @@ function renderLeaderboard(entries){
     });
     container.innerHTML = labelText + rows;
 
-    // Update current user's header score from live data
+    // Update current user's score + mark draws as submitted if they appear in leaderboard
     if(S.user){
       const myEntry = entries.find(e => e.name === S.user);
       if(myEntry){
         const myPts = myEntry.total || 0;
         const ptsEl = document.getElementById('pts');
         if(ptsEl) ptsEl.textContent = myPts;
+        // Restore submitted state so viewMyPicks shows picks not CTA
+        if(myEntry.atpPicks || myEntry.atpChamp) S.submitted.atp = true;
+        if(myEntry.wtaPicks || myEntry.wtaChamp) S.submitted.wta = true;
+        // Restore actual pick data so modal can show them
+        if(myEntry.atpPicks) restorePicksFromEntry('atp', myEntry.atpPicks);
+        if(myEntry.wtaPicks) restorePicksFromEntry('wta', myEntry.wtaPicks);
       }
     }
   });
