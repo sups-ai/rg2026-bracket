@@ -142,7 +142,7 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
 .cr{font-size:.6rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
 .cp{font-size:.56rem;color:var(--ink3);margin-top:.1rem}
 .col-b{flex:1;display:flex;flex-direction:column}
-.col.qf .col-b{justify-content:space-between;gap:0}
+.col.qf .col-b{justify-content:space-between;gap:10px}
 .col.sf .col-b{justify-content:space-around}
 .col.fn .col-b{justify-content:center}
 .ch .col-b{justify-content:center}
@@ -465,7 +465,7 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
             <div class="mu"><div class="mc" id="a-fn" style="width:var(--cw)">
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner SF1</span></div>
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner SF2</span></div>
-              <div class="sr-inline"><span class="sri-label">Final set games</span><input class="sf-in" id="atp-sc" type="number" min="6" max="13" inputmode="numeric" oninput="validateSetSum(this)" placeholder="13"><span class="sri-bonus">+5 pts</span></div>
+              <div class="sr-inline"><span class="sri-label">Sum of Games in Final Set</span><input class="sf-in" id="atp-sc" type="number" min="6" max="13" inputmode="numeric" oninput="validateSetSum(this)" placeholder="13"><span class="sri-bonus">+5 pts</span></div>
             </div></div>
           </div>
         </div>
@@ -552,7 +552,7 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
             <div class="mu"><div class="mc" id="w-fn" style="width:var(--cw)">
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner SF1</span></div>
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner SF2</span></div>
-              <div class="sr-inline"><span class="sri-label">Final set games</span><input class="sf-in" id="wta-sc" type="number" min="6" max="13" inputmode="numeric" oninput="validateSetSum(this)" placeholder="13"><span class="sri-bonus">+5 pts</span></div>
+              <div class="sr-inline"><span class="sri-label">Sum of Games in Final Set</span><input class="sf-in" id="wta-sc" type="number" min="6" max="13" inputmode="numeric" oninput="validateSetSum(this)" placeholder="13"><span class="sri-bonus">+5 pts</span></div>
             </div></div>
           </div>
         </div>
@@ -711,6 +711,8 @@ function pg(id,btn){
   document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
   document.getElementById('pg-'+id).classList.add('on');
   btn.classList.add('on');
+  // Refresh leaderboard every time tab is opened
+  if(id==='leaderboard' && S.user && !DEMO_MODE) loadLeaderboard();
   const isBr = id==='bracket';
   const dlst=document.getElementById('dlst');
   if(dlst) dlst.style.display=isBr?'':'none';
@@ -1220,7 +1222,14 @@ async function loadLeaderboard(){
   });
   try {
     const data = await apiGet('leaderboard');
-    if(!data.ok || !data.leaderboard?.length){
+    if(!data.ok){
+      ['atp','wta','combined'].forEach(v=>{
+        const el=document.getElementById('lb-loading-'+v);
+        if(el) el.textContent='Could not load standings. Try refreshing.';
+      });
+      return;
+    }
+    if(!data.leaderboard || data.leaderboard.length === 0){
       ['atp','wta','combined'].forEach(v=>{
         const el=document.getElementById('lb-loading-'+v);
         if(el) el.textContent='No entries yet -- be the first to submit!';
