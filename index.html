@@ -1192,10 +1192,8 @@ function viewMyPicks(drawOnly){
           } else {
             badge = '<span class="pick-wrong">'+actual+'</span>';
           }
-        } else if(display) {
-          badge = '<span class="pick-pending">pending</span>';
         }
-        h += '<div class="mpr"><span class="rnd">' + RL[r] + '</span><span class="plr ' + (display ? (actual && !badge.includes('pending') && badge.includes('correct') ? 'correct' : actual ? 'wrong' : '') : 'mt') + '">' + (display || '--') + '</span>' + badge + '</div>';
+        h += '<div class="mpr"><span class="rnd">' + RL[r] + '</span><span class="plr ' + (display ? (actual && !badge.includes('correct') ? 'correct' : actual ? 'wrong' : '') : 'mt') + '">' + (display || '--') + '</span>' + badge + '</div>';
       });
     }
     h += '</div>';
@@ -1251,7 +1249,7 @@ function viewPicks(name, role, picks, drawOnly){
         const ok = pC===aC||aC.includes(pC.split(' ').pop())||pC.includes(aC.split(' ').pop());
         badge = ok ? `<span class="pick-correct">+${pts} pts</span>` : `<span class="pick-wrong">${actual}</span>`;
         pickClass = ok ? 'correct' : 'wrong';
-      } else if(p){ badge = '<span class="pick-pending">pending</span>'; }
+      }
       h+=`<div class="mpr"><span class="rnd">${RL[r]}</span><span class="plr ${pickClass}">${p||'--'}</span>${badge}</div>`;
     });
     h+='</div>';
