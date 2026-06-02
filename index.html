@@ -1164,11 +1164,14 @@ function viewMyPicks(drawOnly){
   );
 
   if(!hasPicks){
-    // No picks in memory - they may be in the sheet but not yet restored
-    // Show a helpful message with button to go back to bracket
-    document.getElementById('pmContent').innerHTML =
-      '<p style="font-size:.75rem;color:var(--ink3);padding:.4rem 0 .7rem">Your picks were submitted. Reload the page to view them here.</p>';
-    document.getElementById('picksModal').classList.add('open');
+    // Picks not in memory yet - reload leaderboard to restore them
+    if(S.user && !DEMO_MODE){
+      loadLeaderboard().then(() => viewMyPicks(drawOnly));
+    } else {
+      document.getElementById('pmContent').innerHTML =
+        '<p style="font-size:.75rem;color:var(--ink3);padding:.4rem 0 .7rem">Your picks were submitted. Reload the page to view them here.</p>';
+      document.getElementById('picksModal').classList.add('open');
+    }
     return;
   }
 
@@ -1206,7 +1209,15 @@ function viewMyPicks(drawOnly){
 
 // -- VIEW PICKS FROM LEADERBOARD --
 function viewPicksFromCache(idx, drawOnly){
-  if(!S.leaderboardCache || !S.leaderboardCache[idx]) return;
+  // If cache not ready, reload leaderboard then open modal
+  if(!S.leaderboardCache || !S.leaderboardCache[idx]){
+    if(S.user && !DEMO_MODE){
+      loadLeaderboard().then(() => {
+        if(S.leaderboardCache && S.leaderboardCache[idx]) viewPicksFromCache(idx, drawOnly);
+      });
+    }
+    return;
+  }
   const entry = S.leaderboardCache[idx];
   // Build picks object from entry data
   const picks = {
