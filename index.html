@@ -1208,12 +1208,6 @@ function viewMyPicks(drawOnly){
 
 // -- VIEW PICKS FROM LEADERBOARD --
 function viewPicksFromCache(idx, drawOnly){
-  // Cache results for correct/wrong display in modal
-  if(!S.resultsCache && S.leaderboardCache){
-    // Build results from scored data - derive from who got points
-    // (results come back in leaderboard as part of scoring - we'll populate on first use)
-    S.resultsCache = {};
-  }
   if(!S.leaderboardCache || !S.leaderboardCache[idx]) return;
   const entry = S.leaderboardCache[idx];
   // Build picks object from entry data
