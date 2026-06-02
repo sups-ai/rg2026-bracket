@@ -194,8 +194,8 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
 .sb{font-size:.56rem;font-weight:600;color:var(--gold);white-space:nowrap}
 
 /* Final set games row inside card */
-.sr-inline{display:flex;align-items:center;gap:.35rem;padding:.38rem .6rem;border-top:1px solid var(--line);background:var(--bg);overflow:hidden}
-.sri-label{font-size:.56rem;text-transform:uppercase;letter-spacing:.04em;color:var(--ink3);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.sr-inline{display:flex;align-items:center;gap:.35rem;padding:.38rem .6rem;border-top:1px solid var(--line);background:var(--bg)}
+.sri-label{font-size:.52rem;text-transform:uppercase;letter-spacing:.03em;color:var(--ink3);flex:1;line-height:1.3;min-width:0}
 .sri-bonus{font-size:.56rem;font-weight:600;color:var(--gold);white-space:nowrap;flex-shrink:0}
 
 /* champion */
@@ -246,6 +246,11 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
 .lb-tab:hover:not(.on){color:var(--ink2)}
 .lb-view{display:none}.lb-view.on{display:block}
 .lb-loading{font-size:.75rem;color:var(--ink3);padding:1rem .5rem;text-align:center}
+.lb-winner-banner{background:linear-gradient(135deg,#FFF8DC,#FAEEBB);border:1px solid #F0D060;border-radius:var(--r);padding:.85rem 1rem;margin:.75rem .85rem .3rem;display:flex;align-items:center;gap:.75rem}
+.lb-winner-banner .wb-trophy{font-size:2rem;flex-shrink:0}
+.lb-winner-banner .wb-text h3{font-family:'Instrument Serif',serif;font-size:.95rem;color:#5A4000}
+.lb-winner-banner .wb-text p{font-size:.62rem;color:#7A6010;margin-top:.1rem}
+.lrk-trophy{font-size:.95rem}
 .lb-updated{font-size:.62rem;color:var(--ink3);text-align:right;padding:.3rem .1rem .6rem;letter-spacing:.04em}
 .lb-arr{font-size:.9rem;color:var(--ink3);margin-left:.3rem;flex-shrink:0}
 .lbr{display:flex;align-items:center;gap:.75rem;padding:.65rem .85rem;border:1px solid var(--line);border-radius:var(--r);margin-bottom:.38rem;transition:all .15s;animation:fu .25s ease both;cursor:pointer}
@@ -465,7 +470,7 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
             <div class="mu"><div class="mc" id="a-fn" style="width:var(--cw)">
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner SF1</span></div>
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner SF2</span></div>
-              <div class="sr-inline"><span class="sri-label">Sum of Games in Final Set</span><input class="sf-in" id="atp-sc" type="number" min="6" max="13" inputmode="numeric" oninput="validateSetSum(this)" placeholder="13"><span class="sri-bonus">+5 pts</span></div>
+              <div class="sr-inline"><span class="sri-label">Sum of Games in Final Set</span><input class="sf-in" id="atp-sc" type="number" min="6" max="13" inputmode="numeric" oninput="validateSetSum(this)" ><span class="sri-bonus">+5 pts</span></div>
             </div></div>
           </div>
         </div>
@@ -552,7 +557,7 @@ body{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',s
             <div class="mu"><div class="mc" id="w-fn" style="width:var(--cw)">
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner SF1</span></div>
               <div class="ps tbd"><span class="p-s"></span><span class="p-f"></span><span class="p-n">Winner SF2</span></div>
-              <div class="sr-inline"><span class="sri-label">Sum of Games in Final Set</span><input class="sf-in" id="wta-sc" type="number" min="6" max="13" inputmode="numeric" oninput="validateSetSum(this)" placeholder="13"><span class="sri-bonus">+5 pts</span></div>
+              <div class="sr-inline"><span class="sri-label">Sum of Games in Final Set</span><input class="sf-in" id="wta-sc" type="number" min="6" max="13" inputmode="numeric" oninput="validateSetSum(this)" ><span class="sri-bonus">+5 pts</span></div>
             </div></div>
           </div>
         </div>
@@ -1177,7 +1182,20 @@ function viewMyPicks(drawOnly){
       Object.keys(RL).forEach(r => {
         const p = S.p[d][r];
         const display = p && p.n ? (p.f ? p.f + ' ' + p.n : p.n) : null;
-        h += '<div class="mpr"><span class="rnd">' + RL[r] + '</span><span class="plr ' + (display ? '' : 'mt') + '">' + (display || '--') + '</span></div>';
+        const actual = S.resultsCache && S.resultsCache[d] && S.resultsCache[d][r];
+        const pts = {q1:10,q2:10,q3:10,q4:10,s1:20,s2:20,fn:120}[r];
+        let badge = '';
+        if(actual && display){
+          const correct = display.toLowerCase().includes(actual.toLowerCase()) || actual.toLowerCase().includes(display.split(' ').pop().toLowerCase());
+          if(correct){
+            badge = '<span class="pick-correct">+'+pts+' pts</span>';
+          } else {
+            badge = '<span class="pick-wrong">'+actual+'</span>';
+          }
+        } else if(display) {
+          badge = '<span class="pick-pending">pending</span>';
+        }
+        h += '<div class="mpr"><span class="rnd">' + RL[r] + '</span><span class="plr ' + (display ? (actual && !badge.includes('pending') && badge.includes('correct') ? 'correct' : actual ? 'wrong' : '') : 'mt') + '">' + (display || '--') + '</span>' + badge + '</div>';
       });
     }
     h += '</div>';
@@ -1190,6 +1208,12 @@ function viewMyPicks(drawOnly){
 
 // -- VIEW PICKS FROM LEADERBOARD --
 function viewPicksFromCache(idx, drawOnly){
+  // Cache results for correct/wrong display in modal
+  if(!S.resultsCache && S.leaderboardCache){
+    // Build results from scored data - derive from who got points
+    // (results come back in leaderboard as part of scoring - we'll populate on first use)
+    S.resultsCache = {};
+  }
   if(!S.leaderboardCache || !S.leaderboardCache[idx]) return;
   const entry = S.leaderboardCache[idx];
   // Build picks object from entry data
@@ -1224,7 +1248,17 @@ function viewPicks(name, role, picks, drawOnly){
     h+=`<div class="mps"><div class="mpt">${d==='atp'?"ATP Men's":"WTA Women's"}</div>`;
     Object.keys(RL).forEach(r=>{
       const p = usePicks && usePicks[d] && usePicks[d][r];
-      h+=`<div class="mpr"><span class="rnd">${RL[r]}</span><span class="plr ${p?'':'mt'}">${p||'--'}</span></div>`;
+      const actual = S.resultsCache && S.resultsCache[d] && S.resultsCache[d][r];
+      const pts = {q1:10,q2:10,q3:10,q4:10,s1:20,s2:20,fn:120}[r];
+      let badge = '', pickClass = p ? '' : 'mt';
+      if(p && actual){
+        const pC = String(p).replace(/[^a-zA-Z\-\s]/g,'').trim().toLowerCase();
+        const aC = String(actual).trim().toLowerCase();
+        const ok = pC===aC||aC.includes(pC.split(' ').pop())||pC.includes(aC.split(' ').pop());
+        badge = ok ? `<span class="pick-correct">+${pts} pts</span>` : `<span class="pick-wrong">${actual}</span>`;
+        pickClass = ok ? 'correct' : 'wrong';
+      } else if(p){ badge = '<span class="pick-pending">pending</span>'; }
+      h+=`<div class="mpr"><span class="rnd">${RL[r]}</span><span class="plr ${pickClass}">${p||'--'}</span>${badge}</div>`;
     });
     h+='</div>';
   });
@@ -1276,6 +1310,7 @@ async function loadLeaderboard(){
       });
       return;
     }
+    if(data.results) S.resultsCache = data.results;
     renderLeaderboard(data.leaderboard);
     // Hide loading divs after render
     ['atp','wta','combined'].forEach(v=>{
@@ -1313,6 +1348,22 @@ function renderLeaderboard(entries){
       return pb - pa;
     });
 
+    // Show winner banner if tournament is complete (Final result exists)
+    const tournamentOver = S.resultsComplete && S.resultsComplete[view==='wta'?'wta':'atp'];
+    let bannerHTML = '';
+    if(tournamentOver && sorted.length > 0){
+      const winner = sorted[0];
+      const winPts = view==='atp' ? winner.atpScore : view==='wta' ? winner.wtaScore : winner.total;
+      const drawLabel = view==='atp' ? 'ATP' : view==='wta' ? 'WTA' : 'Combined';
+      bannerHTML = `<div class="lb-winner-banner">
+        <div class="wb-trophy">🏆</div>
+        <div class="wb-text">
+          <h3>${winner.name} wins ${drawLabel}!</h3>
+          <p>${winPts} pts &middot; Best bracket in the challenge</p>
+        </div>
+      </div>`;
+    }
+
     sorted.forEach((entry, i) => {
       const pts = view==='atp' ? entry.atpScore : view==='wta' ? entry.wtaScore : entry.total;
       const sub = view==='combined' ? (entry.role||'') :
@@ -1329,14 +1380,21 @@ function renderLeaderboard(entries){
         ? `viewMyPicks(${view!=='combined'?"'"+view+"'":''})` 
         : `viewPicksFromCache(${entryIdx}${view!=='combined'?`,'${view}'`:''})`;
       rows += `<div class="lbr${meClass}" onclick="${clickFn}">
-        <div class="lrk">${i+1}</div>
+        <div class="lrk${i===0 && tournamentOver ? ' lrk-trophy' : ''}">${i===0 && tournamentOver ? '🏆' : i+1}</div>
         <div class="lav" style="background:${bg}">${initials}</div>
         <div class="li"><div class="ln">${entry.name}</div><div class="lsu">${sub}</div></div>
         <div class="lr"><div class="lp">${pts}</div><div class="lpl">pts</div></div>
         <div class="lb-arr">></div>
       </div>`;
     });
-    container.innerHTML = labelText + rows;
+    container.innerHTML = labelText + bannerHTML + rows;
+
+    // Check if tournament is complete (Final picks have been scored)
+    if(!S.resultsComplete) S.resultsComplete = {};
+    const hasAtpFinal = entries.some(e => e.atpScore >= 80); // someone has champion pts
+    const hasWtaFinal = entries.some(e => e.wtaScore >= 80);
+    if(hasAtpFinal) S.resultsComplete.atp = true;
+    if(hasWtaFinal) S.resultsComplete.wta = true;
 
     // Update current user's score + mark draws as submitted if they appear in leaderboard
     if(S.user){
