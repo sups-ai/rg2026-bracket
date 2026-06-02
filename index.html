@@ -718,6 +718,8 @@ function pg(id,btn){
   btn.classList.add('on');
   // Refresh leaderboard every time tab is opened
   if(id==='leaderboard' && S.user && !DEMO_MODE) loadLeaderboard();
+  // Apply any known results to bracket when switching to it
+  if(id==='bracket' && S.resultsCache) applyResultsToBracket(S.resultsCache);
   const isBr = id==='bracket';
   const dlst=document.getElementById('dlst');
   if(dlst) dlst.style.display=isBr?'':'none';
@@ -1674,7 +1676,7 @@ if(!DEMO_MODE){
       if(pl) pl.textContent = savedUser.split(' ')[0] + "'s pts";
       try { checkAndEnforceDeadlines(); } catch(e){}
       try { loadDraw(); } catch(e){}
-      try { loadLeaderboard(); } catch(e){}
+      try { loadLeaderboard().then(()=>{ if(S.resultsCache) applyResultsToBracket(S.resultsCache); }); } catch(e){}
     }
   } catch(e){}
 }
