@@ -1290,6 +1290,95 @@ function populateSlot(slot, draw, round, player){
   slot.querySelector('.p-n').textContent = player.name;
 }
 
+// -- APPLY RESULTS TO BRACKET (win/out classes) --
+function applyResultsToBracket(results){
+  if(!results) return;
+  const cardMap = {
+    atp: {q1:'a-q1',q2:'a-q2',q3:'a-q3',q4:'a-q4',s1:'a-s1',s2:'a-s2',fn:'a-fn'},
+    wta: {q1:'w-q1',q2:'w-q2',q3:'w-q3',q4:'w-q4',s1:'w-s1',s2:'w-s2',fn:'w-fn'}
+  };
+  const champMap = {atp:'a-cn', wta:'w-cn'};
+  const sfSlots = {
+    atp: {s1:['a-s1',0,'a-s1',1], s2:['a-s2',0,'a-s2',1]},
+    wta: {s1:['w-s1',0,'w-s1',1], s2:['w-s2',0,'w-s2',1]}
+  };
+
+  ['atp','wta'].forEach(d => {
+    const res = results[d];
+    if(!res) return;
+
+    // For each round with a known winner
+    Object.keys(res).forEach(round => {
+      const winner = res[round];
+      if(!winner) return;
+
+      const cardId = cardMap[d][round];
+      if(!cardId) return;
+      const card = document.getElementById(cardId);
+      if(!card) return;
+
+      const slots = card.querySelectorAll('.ps');
+      let winnerSlot = null;
+
+      slots.forEach(slot => {
+        const name = slot.dataset.n || '';
+        // Fuzzy match: strip flags, compare last name
+        const sName = name.replace(/[^a-zA-Z\-\s]/g,'').trim().toLowerCase();
+        const wName = winner.replace(/[^a-zA-Z\-\s]/g,'').trim().toLowerCase();
+        const match = sName === wName
+          || wName.includes(sName.split(' ').pop())
+          || sName.includes(wName.split(' ').pop());
+        if(match) winnerSlot = slot;
+      });
+
+      if(winnerSlot){
+        // Mark winner green, loser greyed
+        slots.forEach(slot => {
+          slot.classList.remove('win','out','sel','sug');
+          if(slot === winnerSlot){
+            slot.classList.add('win');
+          } else {
+            // Only mark out if it's a real player slot (not TBD)
+            if(slot.dataset.n && !slot.classList.contains('tbd')){
+              slot.classList.add('out');
+            }
+          }
+        });
+
+        // Propagate winner name into next round slot (SF/Final display only)
+        const dest = {q1:{next:'s1',slot:0},q2:{next:'s1',slot:1},q3:{next:'s2',slot:0},q4:{next:'s2',slot:1},s1:{next:'fn',slot:0},s2:{next:'fn',slot:1}}[round];
+        if(dest){
+          const nextCardId = cardMap[d][dest.next];
+          const nextCard = nextCardId ? document.getElementById(nextCardId) : null;
+          if(nextCard){
+            const nextSlots = nextCard.querySelectorAll('.ps');
+            const t = nextSlots[dest.slot];
+            if(t && !t.classList.contains('win') && !t.classList.contains('out')){
+              t.querySelector('.p-n').textContent = winnerSlot.dataset.n;
+              t.querySelector('.p-f').textContent = winnerSlot.dataset.f || '';
+              t.setAttribute('data-n', winnerSlot.dataset.n);
+              t.setAttribute('data-f', winnerSlot.dataset.f || '');
+              t.classList.remove('tbd');
+            }
+          }
+        }
+
+        // Update champion card if Final result known
+        if(round === 'fn'){
+          const cn = document.getElementById(champMap[d]);
+          if(cn){
+            const flag = winnerSlot.dataset.f || '';
+            cn.textContent = (flag ? flag + ' ' : '') + winnerSlot.dataset.n;
+          }
+        }
+      }
+    });
+  });
+
+  // Redraw connectors after bracket state changes
+  setTimeout(drawConnectors, 200);
+}
+
 // -- LOAD LEADERBOARD FROM SHEET --
 async function loadLeaderboard(){
   // Show loading in all views
@@ -1314,6 +1403,7 @@ async function loadLeaderboard(){
       return;
     }
     if(data.results) S.resultsCache = data.results;
+    applyResultsToBracket(data.results);
     renderLeaderboard(data.leaderboard);
     // Hide loading divs after render
     ['atp','wta','combined'].forEach(v=>{
